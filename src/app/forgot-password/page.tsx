@@ -64,10 +64,8 @@ export default function ForgotPasswordPage() {
           </Form>
         </CardContent>
         <CardFooter className="justify-center">
-          <Link href="/login" passHref legacyBehavior>
-            <a className="text-sm text-muted-foreground underline-offset-4 hover:text-primary hover:underline">
-              Back to Sign In
-            </a>
+          <Link href="/login" className="text-sm text-muted-foreground underline-offset-4 hover:text-primary hover:underline">
+            Back to Sign In
           </Link>
         </CardFooter>
       </Card>

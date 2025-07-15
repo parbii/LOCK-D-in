@@ -100,10 +100,8 @@ export default function SignUpPage() {
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/login" passHref legacyBehavior>
-              <a className="font-medium text-primary underline-offset-4 hover:underline">
-                Sign in
-              </a>
+            <Link href="/login" className="font-medium text-primary underline-offset-4 hover:underline">
+              Sign in
             </Link>
           </p>
         </CardFooter>
