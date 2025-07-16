@@ -16,7 +16,7 @@ import { type Goal } from '@/context/goals-context';
 const friendsData = [
     {
         id: 1, name: "Sarah Lee", username: "@sarahlee", avatar: "https://placehold.co/100x100.png", aiHint: "woman smiling", bio: "Fitness enthusiast and marathon runner. Always pushing my limits.",
-        stats: { goals: 5, bestStreak: "21 days", posts: 12 },
+        stats: { goals: 5, bestStreak: 21, posts: 12 },
         publicGoals: [
             { id: 101, name: "Run a 5k", progress: 100, streak: 21, isPublic: true, lastCompleted: "2023-10-26" },
             { id: 102, name: "Read 12 books this year", progress: 75, streak: 3, isPublic: true, lastCompleted: "2023-10-26" },
@@ -27,7 +27,7 @@ const friendsData = [
     },
     {
         id: 2, name: "David Kim", username: "@davidkim", avatar: "https://placehold.co/100x100.png", aiHint: "man portrait", bio: "Tech entrepreneur and mindfulness advocate. Building cool things and staying present.",
-        stats: { goals: 3, bestStreak: "45 days", posts: 8 },
+        stats: { goals: 3, bestStreak: 45, posts: 8 },
         publicGoals: [
              { id: 201, name: "Meditate daily", progress: 100, streak: 45, isPublic: true, lastCompleted: "2023-10-26" },
         ],
@@ -37,7 +37,7 @@ const friendsData = [
     },
     {
         id: 3, name: "Emily Chen", username: "@emilychen", avatar: "https://placehold.co/100x100.png", aiHint: "woman hiking", bio: "Artist and nature lover. Finding inspiration in the wild.",
-        stats: { goals: 8, bestStreak: "14 days", posts: 25 },
+        stats: { goals: 8, bestStreak: 14, posts: 25 },
         publicGoals: [
             { id: 301, name: "Finish oil painting", progress: 60, streak: 5, isPublic: true, lastCompleted: "2023-10-25" },
             { id: 302, name: "Hike a new trail weekly", progress: 80, streak: 4, isPublic: true, lastCompleted: "2023-10-22" },
@@ -46,7 +46,7 @@ const friendsData = [
     }
 ];
 
-function ProfileStats({ stats }: { stats: { goals: number, bestStreak: string, posts: number }}) {
+function ProfileStats({ stats }: { stats: { goals: number, bestStreak: number, posts: number }}) {
     const displayStats = [
       { name: "Goals", value: stats.goals, icon: Target },
       { name: "Best Streak", value: stats.bestStreak, icon: Flame },

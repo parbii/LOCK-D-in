@@ -18,7 +18,7 @@ function ProfileStats() {
   
     const stats = [
       { name: "Goals", value: totalGoals, icon: Target },
-      { name: "Best Streak", value: `${highestStreak} days`, icon: Flame },
+      { name: "Best Streak", value: highestStreak, icon: Flame },
       { name: "Posts", value: totalPosts, icon: FileText },
     ];
   
