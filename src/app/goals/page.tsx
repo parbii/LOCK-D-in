@@ -2,18 +2,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { PlusCircle, Trash2, X, Target, Flame, Globe, Lock } from "lucide-react";
+import { PlusCircle, Trash2, X, Target, Flame, Globe, Lock, CheckCircle, RefreshCw } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useGoals, type Goal, type Habit } from "@/context/goals-context";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
 
 export default function GoalsPage() {
   const [open, setOpen] = useState(false);
@@ -22,7 +23,7 @@ export default function GoalsPage() {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [currentHabit, setCurrentHabit] = useState("");
   const [isPublic, setIsPublic] = useState(true);
-  const { activeGoals, addGoal, checkedHabits, handleHabitCheck, getTodaysDate } = useGoals();
+  const { activeGoals, completedGoals, addGoal, checkedHabits, handleHabitCheck, getTodaysDate, completeGoal, keepGoing } = useGoals();
   const [isClient, setIsClient] = React.useState(false);
 
   React.useEffect(() => {
@@ -53,6 +54,7 @@ export default function GoalsPage() {
       progress: 0,
       streak: 0,
       lastCompleted: null,
+      status: 'active',
     };
     
     addGoal(newGoal);
@@ -155,84 +157,128 @@ export default function GoalsPage() {
           </DialogContent>
         </Dialog>
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Active Goals</CardTitle>
-          <CardDescription>This is where your goals will be displayed. Start by creating a new one!</CardDescription>
-        </CardHeader>
-        <CardContent>
-           {activeGoals.length === 0 || !isClient ? (
-            <div className="text-center text-muted-foreground py-8">
-                <p>You haven't set any goals yet.</p>
-            </div>
-           ) : (
-            <Accordion type="single" collapsible className="w-full">
-              {activeGoals.map(goal => (
-                <AccordionItem value={`item-${goal.id}`} key={goal.id}>
-                  <AccordionTrigger>
-                    <div className="flex items-center gap-3 flex-1">
-                      <Target className="h-5 w-5 text-accent" />
-                      <div className="flex-1 text-left">
-                        <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-2">
-                                <h3 className="font-semibold">{goal.name}</h3>
-                                {goal.isPublic ? <Globe className="h-4 w-4 text-muted-foreground" /> : <Lock className="h-4 w-4 text-muted-foreground" />}
-                            </div>
-                            <div className="flex items-center gap-2 text-sm font-semibold">
-                               {goal.streak > 0 && goal.lastCompleted === getTodaysDate() && <Flame className="h-5 w-5 text-orange-500" />}
-                               {goal.progress >= 100 ? (
-                                    <Lock className="h-5 w-5 text-accent" />
-                                ) : (
-                                    <span>{Math.floor(goal.progress)}%</span>
-                                )}
-                            </div>
-                        </div>
-                        {goal.description && <p className="text-sm text-muted-foreground mt-1">{goal.description}</p>}
-                         <Progress value={goal.progress} className="mt-2 h-2" />
-                      </div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="pl-8 space-y-3">
-                        <div className="flex justify-between items-center">
-                             <h4 className="font-medium">Daily Habits:</h4>
-                             {goal.streak > 0 && (
-                                <div className="flex items-center gap-1.5 text-orange-500 font-semibold text-sm">
-                                    <Flame className="h-4 w-4" />
-                                    <span>{goal.streak} day streak!</span>
+      <div className="space-y-8">
+        <Card>
+            <CardHeader>
+            <CardTitle>Active Goals</CardTitle>
+            <CardDescription>This is where your goals will be displayed. Start by creating a new one!</CardDescription>
+            </CardHeader>
+            <CardContent>
+            {activeGoals.length === 0 || !isClient ? (
+                <div className="text-center text-muted-foreground py-8">
+                    <p>You haven't set any goals yet.</p>
+                </div>
+            ) : (
+                <Accordion type="single" collapsible className="w-full">
+                {activeGoals.map(goal => (
+                    <AccordionItem value={`item-${goal.id}`} key={goal.id}>
+                    <AccordionTrigger>
+                        <div className="flex items-center gap-3 flex-1">
+                        <Target className="h-5 w-5 text-accent" />
+                        <div className="flex-1 text-left">
+                            <div className="flex justify-between items-center">
+                                <div className="flex items-center gap-2">
+                                    <h3 className="font-semibold">{goal.name}</h3>
+                                    {goal.isPublic ? <Globe className="h-4 w-4 text-muted-foreground" /> : <Lock className="h-4 w-4 text-muted-foreground" />}
                                 </div>
-                             )}
-                        </div>
-                        {goal.habits.length > 0 ? (
-                           <div className="space-y-2">
-                                {goal.habits.map(habit => (
-                                    <div key={habit.id} className="flex items-center space-x-3">
-                                        <Checkbox
-                                          id={`habit-${habit.id}`}
-                                          checked={checkedHabits[habit.id] || false}
-                                          onCheckedChange={() => handleHabitCheck(habit.id, goal.id)}
-                                          disabled={goal.lastCompleted === getTodaysDate()}
-                                        />
-                                        <label
-                                            htmlFor={`habit-${habit.id}`}
-                                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                        >
-                                            {habit.text}
-                                        </label>
-                                    </div>
-                                ))}
+                                <div className="flex items-center gap-2 text-sm font-semibold">
+                                {goal.streak > 0 && goal.lastCompleted === getTodaysDate() && <Flame className="h-5 w-5 text-orange-500" />}
+                                {goal.progress >= 100 ? (
+                                        <Lock className="h-5 w-5 text-accent" />
+                                    ) : (
+                                        <span>{Math.floor(goal.progress)}%</span>
+                                    )}
+                                </div>
                             </div>
-                        ) : (
-                            <p className="text-sm text-muted-foreground">No habits linked to this goal yet.</p>
-                        )}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-           )}
-        </CardContent>
-      </Card>
+                            {goal.description && <p className="text-sm text-muted-foreground mt-1">{goal.description}</p>}
+                            <Progress value={goal.progress} className="mt-2 h-2" />
+                        </div>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <div className="pl-8 space-y-3">
+                            {goal.status === 'prompt_complete' ? (
+                                <div className="rounded-md border bg-muted/50 p-4 text-center space-y-3">
+                                    <h4 className="font-semibold text-lg">You're LOCKD IN!</h4>
+                                    <p className="text-muted-foreground text-sm">You've reached 100% on this goal. What's next?</p>
+                                    <div className="flex justify-center gap-4 pt-2">
+                                        <Button onClick={() => completeGoal(goal.id)}>
+                                            <CheckCircle className="mr-2 h-4 w-4" />
+                                            Complete Goal
+                                        </Button>
+                                        <Button variant="outline" onClick={() => keepGoing(goal.id)}>
+                                            <RefreshCw className="mr-2 h-4 w-4" />
+                                            Keep Going
+                                        </Button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="flex justify-between items-center">
+                                        <h4 className="font-medium">Daily Habits:</h4>
+                                        {goal.streak > 0 && (
+                                            <div className="flex items-center gap-1.5 text-orange-500 font-semibold text-sm">
+                                                <Flame className="h-4 w-4" />
+                                                <span>{goal.streak} day streak!</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    {goal.habits.length > 0 ? (
+                                        <div className="space-y-2">
+                                            {goal.habits.map(habit => (
+                                                <div key={habit.id} className="flex items-center space-x-3">
+                                                    <Checkbox
+                                                    id={`habit-${habit.id}`}
+                                                    checked={checkedHabits[habit.id] || false}
+                                                    onCheckedChange={() => handleHabitCheck(habit.id, goal.id)}
+                                                    disabled={goal.lastCompleted === getTodaysDate()}
+                                                    />
+                                                    <label
+                                                        htmlFor={`habit-${habit.id}`}
+                                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                                    >
+                                                        {habit.text}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p className="text-sm text-muted-foreground">No habits linked to this goal yet.</p>
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    </AccordionContent>
+                    </AccordionItem>
+                ))}
+                </Accordion>
+            )}
+            </CardContent>
+        </Card>
+        
+        {isClient && completedGoals.length > 0 && (
+            <Card>
+                <CardHeader>
+                    <CardTitle>Completed Goals</CardTitle>
+                    <CardDescription>A record of your amazing achievements.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    {completedGoals.map(goal => (
+                        <div key={goal.id}>
+                            <div className="flex items-center gap-3">
+                                <CheckCircle className="h-5 w-5 text-green-500" />
+                                <div>
+                                    <p className="font-semibold">{goal.name}</p>
+                                    {goal.description && <p className="text-sm text-muted-foreground">{goal.description}</p>}
+                                </div>
+                            </div>
+                            <Separator className="my-2" />
+                        </div>
+                    ))}
+                </CardContent>
+            </Card>
+        )}
+      </div>
     </div>
   );
 }
