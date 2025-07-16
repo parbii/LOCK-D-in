@@ -46,11 +46,13 @@ const friendsData = [
 function ProfileStats({ goals, postsCount }: { goals: any[], postsCount: number }) {
     const totalGoals = goals.length;
     const totalStreaks = goals.reduce((sum, goal) => sum + (goal.streak || 0), 0);
+    const lockedInGoals = goals.filter(goal => goal.progress >= 100).length;
     
     const displayStats = [
       { name: "Goals", value: totalGoals, icon: Target },
       { name: "Streaks", value: totalStreaks, icon: Flame },
       { name: "Posts", value: postsCount, icon: FileText },
+      { name: "LockdIn", value: lockedInGoals, icon: Lock }
     ];
   
     return (

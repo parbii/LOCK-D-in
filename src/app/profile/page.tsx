@@ -7,19 +7,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Edit, Globe, Target, Flame, FileText } from "lucide-react";
+import { Edit, Globe, Target, Flame, FileText, Lock } from "lucide-react";
 
 function ProfileStats() {
     const { activeGoals } = useGoals();
   
     const totalGoals = activeGoals.length;
     const totalStreaks = activeGoals.reduce((sum, goal) => sum + goal.streak, 0);
+    const lockedInGoals = activeGoals.filter(goal => goal.progress >= 100).length;
     const totalPosts = 0; // Placeholder until posts are implemented
   
     const stats = [
       { name: "Goals", value: totalGoals, icon: Target },
       { name: "Streaks", value: totalStreaks, icon: Flame },
       { name: "Posts", value: totalPosts, icon: FileText },
+      { name: "LockdIn", value: lockedInGoals, icon: Lock },
     ];
   
     return (
