@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -23,6 +23,12 @@ export default function GoalsPage() {
   const [currentHabit, setCurrentHabit] = useState("");
   const [isPublic, setIsPublic] = useState(true);
   const { activeGoals, addGoal, checkedHabits, handleHabitCheck, getTodaysDate } = useGoals();
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
 
   const handleAddHabit = () => {
     if (currentHabit.trim() !== "" && !habits.some(h => h.text === currentHabit.trim())) {
@@ -155,7 +161,7 @@ export default function GoalsPage() {
           <CardDescription>This is where your goals will be displayed. Start by creating a new one!</CardDescription>
         </CardHeader>
         <CardContent>
-           {activeGoals.length === 0 ? (
+           {activeGoals.length === 0 || !isClient ? (
             <div className="text-center text-muted-foreground py-8">
                 <p>You haven't set any goals yet.</p>
             </div>
