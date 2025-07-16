@@ -8,8 +8,8 @@ export default function LeaderDashboardPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-4xl font-bold">Leader Dashboard</h1>
-        <p className="text-lg text-muted-foreground mt-2">Your central hub for community insights and management.</p>
+        <h1 className="text-4xl font-bold">Organization</h1>
+        <p className="text-lg text-muted-foreground mt-2">Your central hub for organization insights and management.</p>
       </div>
       
       <div className="grid lg:grid-cols-3 gap-8">
