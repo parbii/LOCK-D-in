@@ -3,17 +3,20 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile, Target, Flame, Lock, Calendar, MapPin, Users } from "lucide-react";
-import { useGoals } from "@/context/goals-context";
+import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile, Target, Flame, Lock, Calendar, MapPin, Users, Image as ImageIcon, X } from "lucide-react";
+import { useGoals, type Goal } from "@/context/goals-context";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import React, { useEffect, useState } from 'react';
 import { format } from "date-fns";
 import Link from "next/link";
 import { type ServiceEvent } from "../service-events/page";
+import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 
 
 // Mock data for feed posts
@@ -57,6 +60,92 @@ const posts = [
     time: "1d ago"
   }
 ];
+
+function CreatePost() {
+    const { activeGoals } = useGoals();
+    const [postContent, setPostContent] = useState('');
+    const [isGoalDialogOpen, setGoalDialogOpen] = useState(false);
+    const [attachedGoal, setAttachedGoal] = useState<Goal | null>(null);
+
+    const handleAttachGoal = (goal: Goal) => {
+        setAttachedGoal(goal);
+        setGoalDialogOpen(false);
+    }
+    
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Create Post</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                 <div className="flex gap-4">
+                    <Avatar>
+                        <AvatarImage src="https://placehold.co/40x40.png" data-ai-hint="profile avatar" />
+                        <AvatarFallback>U</AvatarFallback>
+                    </Avatar>
+                    <Textarea 
+                        placeholder="What's on your mind?" 
+                        className="flex-1"
+                        value={postContent}
+                        onChange={(e) => setPostContent(e.target.value)}
+                        rows={3}
+                    />
+                </div>
+                {attachedGoal && (
+                    <div className="pl-14">
+                        <Badge variant="secondary" className="flex items-center gap-2 max-w-max">
+                            <Target className="h-3 w-3" />
+                            <span>{attachedGoal.name}</span>
+                            <button onClick={() => setAttachedGoal(null)} className="rounded-full hover:bg-muted -mr-1">
+                                <X className="h-3 w-3" />
+                            </button>
+                        </Badge>
+                    </div>
+                )}
+            </CardContent>
+            <CardFooter className="flex justify-between items-center">
+                 <div className="flex gap-2 text-muted-foreground">
+                    <Button variant="ghost" size="icon" aria-label="Add Photo">
+                        <ImageIcon className="h-5 w-5" />
+                    </Button>
+                     <Dialog open={isGoalDialogOpen} onOpenChange={setGoalDialogOpen}>
+                        <DialogTrigger asChild>
+                             <Button variant="ghost" size="icon" aria-label="Attach Goal">
+                                <Target className="h-5 w-5" />
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Attach a Goal</DialogTitle>
+                                <DialogDescription>Select one of your active goals to share in your post.</DialogDescription>
+                            </DialogHeader>
+                            <div className="max-h-80 overflow-y-auto py-4 space-y-2">
+                                {activeGoals.map(goal => (
+                                    <button 
+                                        key={goal.id} 
+                                        className="w-full text-left p-3 rounded-md hover:bg-muted flex items-start gap-3"
+                                        onClick={() => handleAttachGoal(goal)}
+                                    >
+                                        <Target className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                                        <div>
+                                            <p className="font-semibold">{goal.name}</p>
+                                            <p className="text-sm text-muted-foreground">{goal.description}</p>
+                                        </div>
+                                    </button>
+                                ))}
+                                {activeGoals.length === 0 && <p className="text-sm text-center text-muted-foreground py-4">You have no active goals to attach.</p>}
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+                    <Button variant="ghost" size="icon" aria-label="Mention Streak">
+                        <Flame className="h-5 w-5" />
+                    </Button>
+                 </div>
+                <Button>Post</Button>
+            </CardFooter>
+        </Card>
+    );
+}
 
 function DailyHabitsTracker() {
     const { activeGoals, checkedHabits, handleHabitCheck, getTodaysDate } = useGoals();
@@ -188,20 +277,7 @@ export default function FeedPage() {
         <DailyHabitsTracker />
         <RsvpEvents />
       <div className="space-y-6 mt-6">
-        {/* Create Post Card */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Create Post</CardTitle>
-          </CardHeader>
-          <CardContent className="flex items-center gap-4">
-            <Avatar>
-              <AvatarImage src="https://placehold.co/40x40.png" data-ai-hint="profile avatar" />
-              <AvatarFallback>U</AvatarFallback>
-            </Avatar>
-            <Input placeholder="What's on your mind?" className="flex-1" />
-            <Button>Post</Button>
-          </CardContent>
-        </Card>
+        <CreatePost />
 
         {/* Feed Posts */}
         {posts.map(post => (
