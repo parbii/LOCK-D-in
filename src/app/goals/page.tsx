@@ -7,40 +7,53 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { PlusCircle, Trash2, X } from "lucide-react";
-import type { Metadata } from "next";
+import { PlusCircle, Trash2, X, Target } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 
-// This is a client component, so we can't use static metadata export.
-// We can set the title in the layout or use a custom hook if needed.
-// export const metadata: Metadata = {
-//   title: "Goals - LockdIn",
-// };
+interface Habit {
+  id: number;
+  text: string;
+}
+
+interface Goal {
+  id: number;
+  name: string;
+  description: string;
+  habits: Habit[];
+}
 
 export default function GoalsPage() {
   const [open, setOpen] = useState(false);
   const [goalName, setGoalName] = useState("");
   const [goalDescription, setGoalDescription] = useState("");
-  const [habits, setHabits] = useState<string[]>([]);
+  const [habits, setHabits] = useState<Habit[]>([]);
   const [currentHabit, setCurrentHabit] = useState("");
+  const [activeGoals, setActiveGoals] = useState<Goal[]>([]);
 
   const handleAddHabit = () => {
-    if (currentHabit.trim() !== "" && !habits.includes(currentHabit.trim())) {
-      setHabits([...habits, currentHabit.trim()]);
+    if (currentHabit.trim() !== "" && !habits.some(h => h.text === currentHabit.trim())) {
+      setHabits([...habits, { id: Date.now(), text: currentHabit.trim() }]);
       setCurrentHabit("");
     }
   };
 
-  const handleRemoveHabit = (habitToRemove: string) => {
-    setHabits(habits.filter(habit => habit !== habitToRemove));
+  const handleRemoveHabit = (habitId: number) => {
+    setHabits(habits.filter(habit => habit.id !== habitId));
   };
 
   const handleCreateGoal = () => {
-    // Here you would typically handle form submission, e.g., send to an API
-    console.log({
-      goalName,
-      goalDescription,
-      habits
-    });
+    if (!goalName.trim()) return; 
+
+    const newGoal: Goal = {
+      id: Date.now(),
+      name: goalName,
+      description: goalDescription,
+      habits: habits,
+    };
+    
+    setActiveGoals([...activeGoals, newGoal]);
+    
     // Reset form and close dialog
     setGoalName("");
     setGoalDescription("");
@@ -108,10 +121,10 @@ export default function GoalsPage() {
                   </Button>
                 </div>
                 <div className="space-y-2 mt-2">
-                  {habits.map((habit, index) => (
-                    <div key={index} className="flex items-center justify-between rounded-md bg-muted/50 p-2 pl-3">
-                      <span className="text-sm">{habit}</span>
-                      <Button variant="ghost" size="icon" onClick={() => handleRemoveHabit(habit)} className="h-7 w-7">
+                  {habits.map((habit) => (
+                    <div key={habit.id} className="flex items-center justify-between rounded-md bg-muted/50 p-2 pl-3">
+                      <span className="text-sm">{habit.text}</span>
+                      <Button variant="ghost" size="icon" onClick={() => handleRemoveHabit(habit.id)} className="h-7 w-7">
                         <X className="h-4 w-4" />
                       </Button>
                     </div>
@@ -132,9 +145,41 @@ export default function GoalsPage() {
           <CardDescription>This is where your goals will be displayed. Start by creating a new one!</CardDescription>
         </CardHeader>
         <CardContent>
-           <div className="text-center text-muted-foreground py-8">
-            <p>You haven't set any goals yet.</p>
-          </div>
+           {activeGoals.length === 0 ? (
+            <div className="text-center text-muted-foreground py-8">
+                <p>You haven't set any goals yet.</p>
+            </div>
+           ) : (
+            <Accordion type="single" collapsible className="w-full">
+              {activeGoals.map(goal => (
+                <AccordionItem value={`item-${goal.id}`} key={goal.id}>
+                  <AccordionTrigger>
+                    <div className="flex items-center gap-3">
+                      <Target className="h-5 w-5 text-accent" />
+                      <div>
+                        <h3 className="font-semibold text-left">{goal.name}</h3>
+                        {goal.description && <p className="text-sm text-muted-foreground text-left">{goal.description}</p>}
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="pl-8 space-y-2">
+                        <p className="font-medium">Linked Habits:</p>
+                        {goal.habits.length > 0 ? (
+                           <div className="flex flex-wrap gap-2">
+                                {goal.habits.map(habit => (
+                                    <Badge key={habit.id} variant="secondary">{habit.text}</Badge>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-sm text-muted-foreground">No habits linked to this goal yet.</p>
+                        )}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+           )}
         </CardContent>
       </Card>
     </div>
