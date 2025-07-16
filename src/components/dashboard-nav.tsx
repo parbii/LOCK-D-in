@@ -20,10 +20,10 @@ const menuItems = [
   { href: "/lessons", label: "Mindset Modules", icon: BrainCircuit },
   { href: "/communities", label: "Communities", icon: Users },
   { href: "/service-events", label: "Service Events", icon: Handshake },
+  { href: "/leader-dashboard", label: "Leader Dashboard", icon: ShieldCheck },
 ];
 
 const secondaryMenuItems = [
-    { href: "/leader-dashboard", label: "Leader Dashboard", icon: ShieldCheck },
     { href: "/settings", label: "Settings", icon: Cog },
 ]
 
