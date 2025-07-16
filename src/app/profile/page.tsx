@@ -1,24 +1,17 @@
 
 "use client";
 
+import React from 'react';
 import { useGoals } from "@/context/goals-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Edit, Globe, Target, Flame, FileText } from "lucide-react";
-import type { Metadata } from "next";
-
-// Note: Metadata export is for static generation and won't be used in a client component.
-// It's kept here for reference or future adaptation.
-// export const metadata: Metadata = {
-//   title: "Profile - LockdIn",
-// };
 
 function ProfileStats() {
     const { activeGoals } = useGoals();
   
-    // Calculate stats from goals context
     const totalGoals = activeGoals.length;
     const highestStreak = activeGoals.reduce((maxStreak, goal) => Math.max(maxStreak, goal.streak), 0);
     const totalPosts = 0; // Placeholder until posts are implemented
@@ -62,15 +55,15 @@ export default function ProfilePage() {
               </Button>
             </div>
             <div className="space-y-1">
-                <h1 className="text-2xl font-bold">User Name</h1>
-                <p className="text-muted-foreground">@username</p>
+                <h1 className="text-2xl font-bold">My Profile</h1>
+                <p className="text-muted-foreground">@me</p>
             </div>
             <p className="max-w-prose text-sm text-foreground/80">
-              This is a sample bio. Users can write a short description about themselves here. Driven by purpose and committed to growth.
+              This is a sample bio. I'm driven by purpose and committed to growth. This is my personal space to track my journey.
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Globe className="h-4 w-4" />
-              <span>Public Profile</span>
+              <span>My Public Profile</span>
             </div>
             
             <ProfileStats />

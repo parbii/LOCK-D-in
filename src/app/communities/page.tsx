@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 
 interface Community {
     id: number;
@@ -89,7 +90,6 @@ export default function CommunitiesPage() {
     const [communities, setCommunities] = useState<Community[]>(initialCommunities);
     const [joinedCommunities, setJoinedCommunities] = useState<number[]>([]);
     
-    // State for create community dialog
     const [isCreateDialogOpen, setCreateDialogOpen] = useState(false);
     const [newCommunityName, setNewCommunityName] = useState("");
     const [isPrivate, setIsPrivate] = useState(false);
@@ -144,7 +144,6 @@ export default function CommunitiesPage() {
             description: isPrivate ? "Your private community is ready." : "Your public community is now live."
         });
 
-        // Reset form and close dialog
         setNewCommunityName("");
         setIsPrivate(false);
         setInvitedFriends({});
@@ -281,7 +280,9 @@ export default function CommunitiesPage() {
                                             <p className="text-xs text-muted-foreground">{friend.username}</p>
                                         </div>
                                     </div>
-                                    <Button variant="outline">Message</Button>
+                                    <Button variant="outline" asChild>
+                                        <Link href={`/profile/${friend.id}`}>View Profile</Link>
+                                    </Button>
                                 </div>
                             ))}
                         </CardContent>
@@ -290,5 +291,4 @@ export default function CommunitiesPage() {
             </Tabs>
         </div>
     );
-
-    
+}
