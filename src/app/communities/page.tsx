@@ -1,15 +1,19 @@
+
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, UserPlus, Search } from "lucide-react";
+import { Users, Search } from "lucide-react";
 import type { Metadata } from "next";
+import { useGoals } from "@/context/goals-context";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
-export const metadata: Metadata = {
-    title: "Communities - LockdIn",
-    description: "Find and join communities.",
-};
+// Note: Metadata is for static generation and won't be used in a client component.
+// We can set the title dynamically if needed.
 
 const communities = [
     {
@@ -67,6 +71,28 @@ const friends = [
 ]
 
 export default function CommunitiesPage() {
+    const { activeGoals } = useGoals();
+    const { toast } = useToast();
+    const [joinedCommunities, setJoinedCommunities] = useState<number[]>([]);
+
+    const handleJoinClick = (communityId: number) => {
+        const hasLockedInPublicGoal = activeGoals.some(goal => goal.progress >= 100 && goal.isPublic);
+
+        if (hasLockedInPublicGoal) {
+            setJoinedCommunities([...joinedCommunities, communityId]);
+            toast({
+                title: "Welcome to the community!",
+                description: "You've successfully joined.",
+            });
+        } else {
+            toast({
+                variant: "destructive",
+                title: "Goal Required to Join",
+                description: "You must have at least one 'LockdIn' public goal to join a community. Keep pushing!",
+            });
+        }
+    };
+
     return (
         <div>
             <div className="mb-6">
@@ -104,7 +130,12 @@ export default function CommunitiesPage() {
                                             </p>
                                         </div>
                                     </div>
-                                    <Button>Join</Button>
+                                    <Button 
+                                      onClick={() => handleJoinClick(community.id)}
+                                      disabled={joinedCommunities.includes(community.id)}
+                                    >
+                                      {joinedCommunities.includes(community.id) ? "Joined" : "Join"}
+                                    </Button>
                                 </div>
                             ))}
                         </CardContent>
