@@ -184,20 +184,27 @@ export default function ServiceEventsPage() {
             
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {events.map((event) => (
-                    <Link href={`/service-events/${event.id}`} key={event.id} className="group">
-                        <Card className="overflow-hidden h-full flex flex-col">
-                           <div className="relative aspect-video w-full overflow-hidden">
-                                <Image src={event.image} alt={event.title} layout="fill" objectFit="cover" data-ai-hint={event.imageAiHint} className="group-hover:scale-105 transition-transform duration-300"/>
-                           </div>
-                           <div className="p-4 flex flex-col flex-grow">
+                    <Card key={event.id} className="overflow-hidden h-full flex flex-col group">
+                        <div className="relative aspect-video w-full overflow-hidden">
+                            <Image src={event.image} alt={event.title} layout="fill" objectFit="cover" data-ai-hint={event.imageAiHint} className="group-hover:scale-105 transition-transform duration-300"/>
+                        </div>
+                        <CardContent className="p-4 flex flex-col flex-grow">
+                            <Link href={`/service-events/${event.id}`} className="group">
                                 <h3 className="text-lg font-semibold group-hover:text-accent transition-colors">{event.title}</h3>
-                                <div className="flex items-center text-sm text-muted-foreground mt-2">
-                                    <MapPin className="h-4 w-4 mr-2" />
-                                    <span>{event.location}</span>
-                                </div>
-                           </div>
-                        </Card>
-                    </Link>
+                            </Link>
+                            <div className="flex items-center text-sm text-muted-foreground mt-2">
+                                <MapPin className="h-4 w-4 mr-2" />
+                                <span>{event.location}</span>
+                            </div>
+                            <div className="flex items-center text-sm text-muted-foreground mt-1">
+                                <Users className="h-4 w-4 mr-2" />
+                                <span>{event.attendees} going</span>
+                            </div>
+                        </CardContent>
+                        <CardFooter>
+                            <Button className="w-full">RSVP</Button>
+                        </CardFooter>
+                    </Card>
                 ))}
             </div>
         </div>
