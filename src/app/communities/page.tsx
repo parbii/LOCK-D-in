@@ -169,7 +169,7 @@ export default function CommunitiesPage() {
                 <TabsContent value="communities">
                     <Card>
                         <CardHeader className="space-y-4">
-                            <div className="flex justify-between items-center">
+                            <div className="flex justify-between items-start gap-4">
                                 <div>
                                     <CardTitle>Discover Communities</CardTitle>
                                     <CardDescription>Join groups that align with your goals and interests.</CardDescription>
@@ -290,4 +290,5 @@ export default function CommunitiesPage() {
             </Tabs>
         </div>
     );
-}
+
+    
