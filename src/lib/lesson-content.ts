@@ -211,5 +211,99 @@ export const lessonContent = [
           }
         }
       ]
+    },
+    {
+        "moduleID": "KP_BallIsLife_M3",
+        "title": "Module 3: ballislife - Life Lessons from the Court",
+        "description": "This module explores the profound parallels between the game of basketball and the journey of life. Learners will discover how principles of teamwork, discipline, resilience, strategy, and continuous improvement, evident on the court, can be applied to transform their outlook, achieve personal goals, and fulfill their Kingdom purpose.",
+        "order": 3,
+        "lessons": [
+            {
+            "lessonID": "KP_BallIsLife_M3_L1",
+            "title": "Court to Life: Mindset & Resilience",
+            "order": 1,
+            "objective": "Learners will identify key mindset principles from basketball (e.g., resilience, adaptability, focus) and understand how to apply them to daily life challenges and entrepreneurial endeavors.",
+            "duration_minutes": 55,
+            "content_sections": [
+                {
+                "type": "introduction",
+                "heading": "Welcome to Module 3: ballislife!",
+                "text": "For many, basketball is more than a game; it's a metaphor for life. The court becomes a classroom for crucial lessons in strategy, teamwork, discipline, and especially, mindset. In this module, we'll draw parallels between the highs and lows of the game and the realities of your personal and professional journey, equipping you with a winning outlook rooted in Kingdom Principles."
+                },
+                {
+                "type": "scripture_focus",
+                "heading": "Key Scripture: Philippians 4:13",
+                "verse": "'I can do all this through him who gives me strength.'",
+                "commentary": "This verse is the ultimate 'game-winner' mindset. Just as an athlete relies on training and team, we rely on divine strength. It speaks to the resilience and inner fortitude available to us, regardless of the 'score' or the 'opponent' we face in life. It's not about our ability, but His power working through us."
+                },
+                {
+                "type": "teaching_point",
+                "heading": "Lessons from the Hardwood: Mindset in Action",
+                "points": [
+                    {
+                    "sub_heading": "Resilience: Bouncing Back from Turnovers & Missed Shots",
+                    "text": "In basketball, mistakes happen constantly. The best players don't dwell; they have short memories, learn, and immediately refocus on the next play. In life and business, failures and setbacks are inevitable. Resilience is about quickly recovering, adjusting, and moving forward with faith, knowing God is still in control."
+                    },
+                    {
+                    "sub_heading": "Adaptability: Adjusting to the Defense",
+                    "text": "No game plan survives first contact with the opponent. Players must adapt on the fly to new defensive schemes, injuries, or changing momentum. Life is no different. Flexibility, willingness to pivot, and relying on divine guidance when plans change are crucial Kingdom principles for success."
+                    },
+                    {
+                    "sub_heading": "Focus & Awareness: Blocking Out the Crowd",
+                    "text": "Elite players maintain focus amidst noise, pressure, and distractions. They are aware of their teammates, opponents, and the clock. In life, staying focused on your 'Why' (Module 2) and God's leading, while being aware of your surroundings, helps you perform optimally and avoid unnecessary pressure."
+                    },
+                    {
+                    "sub_heading": "Confidence (Rooted in Training, Not Arrogance):",
+                    "text": "True athletic confidence comes from consistent practice and knowing you've put in the work. For us, confidence comes from faithfully seeking God first (Module 1), understanding our purpose, and trusting in His strength, not solely our own abilities. This isn't pride, but assurance."
+                    }
+                ]
+                },
+                {
+                "type": "interactive_activity",
+                "heading": "Reflection & Application: Your 'Game Time' Moment",
+                "activity_type": "text_input_or_discussion",
+                "prompt": "Think of a recent setback or challenge you faced in your personal life or business. How did you react? Applying the basketball principles of resilience, adaptability, or focus, what's one different action or mindset shift you could have made, or will make next time, to 'win' that moment from a Kingdom perspective?"
+                },
+                {
+                "type": "application_challenge",
+                "heading": "Weekly Challenge: Practice the 'Next Play' Mentality",
+                "challenge_details": "This week, when you experience a small failure, mistake, or moment of frustration (a 'turnover'), consciously pause, acknowledge it without dwelling, and immediately ask yourself: 'What's the next faithful play?' Then, take that action, trusting God with the outcome. Document your experience."
+                }
+            ],
+            "resources": [
+                {
+                "type": "video",
+                "title": "Interview: NBA Coach on Mindset & Faith",
+                "url": "https://example.com/ballislife-mindset-video"
+                },
+                {
+                "type": "article",
+                "title": "The Spiritual Discipline of Resilience",
+                "url": "https://your-blog-link.com/spiritual-resilience"
+                },
+                {
+                "type": "podcast",
+                "title": "From the Court to the Kingdom: Athlete Testimonies",
+                "url": "https://example.com/athlete-testimony-podcast"
+                }
+            ],
+            "assessment": {
+                "type": "quiz",
+                "quiz_id": "M3_L1_Quiz",
+                "questions": [
+                {
+                    "question_text": "According to the lesson, what is a key takeaway from how basketball players handle missed shots?",
+                    "options": ["They dwell on their mistakes", "They immediately blame teammates", "They practice a 'short memory' and focus on the next play", "They quit the game"],
+                    "correct_answer_index": 2
+                },
+                {
+                    "question_text": "Philippians 4:13 emphasizes strength from what source?",
+                    "options": ["Personal willpower", "Team support", "Human connections", "Christ who gives strength"],
+                    "correct_answer_index": 3
+                }
+                ]
+            }
+            }
+        ]
     }
 ];
