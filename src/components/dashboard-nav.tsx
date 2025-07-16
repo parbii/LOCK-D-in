@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -11,7 +12,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { Lock, Newspaper, Target, BrainCircuit, Users, Trophy, Handshake, ShieldCheck, Cog } from "lucide-react";
+import { Lock, Newspaper, Target, BrainCircuit, Users, Handshake, ShieldCheck, Cog } from "lucide-react";
 
 const menuItems = [
   { href: "/feed", label: "Feed", icon: Newspaper },
