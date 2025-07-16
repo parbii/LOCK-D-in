@@ -6,11 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile, Target, Flame, Lock } from "lucide-react";
+import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile, Target, Flame, Lock, Calendar, MapPin, Users } from "lucide-react";
 import { useGoals } from "@/context/goals-context";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { format } from "date-fns";
+import Link from "next/link";
+import { type ServiceEvent } from "../service-events/page";
+
 
 // Mock data for feed posts
 const posts = [
@@ -127,12 +131,63 @@ function DailyHabitsTracker() {
     )
 }
 
+function RsvpEvents() {
+    const [rsvpdEvents, setRsvpdEvents] = useState<ServiceEvent[]>([]);
+     const [isClient, setIsClient] = React.useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+        if (typeof window !== 'undefined') {
+            const storedEvents = localStorage.getItem('rsvpdEvents');
+            if (storedEvents) {
+                // Parse dates back to Date objects
+                const parsedEvents = JSON.parse(storedEvents).map((e: ServiceEvent) => ({...e, date: new Date(e.date)}));
+                setRsvpdEvents(parsedEvents);
+            }
+        }
+    }, []);
+
+    if (!isClient || rsvpdEvents.length === 0) {
+        return null;
+    }
+
+    return (
+        <div className="space-y-6">
+            {rsvpdEvents.map(event => (
+                 <Card key={event.id}>
+                    <CardHeader>
+                        <p className="text-sm text-muted-foreground">You RSVP'd to an upcoming event:</p>
+                        <CardTitle>{event.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex items-center text-sm text-muted-foreground mt-2">
+                            <Calendar className="h-4 w-4 mr-2" />
+                            <span>{format(event.date, "PPP")}</span>
+                        </div>
+                        <div className="flex items-center text-sm text-muted-foreground mt-1">
+                            <MapPin className="h-4 w-4 mr-2" />
+                            <span>{event.location}</span>
+                        </div>
+                        <div className="flex items-center text-sm text-muted-foreground mt-1">
+                            <Users className="h-4 w-4 mr-2" />
+                            <span>{event.attendees} going</span>
+                        </div>
+                         <Button asChild className="mt-4 w-full">
+                            <Link href={`/service-events`}>View Event</Link>
+                         </Button>
+                    </CardContent>
+                 </Card>
+            ))}
+        </div>
+    );
+}
 
 export default function FeedPage() {
   return (
     <div className="max-w-2xl mx-auto">
         <DailyHabitsTracker />
-      <div className="space-y-6">
+        <RsvpEvents />
+      <div className="space-y-6 mt-6">
         {/* Create Post Card */}
         <Card>
           <CardHeader>

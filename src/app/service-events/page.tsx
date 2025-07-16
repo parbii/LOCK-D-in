@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -16,8 +16,10 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
 
-interface ServiceEvent {
+
+export interface ServiceEvent {
     id: number;
     title: string;
     description: string;
@@ -62,7 +64,9 @@ const joinedCommunities = [
 
 export default function ServiceEventsPage() {
     const [events, setEvents] = useState<ServiceEvent[]>(initialEvents);
+    const [rsvpdEvents, setRsvpdEvents] = useState<number[]>([]);
     const [open, setOpen] = useState(false);
+    const { toast } = useToast();
     
     // Form state
     const [title, setTitle] = useState("");
@@ -71,10 +75,51 @@ export default function ServiceEventsPage() {
     const [community, setCommunity] = useState("");
     const [date, setDate] = useState<Date | undefined>(undefined);
 
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const storedRsvps = localStorage.getItem('rsvpdEventIds');
+            if (storedRsvps) {
+                setRsvpdEvents(JSON.parse(storedRsvps));
+            }
+        }
+    }, []);
+
+    const handleRsvp = (eventToRsvp: ServiceEvent) => {
+        // Update the event's attendee count
+        setEvents(currentEvents => currentEvents.map(event => 
+            event.id === eventToRsvp.id ? { ...event, attendees: event.attendees + 1 } : event
+        ));
+
+        // Add to RSVP list and prevent duplicate RSVPs
+        const newRsvpdEvents = [...rsvpdEvents, eventToRsvp.id];
+        setRsvpdEvents(newRsvpdEvents);
+
+        // Save to localStorage for feed
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('rsvpdEventIds', JSON.stringify(newRsvpdEvents));
+
+            const existingFeedEventsString = localStorage.getItem('rsvpdEvents');
+            const existingFeedEvents: ServiceEvent[] = existingFeedEventsString ? JSON.parse(existingFeedEventsString) : [];
+            
+            // Avoid adding duplicates to the feed list
+            if (!existingFeedEvents.find(e => e.id === eventToRsvp.id)) {
+                 localStorage.setItem('rsvpdEvents', JSON.stringify([...existingFeedEvents, eventToRsvp]));
+            }
+        }
+
+        toast({
+            title: "You're going!",
+            description: `You have successfully RSVP'd to "${eventToRsvp.title}".`
+        });
+    };
+
     const handleCreateEvent = () => {
         if (!title || !description || !location || !community || !date) {
-            // Basic validation
-            alert("Please fill out all fields.");
+            toast({
+                variant: "destructive",
+                title: "Incomplete Form",
+                description: "Please fill out all fields to create an event.",
+            });
             return;
         }
 
@@ -99,6 +144,11 @@ export default function ServiceEventsPage() {
         setCommunity("");
         setDate(undefined);
         setOpen(false);
+
+        toast({
+            title: "Event Created!",
+            description: `Your event "${newEvent.title}" is now live.`
+        });
     };
 
     return (
@@ -192,7 +242,11 @@ export default function ServiceEventsPage() {
                             <Link href={`/service-events/${event.id}`} className="group">
                                 <h3 className="text-lg font-semibold group-hover:text-accent transition-colors">{event.title}</h3>
                             </Link>
-                            <div className="flex items-center text-sm text-muted-foreground mt-2">
+                             <div className="flex items-center text-sm text-muted-foreground mt-2">
+                                <CalendarIcon className="h-4 w-4 mr-2" />
+                                <span>{format(event.date, "PPP")}</span>
+                            </div>
+                            <div className="flex items-center text-sm text-muted-foreground mt-1">
                                 <MapPin className="h-4 w-4 mr-2" />
                                 <span>{event.location}</span>
                             </div>
@@ -202,7 +256,13 @@ export default function ServiceEventsPage() {
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button className="w-full">RSVP</Button>
+                           <Button 
+                                className="w-full"
+                                onClick={() => handleRsvp(event)}
+                                disabled={rsvpdEvents.includes(event.id)}
+                            >
+                                {rsvpdEvents.includes(event.id) ? "Attending" : "RSVP"}
+                            </Button>
                         </CardFooter>
                     </Card>
                 ))}
