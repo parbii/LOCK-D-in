@@ -35,10 +35,7 @@ const friendsData = [
     },
     {
         id: 3, name: "Emily Chen", username: "@emilychen", avatar: "https://placehold.co/100x100.png", aiHint: "woman hiking", bio: "Artist and nature lover. Finding inspiration in the wild.",
-        publicGoals: [
-            { id: 301, name: "Finish oil painting", progress: 60, streak: 5, isPublic: true, lastCompleted: "2023-10-25", description: "", habits: [] },
-            { id: 302, name: "Hike a new trail weekly", progress: 80, streak: 4, isPublic: true, lastCompleted: "2023-10-22", description: "", habits: [] },
-        ],
+        publicGoals: [],
         posts: []
     }
 ];
@@ -105,7 +102,7 @@ export default function FriendProfilePage() {
                 ))
             ) : (
                 <div className="text-center text-muted-foreground py-8">
-                    <p>{friend.name} hasn't shared any public goals yet.</p>
+                    <p>nothing to see here</p>
                 </div>
             )}
         </CardContent>
