@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -7,10 +8,11 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { PlusCircle, Trash2, X, Target } from "lucide-react";
+import { PlusCircle, Trash2, X, Target, Flame } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useGoals, type Goal, type Habit } from "@/context/goals-context";
+import { Progress } from "@/components/ui/progress";
 
 export default function GoalsPage() {
   const [open, setOpen] = useState(false);
@@ -18,7 +20,7 @@ export default function GoalsPage() {
   const [goalDescription, setGoalDescription] = useState("");
   const [habits, setHabits] = useState<Habit[]>([]);
   const [currentHabit, setCurrentHabit] = useState("");
-  const { activeGoals, addGoal, checkedHabits, handleHabitCheck } = useGoals();
+  const { activeGoals, addGoal, checkedHabits, handleHabitCheck, getTodaysDate } = useGoals();
 
   const handleAddHabit = () => {
     if (currentHabit.trim() !== "" && !habits.some(h => h.text === currentHabit.trim())) {
@@ -39,6 +41,9 @@ export default function GoalsPage() {
       name: goalName,
       description: goalDescription,
       habits: habits,
+      progress: 0,
+      streak: 0,
+      lastCompleted: null,
     };
     
     addGoal(newGoal);
@@ -142,17 +147,32 @@ export default function GoalsPage() {
               {activeGoals.map(goal => (
                 <AccordionItem value={`item-${goal.id}`} key={goal.id}>
                   <AccordionTrigger>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-1">
                       <Target className="h-5 w-5 text-accent" />
-                      <div>
-                        <h3 className="font-semibold text-left">{goal.name}</h3>
-                        {goal.description && <p className="text-sm text-muted-foreground text-left">{goal.description}</p>}
+                      <div className="flex-1 text-left">
+                        <div className="flex justify-between items-center">
+                            <h3 className="font-semibold">{goal.name}</h3>
+                            <div className="flex items-center gap-2 text-sm font-semibold">
+                               {goal.streak > 0 && goal.lastCompleted === getTodaysDate() && <Flame className="h-5 w-5 text-orange-500" />}
+                               <span>{Math.floor(goal.progress)}%</span>
+                            </div>
+                        </div>
+                        {goal.description && <p className="text-sm text-muted-foreground mt-1">{goal.description}</p>}
+                         <Progress value={goal.progress} className="mt-2 h-2" />
                       </div>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="pl-8 space-y-3">
-                        <h4 className="font-medium">Daily Habits:</h4>
+                        <div className="flex justify-between items-center">
+                             <h4 className="font-medium">Daily Habits:</h4>
+                             {goal.streak > 0 && (
+                                <div className="flex items-center gap-1.5 text-orange-500 font-semibold text-sm">
+                                    <Flame className="h-4 w-4" />
+                                    <span>{goal.streak} day streak!</span>
+                                </div>
+                             )}
+                        </div>
                         {goal.habits.length > 0 ? (
                            <div className="space-y-2">
                                 {goal.habits.map(habit => (
@@ -160,7 +180,8 @@ export default function GoalsPage() {
                                         <Checkbox
                                           id={`habit-${habit.id}`}
                                           checked={checkedHabits[habit.id] || false}
-                                          onCheckedChange={() => handleHabitCheck(habit.id)}
+                                          onCheckedChange={() => handleHabitCheck(habit.id, goal.id)}
+                                          disabled={goal.lastCompleted === getTodaysDate()}
                                         />
                                         <label
                                             htmlFor={`habit-${habit.id}`}
