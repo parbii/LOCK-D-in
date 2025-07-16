@@ -14,6 +14,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
 
 interface ServiceEvent {
     id: number;
@@ -23,6 +25,8 @@ interface ServiceEvent {
     location: string;
     date: Date;
     attendees: number;
+    image: string;
+    imageAiHint: string;
 }
 
 const initialEvents: ServiceEvent[] = [
@@ -34,6 +38,8 @@ const initialEvents: ServiceEvent[] = [
         location: "Central Park",
         date: new Date(2024, 10, 15, 9),
         attendees: 25,
+        image: "https://placehold.co/600x400.png",
+        imageAiHint: "community park",
     },
     {
         id: 2,
@@ -43,6 +49,8 @@ const initialEvents: ServiceEvent[] = [
         location: "Online",
         date: new Date(2024, 11, 5, 14),
         attendees: 150,
+        image: "https://placehold.co/600x400.png",
+        imageAiHint: "business mentorship",
     },
 ];
 
@@ -78,6 +86,8 @@ export default function ServiceEventsPage() {
             community,
             date,
             attendees: 1, // Starts with the creator
+            image: "https://placehold.co/600x400.png",
+            imageAiHint: "community event",
         };
 
         setEvents(prev => [newEvent, ...prev]);
@@ -174,32 +184,20 @@ export default function ServiceEventsPage() {
             
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {events.map((event) => (
-                    <Card key={event.id}>
-                        <CardHeader>
-                            <CardTitle>{event.title}</CardTitle>
-                            <CardDescription>{event.description}</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-3">
-                            <div className="flex items-center text-sm text-muted-foreground">
-                                <Users className="h-4 w-4 mr-2" />
-                                <span>Part of the <span className="font-semibold text-foreground">{event.community}</span> community</span>
-                            </div>
-                            <div className="flex items-center text-sm text-muted-foreground">
-                                <MapPin className="h-4 w-4 mr-2" />
-                                <span>{event.location}</span>
-                            </div>
-                             <div className="flex items-center text-sm text-muted-foreground">
-                                <CalendarIcon className="h-4 w-4 mr-2" />
-                                <span>{format(event.date, "PPP, p")}</span>
-                            </div>
-                        </CardContent>
-                        <CardFooter className="flex justify-between">
-                             <div className="text-sm font-semibold">
-                                {event.attendees} going
-                             </div>
-                             <Button>RSVP</Button>
-                        </CardFooter>
-                    </Card>
+                    <Link href={`/service-events/${event.id}`} key={event.id} className="group">
+                        <Card className="overflow-hidden h-full flex flex-col">
+                           <div className="relative aspect-video w-full overflow-hidden">
+                                <Image src={event.image} alt={event.title} layout="fill" objectFit="cover" data-ai-hint={event.imageAiHint} className="group-hover:scale-105 transition-transform duration-300"/>
+                           </div>
+                           <div className="p-4 flex flex-col flex-grow">
+                                <h3 className="text-lg font-semibold group-hover:text-accent transition-colors">{event.title}</h3>
+                                <div className="flex items-center text-sm text-muted-foreground mt-2">
+                                    <MapPin className="h-4 w-4 mr-2" />
+                                    <span>{event.location}</span>
+                                </div>
+                           </div>
+                        </Card>
+                    </Link>
                 ))}
             </div>
         </div>
