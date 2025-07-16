@@ -1,12 +1,10 @@
+
+"use client";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, LogOut, User } from "lucide-react";
 import Link from "next/link";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Settings - LockdIn",
-};
 
 export default function SettingsPage() {
   const handleSupportClick = () => {

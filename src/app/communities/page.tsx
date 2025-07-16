@@ -156,19 +156,19 @@ export default function CommunitiesPage() {
     };
 
     return (
-        <div>
-            <div className="mb-6">
+        <div className="space-y-6">
+            <div>
                 <h1 className="text-3xl font-bold">Communities</h1>
                 <p className="text-muted-foreground">Find your people and grow together.</p>
             </div>
-            <Tabs defaultValue="communities">
+            <Tabs defaultValue="communities" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 max-w-md">
                     <TabsTrigger value="communities">Communities</TabsTrigger>
                     <TabsTrigger value="friends">Friends</TabsTrigger>
                 </TabsList>
                 <TabsContent value="communities">
                     <Card>
-                        <CardHeader>
+                        <CardHeader className="space-y-4">
                             <div className="flex justify-between items-center">
                                 <div>
                                     <CardTitle>Discover Communities</CardTitle>
@@ -188,7 +188,7 @@ export default function CommunitiesPage() {
                                                 Build a space for like-minded people to connect and grow.
                                             </DialogDescription>
                                         </DialogHeader>
-                                        <div className="space-y-4">
+                                        <div className="space-y-4 py-4">
                                             <div>
                                                 <Label htmlFor="comm-name">Community Name</Label>
                                                 <Input id="comm-name" value={newCommunityName} onChange={(e) => setNewCommunityName(e.target.value)} placeholder="e.g., Early Risers Club" />
@@ -203,9 +203,9 @@ export default function CommunitiesPage() {
                                                 <Switch checked={isPrivate} onCheckedChange={setIsPrivate} />
                                             </div>
                                             {isPrivate && (
-                                                <div>
+                                                <div className="space-y-2">
                                                     <Label>Invite Friends</Label>
-                                                    <div className="space-y-2 mt-2 max-h-48 overflow-y-auto rounded-md border p-2">
+                                                    <div className="max-h-48 overflow-y-auto rounded-md border p-2 space-y-1">
                                                         {friends.map(friend => (
                                                             <div key={friend.id} className="flex items-center space-x-3 p-2 rounded-md hover:bg-muted/50">
                                                                 <Checkbox id={`friend-${friend.id}`} checked={!!invitedFriends[friend.id]} onCheckedChange={() => handleFriendInviteChange(friend.id)} />
@@ -213,7 +213,7 @@ export default function CommunitiesPage() {
                                                                     <AvatarImage src={friend.avatar} data-ai-hint={friend.aiHint} />
                                                                     <AvatarFallback>{friend.name.charAt(0)}</AvatarFallback>
                                                                 </Avatar>
-                                                                <label htmlFor={`friend-${friend.id}`} className="font-medium text-sm">{friend.name}</label>
+                                                                <label htmlFor={`friend-${friend.id}`} className="font-medium text-sm flex-1 cursor-pointer">{friend.name}</label>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -227,7 +227,7 @@ export default function CommunitiesPage() {
                                     </DialogContent>
                                 </Dialog>
                             </div>
-                            <div className="relative pt-2">
+                            <div className="relative">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                                 <Input placeholder="Search communities..." className="pl-9" />
                             </div>
