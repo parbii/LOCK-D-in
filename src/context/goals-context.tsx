@@ -33,27 +33,51 @@ const getTodaysDateString = () => {
     return today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
 };
 
+// Function to safely get items from localStorage
+const getFromLocalStorage = <T,>(key: string, defaultValue: T): T => {
+    if (typeof window === 'undefined') {
+        return defaultValue;
+    }
+    try {
+        const item = window.localStorage.getItem(key);
+        return item ? JSON.parse(item) : defaultValue;
+    } catch (error) {
+        console.warn(`Error reading localStorage key “${key}”:`, error);
+        return defaultValue;
+    }
+};
+
+
 export const GoalsProvider = ({ children }: { children: ReactNode }) => {
-  const [activeGoals, setActiveGoals] = useState<Goal[]>([]);
+  const [activeGoals, setActiveGoals] = useState<Goal[]>(() => getFromLocalStorage('activeGoals', []));
   const [checkedHabits, setCheckedHabits] = useState<Record<number, boolean>>({});
 
   const getTodaysDate = getTodaysDateString;
   
-  // Effect to reset checkboxes daily
+  // Effect to load initial state and reset checkboxes daily
   useEffect(() => {
+    // Load goals from localStorage on mount
+    const storedGoals = getFromLocalStorage('activeGoals', []);
+    setActiveGoals(storedGoals);
+
+    // Daily reset logic for checked habits
     const todayStr = getTodaysDate();
-    const lastCheckDate = localStorage.getItem('lastCheckDate');
+    const lastCheckDate = getFromLocalStorage('lastCheckDate', null);
 
     if (lastCheckDate !== todayStr) {
       setCheckedHabits({});
-      localStorage.setItem('lastCheckDate', todayStr);
+      localStorage.setItem('lastCheckDate', JSON.stringify(todayStr));
     } else {
-      const storedCheckedHabits = localStorage.getItem('checkedHabits');
-      if (storedCheckedHabits) {
-        setCheckedHabits(JSON.parse(storedCheckedHabits));
-      }
+      const storedCheckedHabits = getFromLocalStorage('checkedHabits', {});
+      setCheckedHabits(storedCheckedHabits);
     }
   }, []);
+
+  // Effect to save goals to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('activeGoals', JSON.stringify(activeGoals));
+  }, [activeGoals]);
+
 
   const addGoal = (goal: Goal) => {
     setActiveGoals(prevGoals => [...prevGoals, goal]);
@@ -68,10 +92,11 @@ export const GoalsProvider = ({ children }: { children: ReactNode }) => {
     setCheckedHabits(newCheckedState);
     localStorage.setItem('checkedHabits', JSON.stringify(newCheckedState));
 
-    // Check if all habits for the goal are now checked
     const goal = activeGoals.find(g => g.id === goalId);
     if (!goal) return;
 
+    // We need to wait for the state to update before checking all habits
+    // So we use the newCheckedState directly
     const allHabitsForGoalChecked = goal.habits.every(h => newCheckedState[h.id]);
 
     if (allHabitsForGoalChecked) {
@@ -85,9 +110,8 @@ export const GoalsProvider = ({ children }: { children: ReactNode }) => {
         if (goal.id === goalId && goal.lastCompleted !== todayStr) {
             const newStreak = goal.lastCompleted === new Date(Date.now() - 86400000).toISOString().split('T')[0] ? goal.streak + 1 : 1;
             
-            // Exponential boost for consistency
-            const baseProgress = 1; // Base 1%
-            const boostFactor = Math.pow(1.05, newStreak - 1); // 5% compounding interest on progress
+            const baseProgress = 1; 
+            const boostFactor = Math.pow(1.05, newStreak - 1);
             const progressGained = baseProgress * boostFactor;
 
             const newProgress = Math.min(100, goal.progress + progressGained);
