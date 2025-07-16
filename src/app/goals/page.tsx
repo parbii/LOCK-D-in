@@ -10,18 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { PlusCircle, Trash2, X, Target } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
-
-interface Habit {
-  id: number;
-  text: string;
-}
-
-interface Goal {
-  id: number;
-  name: string;
-  description: string;
-  habits: Habit[];
-}
+import { useGoals, type Goal, type Habit } from "@/context/goals-context";
 
 export default function GoalsPage() {
   const [open, setOpen] = useState(false);
@@ -29,8 +18,7 @@ export default function GoalsPage() {
   const [goalDescription, setGoalDescription] = useState("");
   const [habits, setHabits] = useState<Habit[]>([]);
   const [currentHabit, setCurrentHabit] = useState("");
-  const [activeGoals, setActiveGoals] = useState<Goal[]>([]);
-  const [checkedHabits, setCheckedHabits] = useState<Record<number, boolean>>({});
+  const { activeGoals, addGoal, checkedHabits, handleHabitCheck } = useGoals();
 
   const handleAddHabit = () => {
     if (currentHabit.trim() !== "" && !habits.some(h => h.text === currentHabit.trim())) {
@@ -53,20 +41,13 @@ export default function GoalsPage() {
       habits: habits,
     };
     
-    setActiveGoals([...activeGoals, newGoal]);
+    addGoal(newGoal);
     
     setGoalName("");
     setGoalDescription("");
     setHabits([]);
     setCurrentHabit("");
     setOpen(false);
-  };
-
-  const handleHabitCheck = (habitId: number) => {
-    setCheckedHabits(prev => ({
-      ...prev,
-      [habitId]: !prev[habitId]
-    }));
   };
 
   return (

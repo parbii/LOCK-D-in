@@ -1,9 +1,13 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile } from "lucide-react";
+import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile, Target } from "lucide-react";
+import { useGoals } from "@/context/goals-context";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Mock data for feed posts
 const posts = [
@@ -47,9 +51,52 @@ const posts = [
   }
 ];
 
+function DailyHabitsTracker() {
+    const { activeGoals, checkedHabits, handleHabitCheck } = useGoals();
+    const allHabits = activeGoals.flatMap(goal => goal.habits.map(habit => ({ ...habit, goalName: goal.name })));
+
+    if (allHabits.length === 0) {
+        return null;
+    }
+
+    return (
+        <Card className="mb-6">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <Target className="h-6 w-6 text-accent" />
+                    Today's Habits
+                </CardTitle>
+                <CardDescription>Check off your habits for the day to build your streak.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                {allHabits.map(habit => (
+                     <div key={habit.id} className="flex items-center space-x-3 rounded-md border p-3 bg-muted/20">
+                        <Checkbox
+                          id={`feed-habit-${habit.id}`}
+                          checked={checkedHabits[habit.id] || false}
+                          onCheckedChange={() => handleHabitCheck(habit.id)}
+                        />
+                        <div>
+                            <label
+                                htmlFor={`feed-habit-${habit.id}`}
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                {habit.text}
+                            </label>
+                             <p className="text-xs text-muted-foreground">From goal: {habit.goalName}</p>
+                        </div>
+                    </div>
+                ))}
+            </CardContent>
+        </Card>
+    )
+}
+
+
 export default function FeedPage() {
   return (
     <div className="max-w-2xl mx-auto">
+        <DailyHabitsTracker />
       <div className="space-y-6">
         {/* Create Post Card */}
         <Card>
