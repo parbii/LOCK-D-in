@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PlusCircle, Trash2, X, Target } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface Habit {
   id: number;
@@ -30,6 +30,7 @@ export default function GoalsPage() {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [currentHabit, setCurrentHabit] = useState("");
   const [activeGoals, setActiveGoals] = useState<Goal[]>([]);
+  const [checkedHabits, setCheckedHabits] = useState<Record<number, boolean>>({});
 
   const handleAddHabit = () => {
     if (currentHabit.trim() !== "" && !habits.some(h => h.text === currentHabit.trim())) {
@@ -54,12 +55,18 @@ export default function GoalsPage() {
     
     setActiveGoals([...activeGoals, newGoal]);
     
-    // Reset form and close dialog
     setGoalName("");
     setGoalDescription("");
     setHabits([]);
     setCurrentHabit("");
     setOpen(false);
+  };
+
+  const handleHabitCheck = (habitId: number) => {
+    setCheckedHabits(prev => ({
+      ...prev,
+      [habitId]: !prev[habitId]
+    }));
   };
 
   return (
@@ -163,12 +170,24 @@ export default function GoalsPage() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="pl-8 space-y-2">
-                        <p className="font-medium">Linked Habits:</p>
+                    <div className="pl-8 space-y-3">
+                        <h4 className="font-medium">Daily Habits:</h4>
                         {goal.habits.length > 0 ? (
-                           <div className="flex flex-wrap gap-2">
+                           <div className="space-y-2">
                                 {goal.habits.map(habit => (
-                                    <Badge key={habit.id} variant="secondary">{habit.text}</Badge>
+                                    <div key={habit.id} className="flex items-center space-x-3">
+                                        <Checkbox
+                                          id={`habit-${habit.id}`}
+                                          checked={checkedHabits[habit.id] || false}
+                                          onCheckedChange={() => handleHabitCheck(habit.id)}
+                                        />
+                                        <label
+                                            htmlFor={`habit-${habit.id}`}
+                                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        >
+                                            {habit.text}
+                                        </label>
+                                    </div>
                                 ))}
                             </div>
                         ) : (
