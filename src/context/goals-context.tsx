@@ -51,7 +51,7 @@ const getFromLocalStorage = <T,>(key: string, defaultValue: T): T => {
 
 export const GoalsProvider = ({ children }: { children: ReactNode }) => {
   const [activeGoals, setActiveGoals] = useState<Goal[]>(() => getFromLocalStorage('activeGoals', []));
-  const [checkedHabits, setCheckedHabits] = useState<Record<number, boolean>>({});
+  const [checkedHabits, setCheckedHabits] = useState<Record<number, boolean>>(() => getFromLocalStorage('checkedHabits', {}));
 
   const getTodaysDate = getTodaysDateString;
   
@@ -67,6 +67,7 @@ export const GoalsProvider = ({ children }: { children: ReactNode }) => {
 
     if (lastCheckDate !== todayStr) {
       setCheckedHabits({});
+      localStorage.setItem('checkedHabits', JSON.stringify({}));
       localStorage.setItem('lastCheckDate', JSON.stringify(todayStr));
     } else {
       const storedCheckedHabits = getFromLocalStorage('checkedHabits', {});
@@ -109,7 +110,11 @@ export const GoalsProvider = ({ children }: { children: ReactNode }) => {
     const todayStr = getTodaysDate();
     setActiveGoals(prevGoals => prevGoals.map(goal => {
         if (goal.id === goalId && goal.lastCompleted !== todayStr) {
-            const newStreak = goal.lastCompleted === new Date(Date.now() - 86400000).toISOString().split('T')[0] ? goal.streak + 1 : 1;
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
+            
+            const newStreak = goal.lastCompleted === yesterdayStr ? goal.streak + 1 : 1;
             
             const baseProgress = 1; 
             const boostFactor = Math.pow(1.05, newStreak - 1);
