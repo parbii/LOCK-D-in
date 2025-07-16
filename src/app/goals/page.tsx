@@ -8,11 +8,12 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { PlusCircle, Trash2, X, Target, Flame } from "lucide-react";
+import { PlusCircle, Trash2, X, Target, Flame, Globe, Lock } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useGoals, type Goal, type Habit } from "@/context/goals-context";
 import { Progress } from "@/components/ui/progress";
+import { Switch } from "@/components/ui/switch";
 
 export default function GoalsPage() {
   const [open, setOpen] = useState(false);
@@ -20,6 +21,7 @@ export default function GoalsPage() {
   const [goalDescription, setGoalDescription] = useState("");
   const [habits, setHabits] = useState<Habit[]>([]);
   const [currentHabit, setCurrentHabit] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
   const { activeGoals, addGoal, checkedHabits, handleHabitCheck, getTodaysDate } = useGoals();
 
   const handleAddHabit = () => {
@@ -40,6 +42,7 @@ export default function GoalsPage() {
       id: Date.now(),
       name: goalName,
       description: goalDescription,
+      isPublic: isPublic,
       habits: habits,
       progress: 0,
       streak: 0,
@@ -52,6 +55,7 @@ export default function GoalsPage() {
     setGoalDescription("");
     setHabits([]);
     setCurrentHabit("");
+    setIsPublic(true);
     setOpen(false);
   };
 
@@ -124,6 +128,19 @@ export default function GoalsPage() {
                   ))}
                 </div>
               </div>
+               <div className="flex items-center justify-between rounded-lg border p-3">
+                <div className="space-y-0.5">
+                  <Label htmlFor="public-goal">Public Goal</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Public goals can be seen by others on your profile.
+                  </p>
+                </div>
+                <Switch
+                  id="public-goal"
+                  checked={isPublic}
+                  onCheckedChange={setIsPublic}
+                />
+              </div>
             </div>
             <DialogFooter>
               <Button type="button" variant="secondary" onClick={() => setOpen(false)}>Cancel</Button>
@@ -151,7 +168,10 @@ export default function GoalsPage() {
                       <Target className="h-5 w-5 text-accent" />
                       <div className="flex-1 text-left">
                         <div className="flex justify-between items-center">
-                            <h3 className="font-semibold">{goal.name}</h3>
+                            <div className="flex items-center gap-2">
+                                <h3 className="font-semibold">{goal.name}</h3>
+                                {goal.isPublic ? <Globe className="h-4 w-4 text-muted-foreground" /> : <Lock className="h-4 w-4 text-muted-foreground" />}
+                            </div>
                             <div className="flex items-center gap-2 text-sm font-semibold">
                                {goal.streak > 0 && goal.lastCompleted === getTodaysDate() && <Flame className="h-5 w-5 text-orange-500" />}
                                <span>{Math.floor(goal.progress)}%</span>

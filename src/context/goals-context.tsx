@@ -12,6 +12,7 @@ export interface Goal {
   id: number;
   name: string;
   description: string;
+  isPublic: boolean;
   habits: Habit[];
   progress: number;
   streak: number;
