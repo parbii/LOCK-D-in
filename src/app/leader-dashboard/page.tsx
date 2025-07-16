@@ -79,6 +79,17 @@ export default function LeaderDashboardPage() {
         <div className="space-y-8">
             <Card>
                 <CardHeader>
+                    <CardTitle className="flex items-center gap-2"><Shield className="h-5 w-5 text-accent" /> Scholarship Opportunities</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                        Being a part of an organization will boost your chances of being seen for a scholarship that we one day wish to offer to LOCKD In leaders who are crushing their goals.
+                    </p>
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
                     <CardTitle className="flex items-center gap-2"><Users className="h-5 w-5 text-accent"/> Key Metrics</CardTitle>
                 </CardHeader>
                 <CardContent>
