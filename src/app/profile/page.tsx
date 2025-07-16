@@ -13,12 +13,12 @@ function ProfileStats() {
     const { activeGoals } = useGoals();
   
     const totalGoals = activeGoals.length;
-    const highestStreak = activeGoals.reduce((maxStreak, goal) => Math.max(maxStreak, goal.streak), 0);
+    const totalStreaks = activeGoals.reduce((sum, goal) => sum + goal.streak, 0);
     const totalPosts = 0; // Placeholder until posts are implemented
   
     const stats = [
       { name: "Goals", value: totalGoals, icon: Target },
-      { name: "Best Streak", value: highestStreak, icon: Flame },
+      { name: "Streaks", value: totalStreaks, icon: Flame },
       { name: "Posts", value: totalPosts, icon: FileText },
     ];
   
