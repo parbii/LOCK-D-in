@@ -214,7 +214,7 @@ export const lessonContent = [
     },
     {
         "moduleID": "KP_BallIsLife_M3",
-        "title": "Module 3: ballislife - Life Lessons from the Court",
+        "title": "Module 3: Ballislife - Life Lessons from the Court",
         "description": "This module explores the profound parallels between the game of basketball and the journey of life. Learners will discover how principles of teamwork, discipline, resilience, strategy, and continuous improvement, evident on the court, can be applied to transform their outlook, achieve personal goals, and fulfill their Kingdom purpose.",
         "order": 3,
         "lessons": [
@@ -227,7 +227,7 @@ export const lessonContent = [
             "content_sections": [
                 {
                 "type": "introduction",
-                "heading": "Welcome to Module 3: ballislife!",
+                "heading": "Welcome to Module 3: Ballislife!",
                 "text": "For many, basketball is more than a game; it's a metaphor for life. The court becomes a classroom for crucial lessons in strategy, teamwork, discipline, and especially, mindset. In this module, we'll draw parallels between the highs and lows of the game and the realities of your personal and professional journey, equipping you with a winning outlook rooted in Kingdom Principles."
                 },
                 {
