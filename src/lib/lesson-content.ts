@@ -1,4 +1,48 @@
 
+export interface Lesson {
+    lessonID: string;
+    title: string;
+    order: number;
+    objective: string;
+    duration_minutes: number;
+    content_sections: ContentSection[];
+    resources: Resource[];
+    assessment: Assessment;
+}
+
+interface ContentSection {
+    type: string;
+    heading: string;
+    text?: string;
+    verse?: string;
+    commentary?: string;
+    points?: { sub_heading: string; text: string }[];
+    activity_type?: string;
+    prompt?: string;
+    challenge_details?: string;
+}
+
+interface Resource {
+    type: string;
+    title: string;
+    url: string;
+}
+
+interface Assessment {
+    type: string;
+    quiz_id?: string;
+    questions?: QuizQuestion[];
+    question_text?: string;
+    expected_keywords?: string[];
+}
+
+interface QuizQuestion {
+    question_text: string;
+    options: string[];
+    correct_answer_index: number;
+}
+
+
 export const lessonContent = [
     {
         "moduleID": "KP_GodFirst_M1",
@@ -84,5 +128,88 @@ export const lessonContent = [
                 }
             }
         ]
+    },
+    {
+      "moduleID": "KP_KnowingYourWhy_M2",
+      "title": "Module 2: Knowing Your Why - Unearthing Your Purpose",
+      "description": "This module guides learners through a process of self-discovery to identify their core 'Why' – their deepest purpose, motivation, and values. Understanding this 'Why' is crucial for aligning personal and entrepreneurial pursuits with Kingdom Principles, ensuring sustainable passion and impact.",
+      "order": 2,
+      "lessons": [
+        {
+          "lessonID": "KP_KnowingYourWhy_M2_L1",
+          "title": "The Power of Purpose: Discovering Your 'Why'",
+          "order": 1,
+          "objective": "Learners will understand the significance of identifying their personal and Kingdom-aligned 'Why' and begin the process of articulating it clearly.",
+          "duration_minutes": 50,
+          "content_sections": [
+            {
+              "type": "introduction",
+              "heading": "Welcome to Module 2: Knowing Your Why!",
+              "text": "Module 1 laid the foundational truth: God First. Now, we build on that by exploring *your* unique purpose within His grand design. Understanding your 'Why' is the fuel that will sustain you through challenges and clarify your direction, whether in life or business. It's about finding your Kingdom-aligned purpose."
+            },
+            {
+              "type": "scripture_focus",
+              "heading": "Key Scripture: Proverbs 29:18a",
+              "verse": "'Where there is no revelation, people cast off restraint.' (NIV)",
+              "commentary": "This verse highlights the importance of vision and purpose. Without a clear 'Why' (revelation or vision), we lack direction and can become aimless or unfocused. A Kingdom 'Why' provides divine restraint and guidance, leading to fruitfulness."
+            },
+            {
+              "type": "teaching_point",
+              "heading": "Why Your 'Why' Matters for Kingdom Principles",
+              "points": [
+                {
+                  "sub_heading": "Clarity and Direction:",
+                  "text": "Your 'Why' acts as a compass, ensuring your decisions and actions are aligned with your ultimate purpose, preventing distractions and wasted effort."
+                },
+                {
+                  "sub_heading": "Resilience and Perseverance:",
+                  "text": "When challenges arise (and they will!), your 'Why' provides the intrinsic motivation to keep going. It's the reason you started, and the reason you'll persist."
+                },
+                {
+                  "sub_heading": "Impact and Legacy:",
+                  "text": "A clear 'Why' rooted in Kingdom values allows you to measure true success not just by profit, but by the positive, God-honoring impact you make in the world."
+                },
+                {
+                  "sub_heading": "Attracting Alignment:",
+                  "text": "People, resources, and opportunities are drawn to clarity of purpose. Articulating your 'Why' helps you attract partners and clients who resonate with your values."
+                }
+              ]
+            },
+            {
+              "type": "interactive_activity",
+              "heading": "Exercise: The 5 Whys (Kingdom Edition)",
+              "activity_type": "text_input",
+              "prompt": "Start with something you want to achieve or build (e.g., 'I want to start a business.' or 'I want to improve my community.'). Then, ask 'Why?' five times, digging deeper into your motivations each time, always bringing it back to a Kingdom perspective. \n\nExample:\n1. I want to build a business. Why?\n2. To gain financial freedom. Why?\n3. To be able to bless others and fund Kingdom initiatives. Why?\n4. Because I believe God has called me to be a steward of resources for His glory. Why?\n5. To demonstrate His generosity and advance His Kingdom on Earth."
+            },
+            {
+              "type": "application_challenge",
+              "heading": "Weekly Challenge: Craft Your Draft 'Why' Statement",
+              "challenge_details": "Based on today's lesson and the '5 Whys' exercise, draft a concise 'Why' statement for your life or your primary venture. It should be inspiring, purpose-driven, and reflect your commitment to putting God first. (Example format: 'To [contribute/impact/inspire] by [action/method] so that [desired outcome/Kingdom impact].')"
+            }
+          ],
+          "resources": [
+            {
+              "type": "video",
+              "title": "Finding Your God-Given Purpose (Sermon/Talk)",
+              "url": "https://example.com/video-link-2"
+            },
+            {
+              "type": "article",
+              "title": "The Importance of Purpose-Driven Leadership",
+              "url": "https://your-blog-link.com/purpose-driven-leadership"
+            },
+            {
+              "type": "template",
+              "title": "Why Statement Worksheet",
+              "url": "https://your-resource-link.com/why-worksheet.pdf"
+            }
+          ],
+          "assessment": {
+            "type": "short_answer",
+            "question_text": "In your own words, explain how understanding your 'Why' can contribute to resilience in the face of entrepreneurial challenges.",
+            "expected_keywords": ["motivation", "perseverance", "clarity", "purpose", "God-given", "endurance"]
+          }
+        }
+      ]
     }
 ];

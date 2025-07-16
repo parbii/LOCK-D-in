@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
 import { modules } from "@/lib/modules-data";
-import { lessonContent } from "@/lib/lesson-content";
+import { lessonContent, type Lesson } from "@/lib/lesson-content";
 import { Badge } from "@/components/ui/badge";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -17,12 +17,10 @@ export function generateStaticParams() {
 }
 
 
-function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], lesson: (typeof lessonContent)[0]['lessons'][0] }) {
+function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], lesson: Lesson }) {
   if (!module || !lesson) {
     return <div>Module or lesson not found</div>;
   }
-
-  const scriptureSection = lesson.content_sections.find(s => s.type === 'scripture_focus');
 
   return (
     <div>
@@ -57,7 +55,7 @@ function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], les
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2"><BookOpen className="h-5 w-5 text-accent"/> {section.heading}</CardTitle>
                                 </CardHeader>
-                                <CardContent className="prose prose-sm md:prose-base max-w-none text-foreground/90">
+                                <CardContent className="prose prose-sm md:prose-base max-w-none text-foreground/90 whitespace-pre-line">
                                     <p>{section.text}</p>
                                 </CardContent>
                             </Card>
@@ -97,10 +95,10 @@ function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], les
                             <Card key={index}>
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2"><Edit className="h-5 w-5 text-accent"/> {section.heading}</CardTitle>
-                                    <CardDescription>{section.prompt}</CardDescription>
+                                    <CardDescription className="whitespace-pre-line">{section.prompt}</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <Textarea placeholder="Write your reflection here..." rows={6}/>
+                                    <Textarea placeholder="Write your reflection here..." rows={8}/>
                                 </CardContent>
                                 <CardFooter>
                                     <Button>Save Reflection</Button>
@@ -137,7 +135,7 @@ function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], les
                             {lesson.resources.map((resource, index) => (
                                 <li key={index}>
                                     <a href={resource.url} target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline flex items-center gap-2">
-                                        {resource.type === 'video' ? <Film className="h-4 w-4" /> : <BookOpen className="h-4 w-4" />}
+                                        {resource.type === 'video' ? <Film className="h-4 w-4" /> : resource.type === 'article' ? <BookOpen className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
                                         {resource.title}
                                     </a>
                                 </li>
@@ -147,7 +145,7 @@ function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], les
                 </Card>
             )}
 
-            {lesson.assessment && lesson.assessment.questions.length > 0 && (
+            {lesson.assessment && lesson.assessment.questions && lesson.assessment.questions.length > 0 && (
                 <Card>
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Knowledge Check</CardTitle>
@@ -175,6 +173,20 @@ function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], les
                     </CardFooter>
                 </Card>
             )}
+             {lesson.assessment && lesson.assessment.question_text && (
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Knowledge Check</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="font-semibold mb-2">{lesson.assessment.question_text}</p>
+                        <Textarea placeholder="Your answer..."/>
+                    </CardContent>
+                    <CardFooter>
+                        <Button className="w-full">Submit Answer</Button>
+                    </CardFooter>
+                </Card>
+            )}
         </div>
       </div>
     </div>
@@ -184,9 +196,10 @@ function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], les
 
 export default function LessonPage({ params }: { params: { id: string } }) {
   const module = modules.find(m => m.id.toString() === params.id);
-  // For now, we assume there is only one lesson content module and it corresponds to module ID 1.
-  // We also assume one lesson per module.
-  const lessonModuleData = lessonContent.find(lc => lc.moduleID === "KP_GodFirst_M1");
+  // Find the lesson content by matching the module order/ID.
+  // This assumes the order in lessonContent matches the module IDs.
+  // A more robust solution might use a matching key if available.
+  const lessonModuleData = lessonContent.find(lc => lc.order.toString() === params.id);
   const lesson = lessonModuleData?.lessons[0];
 
   if (!module || !lesson) {
