@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile, Target, Flame } from "lucide-react";
 import { useGoals } from "@/context/goals-context";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
 
 // Mock data for feed posts
 const posts = [
@@ -54,13 +55,8 @@ const posts = [
 
 function DailyHabitsTracker() {
     const { activeGoals, checkedHabits, handleHabitCheck, getTodaysDate } = useGoals();
-    
-    // Flatten habits from all goals
-    const allHabits = activeGoals.flatMap(goal => 
-        goal.habits.map(habit => ({ ...habit, goalId: goal.id, goalName: goal.name, goalCompletedToday: goal.lastCompleted === getTodaysDate() }))
-    );
 
-    if (allHabits.length === 0) {
+    if (activeGoals.length === 0) {
         return null;
     }
 
@@ -75,16 +71,25 @@ function DailyHabitsTracker() {
             </CardHeader>
             <CardContent className="space-y-4">
                 {activeGoals.map(goal => (
-                    <div key={goal.id}>
-                        <div className="flex justify-between items-center mb-2">
-                            <h4 className="font-semibold">{goal.name}</h4>
-                            {goal.streak > 0 && (
-                                <div className="flex items-center gap-1.5 text-orange-500 font-semibold text-sm">
-                                    <Flame className="h-4 w-4" />
-                                    <span>{goal.streak} day streak!</span>
+                    <div key={goal.id} className="space-y-3">
+                         <div>
+                            <div className="flex justify-between items-center mb-1">
+                                <h4 className="font-semibold">{goal.name}</h4>
+                                <div className="flex items-center gap-2 text-sm font-semibold">
+                                    {goal.streak > 0 && goal.lastCompleted === getTodaysDate() && <Flame className="h-5 w-5 text-orange-500" />}
+                                    <span>{Math.floor(goal.progress)}%</span>
                                 </div>
-                             )}
+                            </div>
+                            <Progress value={goal.progress} className="h-2" />
                         </div>
+
+                        {goal.streak > 0 && (
+                            <div className="flex items-center justify-end gap-1.5 text-orange-500 font-semibold text-sm">
+                                <Flame className="h-4 w-4" />
+                                <span>{goal.streak} day streak!</span>
+                            </div>
+                        )}
+                        
                         <div className="space-y-3">
                             {goal.habits.map(habit => (
                                  <div key={habit.id} className="flex items-center space-x-3 rounded-md border p-3 bg-muted/20">
