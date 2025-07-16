@@ -30,7 +30,7 @@ export function ProfileStats({ goals, postsCount, userId }: ProfileStatsProps) {
         {stats.map((stat, index) => (
           <React.Fragment key={stat.name}>
             <Link href={stat.href}>
-                <div className="flex flex-col items-center gap-2 text-center transition-transform hover:scale-105">
+                <div className="flex flex-col items-center gap-1 text-center transition-transform hover:scale-105 px-2">
                     <stat.icon className="h-6 w-6 text-muted-foreground" />
                     <p className="text-2xl font-bold">{stat.value}</p>
                     <p className="text-xs text-muted-foreground uppercase tracking-wider">{stat.name}</p>
