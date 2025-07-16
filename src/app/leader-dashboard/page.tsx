@@ -1,10 +1,38 @@
+"use client";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BarChart, Users, Activity, Target, Shield, MessageSquare, ThumbsUp } from "lucide-react";
+import { BarChart, Users, Activity, Target, Shield, MessageSquare, ThumbsUp, Lock } from "lucide-react";
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
+import { modules } from "@/lib/modules-data";
+import Link from "next/link";
+
+function OrganizationGate() {
+  return (
+    <Card className="max-w-xl mx-auto mt-10">
+      <CardHeader className="text-center">
+        <Lock className="mx-auto h-12 w-12 text-accent mb-4" />
+        <CardTitle>Unlock the Organization Dashboard</CardTitle>
+        <CardDescription>To access this page, you must first complete all 10 Mindset Modules.</CardDescription>
+      </CardHeader>
+      <CardContent className="text-center">
+        <p className="text-sm text-muted-foreground mb-4">This ensures all leaders share a foundational understanding.</p>
+        <Button asChild>
+          <Link href="/lessons">Go to Mindset Modules</Link>
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function LeaderDashboardPage() {
+  const allModulesCompleted = modules.every(module => module.completed);
+
+  if (!allModulesCompleted) {
+    return <OrganizationGate />;
+  }
+
   return (
     <div>
       <div className="mb-6">

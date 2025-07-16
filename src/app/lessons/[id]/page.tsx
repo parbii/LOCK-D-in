@@ -5,19 +5,8 @@ import { ArrowLeft, BookOpen, FileText, Film, Lightbulb, MessageSquare, CheckCir
 import Link from "next/link";
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
+import { modules } from "@/lib/modules-data";
 
-const modules = [
-  { id: 1, title: "Kp God First", theme: "Spiritual alignment, trust, daily devotion." },
-  { id: 2, title: "Know Your Why", theme: "Intentionality, '5 Whys' technique, deep inquiry." },
-  { id: 3, title: "Ballislif", theme: "Teamwork, 'Threes Over Twos', Intensity, Dictate Your Pace." },
-  { id: 4, title: "Th Art of What If", theme: "Directing imagination, risk tolerance, scenario planning." },
-  { id: 5, title: "Linkdin", theme: "Professionalism, building professional brand, networking." },
-  { id: 6, title: "Consistncy/Disciplin", theme: "Showing up, putting in work, symbiotic relationship." },
-  { id: 7, title: "Authnticity", theme: "Living your truth, supportive people/spaces, overcoming imposter syndrome." },
-  { id: 8, title: "Togthrness", theme: "Collective effort, respect, overcoming greed, community building." },
-  { id: 9, title: "Prfction", theme: "Unattainable ideal, infinite growth, embracing mistakes/feedback." },
-  { id: 10, title: "Whats Your Purpos", theme: "Synthesis, passion alignment, life's calling, impact." },
-];
 
 export function generateStaticParams() {
     return modules.map(m => ({ id: m.id.toString() }));
@@ -118,10 +107,13 @@ function LessonClientPage({ module }: { module: (typeof modules)[0] }) {
 
 export default function LessonPage({ params }: { params: { id: string } }) {
   const module = modules.find(m => m.id.toString() === params.id);
+  
+  // This extracts the theme for the specific module based on its ID
+  const lessonModule = modules.find(m => m.id.toString() === params.id) || { theme: "Default Theme" };
 
   if (!module) {
     return <div>Module not found</div>;
   }
   
-  return <LessonClientPage module={module} />;
+  return <LessonClientPage module={{...module, theme: lessonModule.theme}} />;
 }
