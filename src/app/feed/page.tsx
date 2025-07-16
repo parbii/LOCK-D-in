@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile, Target, Flame } from "lucide-react";
+import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile, Target, Flame, Lock } from "lucide-react";
 import { useGoals } from "@/context/goals-context";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
@@ -83,7 +83,11 @@ function DailyHabitsTracker() {
                                 <h4 className="font-semibold">{goal.name}</h4>
                                 <div className="flex items-center gap-2 text-sm font-semibold">
                                     {goal.streak > 0 && goal.lastCompleted === getTodaysDate() && <Flame className="h-5 w-5 text-orange-500" />}
-                                    <span>{Math.floor(goal.progress)}%</span>
+                                    {goal.progress >= 100 ? (
+                                        <Lock className="h-5 w-5 text-accent" />
+                                    ) : (
+                                        <span>{Math.floor(goal.progress)}%</span>
+                                    )}
                                 </div>
                             </div>
                             <Progress value={goal.progress} className="h-2" />

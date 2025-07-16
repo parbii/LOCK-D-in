@@ -180,7 +180,11 @@ export default function GoalsPage() {
                             </div>
                             <div className="flex items-center gap-2 text-sm font-semibold">
                                {goal.streak > 0 && goal.lastCompleted === getTodaysDate() && <Flame className="h-5 w-5 text-orange-500" />}
-                               <span>{Math.floor(goal.progress)}%</span>
+                               {goal.progress >= 100 ? (
+                                    <Lock className="h-5 w-5 text-accent" />
+                                ) : (
+                                    <span>{Math.floor(goal.progress)}%</span>
+                                )}
                             </div>
                         </div>
                         {goal.description && <p className="text-sm text-muted-foreground mt-1">{goal.description}</p>}
