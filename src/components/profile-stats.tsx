@@ -20,16 +20,16 @@ export function ProfileStats({ goals, postsCount, userId }: ProfileStatsProps) {
     
     const stats = [
       { name: "Goals", value: totalGoals, icon: Target, href: userId ? `/profile/${userId}/goals` : '/goals' },
-      { name: "Streaks", value: totalStreaks, icon: Flame, href: userId ? `/profile/${userId}/streaks` : '/streaks' },
+      { name: "Streaks", value: totalStreaks, icon: Flame, href: userId ? `/profile/${userId}/streaks` : '/goals' },
       { name: "Posts", value: postsCount, icon: FileText, href: userId ? `/profile/${userId}/posts` : '/feed' },
-      { name: "LockdIn", value: lockedInGoals, icon: Lock, href: userId ? `/profile/${userId}/locked` : '/locked-goals' }
+      { name: "LockdIn", value: lockedInGoals, icon: Lock, href: userId ? `/profile/${userId}/locked` : '/goals' }
     ];
   
     return (
-        <div className="flex justify-around rounded-lg bg-muted/50 p-4 w-full max-w-md">
+        <div className="flex justify-between rounded-lg bg-muted/50 p-4 w-full max-w-md">
         {stats.map((stat, index) => (
           <React.Fragment key={stat.name}>
-            <Link href={stat.href}>
+            <Link href={stat.href} className="flex-1">
                 <div className="flex flex-col items-center gap-1 text-center transition-transform hover:scale-105 px-2">
                     <stat.icon className="h-6 w-6 text-muted-foreground" />
                     <p className="text-2xl font-bold">{stat.value}</p>
