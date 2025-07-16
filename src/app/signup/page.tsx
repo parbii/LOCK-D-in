@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -34,8 +33,8 @@ export default function SignUpPage() {
   function onSubmit(values: z.infer<typeof signupSchema>) {
     console.log(values);
     // Here you would typically handle user creation
-    // On success, redirect to the dashboard
-    router.push("/dashboard");
+    // On success, redirect to the feed
+    router.push("/feed");
   }
 
   return (
@@ -43,7 +42,7 @@ export default function SignUpPage() {
       <Card className="w-full">
         <CardHeader className="text-center">
           <CardTitle>Create an Account</CardTitle>
-          <CardDescription>Get started with AuthZen today</CardDescription>
+          <CardDescription>Get started with LockdIn today</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <Form {...form}>
@@ -90,7 +89,7 @@ export default function SignUpPage() {
 
               <PasswordStrength password={password} />
 
-              <Button type="submit" className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90">
+              <Button type="submit" className="w-full">
                 Create Account
               </Button>
             </form>
@@ -100,7 +99,7 @@ export default function SignUpPage() {
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/login" className="font-medium text-primary underline-offset-4 hover:underline">
+            <Link href="/login" className="font-medium text-accent underline-offset-4 hover:underline">
               Sign in
             </Link>
           </p>

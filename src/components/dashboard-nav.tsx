@@ -6,28 +6,34 @@ import {
   Sidebar,
   SidebarHeader,
   SidebarContent,
+  SidebarFooter,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { Shield, LayoutDashboard, Target, BrainCircuit, Users, FileText } from "lucide-react";
+import { Lock, Newspaper, Target, BrainCircuit, Users, Trophy, Handshake, ShieldCheck, Cog } from "lucide-react";
 
 const menuItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "#", label: "Goals", icon: Target },
-  { href: "#", label: "Mindset Modules", icon: BrainCircuit },
-  { href: "#", label: "Communities", icon: Users },
-  { href: "#", label: "Apply for Leadership", icon: FileText },
+  { href: "/feed", label: "Feed", icon: Newspaper },
+  { href: "/goals", label: "Goals", icon: Target },
+  { href: "/lessons", label: "Mindset Modules", icon: BrainCircuit },
+  { href: "/communities", label: "Communities", icon: Users },
+  { href: "/service-events", label: "Service Events", icon: Handshake },
 ];
+
+const secondaryMenuItems = [
+    { href: "/leader-dashboard", label: "Leader Dashboard", icon: ShieldCheck },
+    { href: "/settings", label: "Settings", icon: Cog },
+]
 
 export function DashboardNav() {
   const pathname = usePathname();
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar>
       <SidebarHeader>
-        <Shield className="h-6 w-6 text-accent" />
-        <span className="text-lg font-semibold">AuthZen</span>
+        <Lock className="h-6 w-6 text-accent" />
+        <span className="text-lg font-semibold">LockdIn</span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
@@ -35,7 +41,7 @@ export function DashboardNav() {
             <SidebarMenuItem key={item.label}>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === item.href}
+                isActive={pathname.startsWith(item.href)}
                 tooltip={{ children: item.label, side: "right", align: "center" }}
               >
                 <Link href={item.href}>
@@ -47,6 +53,27 @@ export function DashboardNav() {
           ))}
         </SidebarMenu>
       </SidebarContent>
+      <SidebarFooter className="flex flex-col gap-4 !p-4 group-data-[collapsible=icon]:items-center">
+        <div className="text-center text-accent font-bold uppercase tracking-widest group-data-[collapsible=icon]:hidden">
+            "nothing in life worth having comes easy"
+        </div>
+         <SidebarMenu>
+          {secondaryMenuItems.map((item) => (
+            <SidebarMenuItem key={item.label}>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith(item.href)}
+                tooltip={{ children: item.label, side: "right", align: "center" }}
+              >
+                <Link href={item.href}>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }

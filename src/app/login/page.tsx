@@ -28,8 +28,8 @@ export default function LoginPage() {
   function onSubmit(values: z.infer<typeof loginSchema>) {
     console.log(values);
     // Here you would typically handle authentication
-    // On success, redirect to the dashboard
-    router.push("/dashboard");
+    // On success, redirect to the feed
+    router.push("/feed");
   }
 
   return (
@@ -37,7 +37,7 @@ export default function LoginPage() {
       <Card className="w-full">
         <CardHeader className="text-center">
           <CardTitle>Welcome Back</CardTitle>
-          <CardDescription>Sign in to continue to your dashboard</CardDescription>
+          <CardDescription>Sign in to get LOCKD IN</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <Form {...form}>
@@ -73,7 +73,7 @@ export default function LoginPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90">
+              <Button type="submit" className="w-full">
                 Sign In
               </Button>
             </form>
@@ -83,7 +83,7 @@ export default function LoginPage() {
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
             Don't have an account?{" "}
-            <Link href="/signup" className="font-medium text-primary underline-offset-4 hover:underline">
+            <Link href="/signup" className="font-medium text-accent underline-offset-4 hover:underline">
                 Sign up
             </Link>
           </p>

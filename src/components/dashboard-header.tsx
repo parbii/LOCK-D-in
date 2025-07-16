@@ -11,10 +11,17 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, Mail, Settings } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function DashboardHeader() {
+  const router = useRouter();
+  
+  const handleSupportClick = () => {
+    window.location.href = "mailto:support@lockdin.com";
+  };
+  
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <SidebarTrigger className="md:hidden" />
@@ -31,9 +38,21 @@ export function DashboardHeader() {
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
+          <DropdownMenuItem asChild>
+             <Link href="/profile">
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+             </Link>
+          </DropdownMenuItem>
+           <DropdownMenuItem asChild>
+             <Link href="/settings">
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+             </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleSupportClick}>
+            <Mail className="mr-2 h-4 w-4" />
+            <span>Email Support</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>

@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { Shield } from 'lucide-react';
+import { Lock } from 'lucide-react';
 
 function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2 text-2xl font-bold text-foreground">
-      <Shield className="text-accent h-7 w-7" />
-      AuthZen
+      <Lock className="text-accent h-7 w-7" />
+      LockdIn
     </Link>
   );
 }
