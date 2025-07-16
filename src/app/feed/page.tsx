@@ -10,6 +10,7 @@ import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile, Target, Fl
 import { useGoals } from "@/context/goals-context";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
+import React from 'react';
 
 // Mock data for feed posts
 const posts = [
@@ -55,8 +56,13 @@ const posts = [
 
 function DailyHabitsTracker() {
     const { activeGoals, checkedHabits, handleHabitCheck, getTodaysDate } = useGoals();
+    const [isClient, setIsClient] = React.useState(false);
 
-    if (activeGoals.length === 0) {
+    React.useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient || activeGoals.length === 0) {
         return null;
     }
 
