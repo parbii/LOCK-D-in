@@ -17,6 +17,7 @@ import { type ServiceEvent } from "../service-events/page";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { ModuleCompletionTracker } from "@/components/module-completion-tracker";
 
 
 // Mock data for feed posts
@@ -275,6 +276,7 @@ export default function FeedPage() {
   return (
     <div className="max-w-2xl mx-auto">
         <DailyHabitsTracker />
+        <ModuleCompletionTracker />
         <RsvpEvents />
       <div className="space-y-6 mt-6">
         <CreatePost />
