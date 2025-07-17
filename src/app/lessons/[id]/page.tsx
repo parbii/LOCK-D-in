@@ -110,8 +110,8 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
       id: Date.now(),
       name: heading,
       description: details,
-      isPublic: false, // Default to private, user can change later
-      habits: [],
+      isPublic: false,
+      habits: [{ id: Date.now(), text: "Work on this challenge daily." }],
       progress: 0,
       streak: 0,
       lastCompleted: null,
