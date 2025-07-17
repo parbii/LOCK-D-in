@@ -9,7 +9,7 @@ import { ArrowLeft, BookOpen, FileText, Film, Lightbulb, MessageSquare, CheckCir
 import Link from "next/link";
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
-import { useModules } from "@/lib/modules-data";
+import { useModules } from "@/lib/modules-data.tsx";
 import { lessonContent, type Lesson, type QuizQuestion } from "@/lib/lesson-content";
 import { Badge } from "@/components/ui/badge";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -31,12 +31,16 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
   const handleSubmit = () => {
     let isCorrect = true;
     if (lesson.assessment.type === 'quiz' && lesson.assessment.questions) {
-        lesson.assessment.questions.forEach((q, index) => {
-            const selectedOptionIndex = parseInt(answers[index] as string, 10);
-            if (q.options[selectedOptionIndex] !== q.correct_answer) {
-                isCorrect = false;
-            }
-        });
+        if (Object.keys(answers).length !== lesson.assessment.questions.length) {
+            isCorrect = false;
+        } else {
+            lesson.assessment.questions.forEach((q, index) => {
+                const selectedOptionIndex = parseInt(answers[index] as string, 10);
+                 if (isNaN(selectedOptionIndex) || q.options[selectedOptionIndex] !== q.correct_answer) {
+                    isCorrect = false;
+                }
+            });
+        }
     }
 
     if(isCorrect) {
@@ -50,7 +54,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
         toast({
             variant: "destructive",
             title: "Not Quite",
-            description: "Some answers were incorrect. Please review the material and try again.",
+            description: "Some answers were incorrect or missing. Please review and try again.",
         });
     }
   };
@@ -231,24 +235,21 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
                         <CardDescription>Test your understanding of the key concepts.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                        <RadioGroup onValueChange={(value) => {
-                            const [qIndex] = value.split('-').map(Number);
-                            handleAnswerChange(qIndex, value.split('-')[1]);
-                        }}>
-                            {lesson.assessment.questions.map((q, qIndex) => (
-                                <div key={qIndex} className="space-y-3">
-                                    <p className="font-semibold">{qIndex + 1}. {q.question_text}</p>
+                        {lesson.assessment.questions.map((q, qIndex) => (
+                            <div key={qIndex} className="space-y-3">
+                                <p className="font-semibold">{qIndex + 1}. {q.question_text}</p>
+                                <RadioGroup onValueChange={(value) => handleAnswerChange(qIndex, value)}>
                                     <div className="space-y-2 pl-2">
                                     {q.options.map((option, oIndex) => (
                                         <div key={oIndex} className="flex items-center space-x-2">
-                                            <RadioGroupItem value={`${qIndex}-${oIndex}`} id={`q${qIndex}-o${oIndex}`} />
+                                            <RadioGroupItem value={`${oIndex}`} id={`q${qIndex}-o${oIndex}`} />
                                             <Label htmlFor={`q${qIndex}-o${oIndex}`}>{option}</Label>
                                         </div>
                                     ))}
                                     </div>
-                                </div>
-                            ))}
-                        </RadioGroup>
+                                </RadioGroup>
+                            </div>
+                        ))}
                     </CardContent>
                     <CardFooter>
                         <Button className="w-full" onClick={handleSubmit}>Submit Answers</Button>

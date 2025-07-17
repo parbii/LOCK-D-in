@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { BarChart, Users, Activity, Target, Shield, MessageSquare, ThumbsUp, Lock, FileText, Send } from "lucide-react";
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
-import { useModules } from "@/lib/modules-data";
+import { useModules } from "@/lib/modules-data.tsx";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 

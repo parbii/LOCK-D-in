@@ -3,7 +3,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardNav } from "@/components/dashboard-nav";
 import { GoalsProvider } from "@/context/goals-context";
-import { ModulesProvider } from "@/lib/modules-data";
+import { ModulesProvider } from "@/lib/modules-data.tsx";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (

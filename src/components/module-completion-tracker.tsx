@@ -4,7 +4,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { useModules } from "@/lib/modules-data";
+import { useModules } from "@/lib/modules-data.tsx";
 import { BrainCircuit } from "lucide-react";
 import Link from "next/link";
 import React from "react";

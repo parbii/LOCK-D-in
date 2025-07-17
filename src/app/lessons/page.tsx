@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
-import { useModules } from '@/lib/modules-data';
+import { useModules } from '@/lib/modules-data.tsx';
 
 export default function LessonsPage() {
   const { modules } = useModules();
