@@ -328,21 +328,31 @@ export const lessonContent = [
                         "type": "teaching_point",
                         "heading": "Weighing the Good with the Bad",
                         "points": [
-                            {
+                           {
                                 "sub_heading": "Conduct a 'What If' Assessment",
                                 "text": "Life is full of choices, and every choice comes with potential risks and rewards. For any decision you're facing, list out the potential positive outcomes ('what if it goes right?') and the potential negative outcomes ('what if it goes wrong?'). You'll likely discover that for many things you're contemplating, the potential good far outweighs the bad."
                             }
                         ]
                     },
-                    {
-                        "type": "application_challenge",
+                     {
+                        "type": "teaching_point",
                         "heading": "Embracing Calculated Risks",
-                        "challenge_details": "Once you've analyzed your 'what ifs,' this lesson encourages you to embrace calculated risks. A calculated risk isn't about recklessness; it's about making informed decisions where the potential upside is significant, and the downside is manageable. We'll explore strategies for mitigating potential negative outcomes while still pushing yourself beyond your comfort zone."
+                         "points": [
+                           {
+                                "sub_heading": "",
+                                "text": "Once you've analyzed your 'what ifs,' this lesson encourages you to embrace calculated risks. A calculated risk isn't about recklessness; it's about making informed decisions where the potential upside is significant, and the downside is manageable. We'll explore strategies for mitigating potential negative outcomes while still pushing yourself beyond your comfort zone."
+                           }
+                         ]
                     },
                     {
-                        "type": "introduction",
+                        "type": "teaching_point",
                         "heading": "Stories of 'What If' Success",
-                        "text": "Throughout history, countless individuals have achieved extraordinary things by daring to ask 'what if' and taking a chance. This lesson will feature inspiring success stories of people who took a leap of faith, faced their fears, and reaped incredible rewards. Their journeys will demonstrate the transformative power of focusing on positive possibilities and taking action."
+                        "points": [
+                           {
+                                "sub_heading": "",
+                                "text": "Throughout history, countless individuals have achieved extraordinary things by daring to ask 'what if' and taking a chance. This lesson will feature inspiring success stories of people who took a leap of faith, faced their fears, and reaped incredible rewards. Their journeys will demonstrate the transformative power of focusing on positive possibilities and taking action."
+                           }
+                        ]
                     }
                 ],
                 "resources": [],
@@ -357,6 +367,80 @@ export const lessonContent = [
                                 "Reframing negative thoughts into positive possibilities.",
                                 "Avoiding all risks in life.",
                                 "Only focusing on the past."
+                            ],
+                            "correct_answer_index": 1
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "moduleID": "KP_LinkedIn_M5",
+        "title": "Module 5: LinkedIn - Professional Networking",
+        "description": "This module covers the importance of professional networking, crafting a compelling online presence, and finding mentors.",
+        "order": 5,
+        "lessons": [
+            {
+                "lessonID": "KP_LinkedIn_M5_L1",
+                "title": "Building Your Professional Brand",
+                "order": 1,
+                "objective": "Learners will understand how to build and maintain a professional online presence using platforms like LinkedIn.",
+                "duration_minutes": 35,
+                "content_sections": [
+                    {
+                        "type": "teaching_point",
+                        "heading": "Beyond Social Media: Your Professional Hub",
+                        "points": [
+                            {
+                                "sub_heading": "",
+                                "text": "Just as you curate your social media for personal connections, LinkedIn is your dedicated platform for professional growth. This lesson will help you understand why treating your LinkedIn profile with the same, if not more, importance as your TikTok or Instagram can open doors to incredible opportunities. We'll explore how to view LinkedIn not just as a job board, but as a dynamic space for building your professional brand and making meaningful connections."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "teaching_point",
+                        "heading": "Crafting a Compelling Online Presence",
+                        "points": [
+                            {
+                                "sub_heading": "",
+                                "text": "Your LinkedIn profile is your digital resume and professional storefront. This lesson will guide you through creating a profile that stands out. We'll cover optimizing your headline, writing an engaging summary, showcasing your skills and experience effectively, and choosing a professional profile picture. The goal is to make your profile a magnet for opportunities and connections in your desired field."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "teaching_point",
+                        "heading": "Building Genuine Connections, Not Just Contacts",
+                        "points": [
+                            {
+                                "sub_heading": "",
+                                "text": "Networking isn't just about collecting contacts; it's about building genuine relationships. This lesson will teach you strategies for connecting with real people in professions you aspire to enter. We'll discuss how to send personalized connection requests, engage meaningfully with content, and initiate conversations that can lead to valuable mentorships and collaborations. Remember, the quality of your network often dictates the quality of your opportunities."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "teaching_point",
+                        "heading": "The Power of Playing Up: Mentorship and Growth",
+                        "points": [
+                            {
+                                "sub_heading": "",
+                                "text": "Think about sports: athletes who 'play up' with more experienced players often develop faster. The same principle applies in the professional world. This lesson will emphasize the immense value of connecting with and learning from seasoned professionals. We'll provide tips on identifying potential mentors, reaching out effectively, and nurturing these relationships to accelerate your professional growth."
+                            }
+                        ]
+                    }
+                ],
+                "resources": [],
+                "assessment": {
+                    "type": "quiz",
+                    "quiz_id": "M5_L1_Quiz",
+                    "questions": [
+                        {
+                            "question_text": "What is the primary purpose of LinkedIn as discussed in the lesson?",
+                            "options": [
+                                "Sharing personal life updates with friends.",
+                                "Building a professional brand and network.",
+                                "Watching viral videos.",
+                                "Playing games."
                             ],
                             "correct_answer_index": 1
                         }
