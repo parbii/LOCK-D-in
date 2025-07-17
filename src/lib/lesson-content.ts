@@ -626,5 +626,81 @@ export const lessonContent = [
                 }
             }
         ]
+    },
+    {
+        "moduleID": "KP_Perfection_M9",
+        "title": "Module 9: Perfection - A Journey of Continuous Improvement",
+        "description": "This module redefines perfection as a continuous journey of growth, not a static destination, encouraging users to embrace imperfection and strive for constant betterment.",
+        "order": 9,
+        "lessons": [
+            {
+                "lessonID": "KP_Perfection_M9_L1",
+                "title": "Perfection: A Journey, Not a Destination",
+                "order": 1,
+                "objective": "Learners will redefine 'perfection' as a continuous journey of improvement and embrace imperfection as a key part of growth.",
+                "duration_minutes": 40,
+                "content_sections": [
+                    {
+                        "type": "teaching_point",
+                        "heading": "The Path to Excellence",
+                        "points": [
+                            {
+                                "sub_heading": "Perfection: A Journey, Not a Destination",
+                                "text": "This lesson challenges the common misconception that perfection is a static state to be achieved. Instead, we'll explore 'perfection' as a dynamic and ongoing journey of continuous improvement. The goal isn't to reach an unattainable ideal, but to constantly strive for 'something better.' Embrace the understanding that true growth means never being comfortable or complacent with where you are, always seeking new heights and deeper understanding."
+                            },
+                            {
+                                "sub_heading": "The Infinite Room to Grow",
+                                "text": "No matter how accomplished you become, there is always, always room for growth. This lesson draws parallels with high-achievers, like LeBron James, who despite being arguably the greatest basketball player of all time, still embodies consistency and discipline (linking back to Module 6) by showing up every day to polish his game. This illustrates that continuous dedication, even at the pinnacle of success, is the pathway to sustained excellence. We'll inspire you to adopt this mindset of endless learning and refinement in your own life."
+                            },
+                            {
+                                "sub_heading": "Embracing Imperfections and Action Over Procrastination",
+                                "text": "The pursuit of 'perfection' can often lead to procrastination and discouragement, as individuals fear not meeting an impossible standard. This lesson emphasizes that nobody is perfect, and imperfection is a natural, essential part of the growth process. We'll encourage you to release the burden of needing to be flawless before you start. The key is to simply try what you want to try, knowing that every attempt, every mistake, and every step provides valuable lessons for continuous improvement. Start imperfectly, improve consistently."
+                            },
+                            {
+                                "sub_heading": "Setting Realistic Expectations and Celebrating Progress",
+                                "text": "This lesson provides tools for setting realistic expectations for your journey of growth, rather than striving for an immediate, flawless outcome. We'll guide you on how to break down larger goals into manageable steps, making the pursuit of 'better' less daunting and more achievable. Crucially, we'll also focus on the importance of acknowledging and celebrating your progress along the way. Recognizing your achievements, no matter how small, fuels motivation and reinforces the joy of continuous self-improvement."
+                            }
+                        ]
+                    }
+                ],
+                "resources": [],
+                "assessment": {
+                    "type": "quiz",
+                    "quiz_id": "M9_L1_Quiz",
+                    "questions": [
+                        {
+                            "question_text": "What is the core idea of 'perfection' as discussed in this module?",
+                            "options": [
+                                "It's a fixed destination you eventually reach.",
+                                "It means never making any mistakes.",
+                                "It's a continuous journey of growth and improvement.",
+                                "It only applies to a select few individuals."
+                            ],
+                            "correct_answer_index": 2
+                        },
+                        {
+                            "question_text": "Why should you never be comfortable or complacent, even after achieving success?",
+                            "options": [
+                                "Because success is fleeting and always disappears.",
+                                "Because there is always room to grow and improve.",
+                                "Because you should always compare yourself to others.",
+                                "Because being comfortable means you've failed."
+                            ],
+                            "correct_answer_index": 1
+                        },
+                        {
+                            "question_text": "What is a common pitfall of striving for an unattainable 'perfect' outcome?",
+                            "options": [
+                                "It makes you try harder.",
+                                "It leads to instant success.",
+                                "It can cause procrastination and discouragement.",
+                                "It ensures you will never make a mistake."
+                            ],
+                            "correct_answer_index": 2
+                        }
+                    ]
+                }
+            }
+        ]
     }
 ];
