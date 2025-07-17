@@ -167,7 +167,7 @@ export default function LeaderDashboardPage() {
                 </CardHeader>
                 <CardContent>
                     <p className="text-sm text-muted-foreground">
-                        Being a part of an organization will boost your chances of being seen for a scholarship that we one day wish to offer to LOCKD In leaders who are crushing their goals.
+                        Being a part of an organization will boost your chances of being seen for a scholarship that we one day wish to offer to LOCK*DIn leaders who are crushing their goals.
                     </p>
                 </CardContent>
             </Card>

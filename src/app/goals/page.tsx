@@ -332,7 +332,7 @@ export default function GoalsPage() {
                             <div className="pl-8 space-y-4">
                                 {goal.status === 'prompt_complete' ? (
                                     <div className="rounded-md border bg-muted/50 p-4 text-center space-y-3">
-                                        <h4 className="font-semibold text-lg">You'r* LOCKD IN!</h4>
+                                        <h4 className="font-semibold text-lg">You'r* LOCK*D IN!</h4>
                                         <p className="text-muted-foreground text-sm">You've reached 100% on this goal. What's next?</p>
                                         <div className="flex justify-center gap-4 pt-2">
                                             <Button onClick={() => completeGoal(goal.id)}>

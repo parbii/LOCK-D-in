@@ -17,10 +17,10 @@ export default function FriendLockedInPage() {
             </Link>
             <Card>
                 <CardHeader>
-                    <CardTitle>LockdIn Goals</CardTitle>
+                    <CardTitle>Lock*dIn Goals</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-muted-foreground">This is where the user's completed ('LockdIn') goals will be displayed.</p>
+                    <p className="text-muted-foreground">This is where the user's completed ('Lock*dIn') goals will be displayed.</p>
                 </CardContent>
             </Card>
         </div>

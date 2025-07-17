@@ -37,7 +37,7 @@ export default function LoginPage() {
       <Card className="w-full">
         <CardHeader className="text-center">
           <CardTitle>W*lcom* Back</CardTitle>
-          <CardDescription>Sign in to get LOCKD IN</CardDescription>
+          <CardDescription>Sign in to g*t LOCK*D IN</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <Form {...form}>

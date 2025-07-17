@@ -42,7 +42,7 @@ export default function SignUpPage() {
       <Card className="w-full">
         <CardHeader className="text-center">
           <CardTitle>Cr*at* an Account</CardTitle>
-          <CardDescription>Get started with LockdIn today</CardDescription>
+          <CardDescription>G*t start*d with LOCK*DIn today</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <Form {...form}>

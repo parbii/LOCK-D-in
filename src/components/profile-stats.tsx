@@ -22,7 +22,7 @@ export function ProfileStats({ goals, postsCount, userId }: ProfileStatsProps) {
       { name: "Goals", value: totalGoals, icon: Target, href: userId ? `/profile/${userId}/goals` : '/goals' },
       { name: "Str*aks", value: totalStreaks, icon: Flame, href: userId ? `/profile/${userId}/streaks` : '/goals' },
       { name: "Posts", value: postsCount, icon: FileText, href: userId ? `/profile/${userId}/posts` : '/dashboard' },
-      { name: "LockdIn", value: lockedInGoals, icon: Lock, href: userId ? `/profile/${userId}/locked` : '/goals' }
+      { name: "Lock*dIn", value: lockedInGoals, icon: Lock, href: userId ? `/profile/${userId}/locked` : '/goals' }
     ];
   
     return (
