@@ -320,39 +320,24 @@ export const lessonContent = [
                 "duration_minutes": 40,
                 "content_sections": [
                     {
-                        "type": "introduction",
-                        "heading": "Welcome to 'The Art of What If'",
-                        "text": "Often, our minds jump to the worst-case 'what if' scenarios. We imagine all the things that could go wrong, paralyzing us from taking action. But what if we flipped that script? This lesson will challenge you to identify your negative 'what ifs' and then intentionally reframe them into positive possibilities. Remember, the regret of not trying at all often outweighs the fear of failure."
+                        "type": "teaching_point",
+                        "heading": "Beyond the Negative 'What If'",
+                        "points": [{ "sub_heading": "", "text": "Often, our minds jump to the worst-case 'what if' scenarios. We imagine all the things that could go wrong, paralyzing us from taking action. But what if we flipped that script? This lesson will challenge you to identify your negative 'what ifs' and then intentionally reframe them into positive possibilities. Remember, the regret of not trying at all often outweighs the fear of failure."}]
                     },
                     {
                         "type": "teaching_point",
                         "heading": "Weighing the Good with the Bad",
-                        "points": [
-                           {
-                                "sub_heading": "Conduct a 'What If' Assessment",
-                                "text": "Life is full of choices, and every choice comes with potential risks and rewards. For any decision you're facing, list out the potential positive outcomes ('what if it goes right?') and the potential negative outcomes ('what if it goes wrong?'). You'll likely discover that for many things you're contemplating, the potential good far outweighs the bad."
-                            }
-                        ]
+                        "points": [{ "sub_heading": "", "text": "Life is full of choices, and every choice comes with potential risks and rewards. This lesson will teach you how to conduct a 'What If' assessment. For any decision you're facing, list out the potential positive outcomes ('what if it goes right?') and the potential negative outcomes ('what if it goes wrong?'). You'll likely discover that for many things you're contemplating, the potential good far outweighs the bad."}]
                     },
                      {
                         "type": "teaching_point",
                         "heading": "Embracing Calculated Risks",
-                         "points": [
-                           {
-                                "sub_heading": "",
-                                "text": "Once you've analyzed your 'what ifs,' this lesson encourages you to embrace calculated risks. A calculated risk isn't about recklessness; it's about making informed decisions where the potential upside is significant, and the downside is manageable. We'll explore strategies for mitigating potential negative outcomes while still pushing yourself beyond your comfort zone."
-                           }
-                         ]
+                         "points": [{ "sub_heading": "", "text": "Once you've analyzed your 'what ifs,' this lesson encourages you to embrace calculated risks. A calculated risk isn't about recklessness; it's about making informed decisions where the potential upside is significant, and the downside is manageable. We'll explore strategies for mitigating potential negative outcomes while still pushing yourself beyond your comfort zone."}]
                     },
                     {
                         "type": "teaching_point",
                         "heading": "Stories of 'What If' Success",
-                        "points": [
-                           {
-                                "sub_heading": "",
-                                "text": "Throughout history, countless individuals have achieved extraordinary things by daring to ask 'what if' and taking a chance. This lesson will feature inspiring success stories of people who took a leap of faith, faced their fears, and reaped incredible rewards. Their journeys will demonstrate the transformative power of focusing on positive possibilities and taking action."
-                           }
-                        ]
+                        "points": [{ "sub_heading": "", "text": "Throughout history, countless individuals have achieved extraordinary things by daring to ask 'what if' and taking a chance. This lesson will feature inspiring success stories of people who took a leap of faith, faced their fears, and reaped incredible rewards. Their journeys will demonstrate the transformative power of focusing on positive possibilities and taking action."}]
                     }
                 ],
                 "resources": [],
@@ -383,7 +368,7 @@ export const lessonContent = [
         "lessons": [
             {
                 "lessonID": "KP_LinkedIn_M5_L1",
-                "title": "Building Your Professional Brand",
+                "title": "LinkedIn: Build Your Professional Brand",
                 "order": 1,
                 "objective": "Learners will understand how to build and maintain a professional online presence using platforms like LinkedIn.",
                 "duration_minutes": 35,
@@ -391,42 +376,22 @@ export const lessonContent = [
                     {
                         "type": "teaching_point",
                         "heading": "Beyond Social Media: Your Professional Hub",
-                        "points": [
-                            {
-                                "sub_heading": "",
-                                "text": "Just as you curate your social media for personal connections, LinkedIn is your dedicated platform for professional growth. This lesson will help you understand why treating your LinkedIn profile with the same, if not more, importance as your TikTok or Instagram can open doors to incredible opportunities. We'll explore how to view LinkedIn not just as a job board, but as a dynamic space for building your professional brand and making meaningful connections."
-                            }
-                        ]
+                        "points": [{ "sub_heading": "", "text": "Just as you curate your social media for personal connections, LinkedIn is your dedicated platform for professional growth. This lesson will help you understand why treating your LinkedIn profile with the same, if not more, importance as your TikTok or Instagram can open doors to incredible opportunities. We'll explore how to view LinkedIn not just as a job board, but as a dynamic space for building your professional brand and making meaningful connections."}]
                     },
                     {
                         "type": "teaching_point",
                         "heading": "Crafting a Compelling Online Presence",
-                        "points": [
-                            {
-                                "sub_heading": "",
-                                "text": "Your LinkedIn profile is your digital resume and professional storefront. This lesson will guide you through creating a profile that stands out. We'll cover optimizing your headline, writing an engaging summary, showcasing your skills and experience effectively, and choosing a professional profile picture. The goal is to make your profile a magnet for opportunities and connections in your desired field."
-                            }
-                        ]
+                        "points": [{ "sub_heading": "", "text": "Your LinkedIn profile is your digital resume and professional storefront. This lesson will guide you through creating a profile that stands out. We'll cover optimizing your headline, writing an engaging summary, showcasing your skills and experience effectively, and choosing a professional profile picture. The goal is to make your profile a magnet for opportunities and connections in your desired field."}]
                     },
                     {
                         "type": "teaching_point",
                         "heading": "Building Genuine Connections, Not Just Contacts",
-                        "points": [
-                            {
-                                "sub_heading": "",
-                                "text": "Networking isn't just about collecting contacts; it's about building genuine relationships. This lesson will teach you strategies for connecting with real people in professions you aspire to enter. We'll discuss how to send personalized connection requests, engage meaningfully with content, and initiate conversations that can lead to valuable mentorships and collaborations. Remember, the quality of your network often dictates the quality of your opportunities."
-                            }
-                        ]
+                        "points": [{ "sub_heading": "", "text": "Networking isn't just about collecting contacts; it's about building genuine relationships. This lesson will teach you strategies for connecting with real people in professions you aspire to enter. We'll discuss how to send personalized connection requests, engage meaningfully with content, and initiate conversations that can lead to valuable mentorships and collaborations. Remember, the quality of your network often dictates the quality of your opportunities."}]
                     },
                     {
                         "type": "teaching_point",
                         "heading": "The Power of Playing Up: Mentorship and Growth",
-                        "points": [
-                            {
-                                "sub_heading": "",
-                                "text": "Think about sports: athletes who 'play up' with more experienced players often develop faster. The same principle applies in the professional world. This lesson will emphasize the immense value of connecting with and learning from seasoned professionals. We'll provide tips on identifying potential mentors, reaching out effectively, and nurturing these relationships to accelerate your professional growth."
-                            }
-                        ]
+                        "points": [{ "sub_heading": "", "text": "Think about sports: athletes who 'play up' with more experienced players often develop faster. The same principle applies in the professional world. This lesson will emphasize the immense value of connecting with and learning from seasoned professionals. We'll provide tips on identifying potential mentors, reaching out effectively, and nurturing these relationships to accelerate your professional growth."}]
                     }
                 ],
                 "resources": [],
@@ -446,6 +411,40 @@ export const lessonContent = [
                         }
                     ]
                 }
+            }
+        ]
+    },
+    {
+        "moduleID": "KP_ConsistencyDiscipline_M6",
+        "title": "Module 6: Consistency and Discipline",
+        "description": "This module teaches the power of daily habits, the compound effect of consistent effort, and how discipline builds mental toughness.",
+        "order": 6,
+        "lessons": [
+            {
+                "lessonID": "KP_ConsistencyDiscipline_M6_L1",
+                "title": "The Power of Showing Up",
+                "order": 1,
+                "objective": "Learners will understand that consistency is their greatest ally and how small, daily efforts lead to exponential growth.",
+                "duration_minutes": 30,
+                "content_sections": [
+                    {
+                        "type": "teaching_point",
+                        "heading": "Your Most Reliable Ally: Showing Up for Yourself",
+                        "points": [{ "sub_heading": "", "text": "In life, circumstances and people can change, but there are two constants: yourself and God. This lesson emphasizes the profound truth that the only person guaranteed to show up for you, every single day, is you. We'll explore how consistent effort and unwavering discipline build an unshakeable foundation of self-reliance, ensuring you are never truly alone on your journey. It's about cultivating an inner commitment that fuels your progress regardless of external factors."}]
+                    },
+                    {
+                        "type": "teaching_point",
+                        "heading": "The Magic of Compound Interest (Beyond Money)",
+                        "points": [{ "sub_heading": "", "text": "You've likely heard of compound interest in finance, where small investments grow exponentially over time. This lesson reveals that the same powerful principle applies to your personal growth. We'll illustrate how someone who commits to daily, consistent action will progress significantly faster—often ten times faster—than someone who works sporadically. Discover how small, consistent efforts accumulate into massive, transformative results in every area of your life."}]
+                    },
+                    {
+                        "type": "teaching_point",
+                        "heading": "Forging Mental Toughness Through Discipline",
+                        "points": [{ "sub_heading": "", "text": "Discipline isn't about punishment; it's about empowerment. This lesson delves into how"}]
+                    }
+                ],
+                "resources": [],
+                "assessment": { "type": "none" }
             }
         ]
     }
