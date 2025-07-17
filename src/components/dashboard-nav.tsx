@@ -15,16 +15,16 @@ import {
 import { Lock, Newspaper, Target, BrainCircuit, Users, Handshake, ShieldCheck, Cog } from "lucide-react";
 
 const menuItems = [
-  { href: "/feed", label: "Feed", icon: Newspaper },
+  { href: "/dashboard", label: "Dashboard", icon: Newspaper },
   { href: "/goals", label: "Goals", icon: Target },
-  { href: "/lessons", label: "Mindset Modules", icon: BrainCircuit },
-  { href: "/communities", label: "Communities", icon: Users },
-  { href: "/service-events", label: "Service Events", icon: Handshake },
+  { href: "/lessons", label: "Minds*t Modul*s", icon: BrainCircuit },
+  { href: "/communities", label: "Communiti*s", icon: Users },
+  { href: "/service-events", label: "S*rvic* *v*nts", icon: Handshake },
   { href: "/leader-dashboard", label: "Organization", icon: ShieldCheck },
 ];
 
 const secondaryMenuItems = [
-    { href: "/settings", label: "Settings", icon: Cog },
+    { href: "/settings", label: "S*ttings", icon: Cog },
 ]
 
 export function DashboardNav() {
@@ -56,7 +56,7 @@ export function DashboardNav() {
       </SidebarContent>
       <SidebarFooter className="flex flex-col gap-4 !p-4 group-data-[collapsible=icon]:items-center">
         <div className="text-center text-accent font-bold uppercase tracking-widest group-data-[collapsible=icon]:hidden">
-            "nothing in life worth having comes easy"
+            "nothing in lif* worth having com*s *asy"
         </div>
          <SidebarMenu>
           {secondaryMenuItems.map((item) => (

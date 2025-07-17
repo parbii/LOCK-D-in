@@ -36,16 +36,16 @@ function CreateSharedGoal({ community }: { community: Community }) {
 
     const handleCreateGoal = () => {
         if (!goalName.trim()) {
-            toast({ variant: "destructive", title: "Goal name is required." });
+            toast({ variant: "destructive", title: "Goal nam* is r*quir*d." });
             return;
         }
         
-        // Logic to create and share the goal with the community would go here.
-        // For now, we'll just show a success toast.
+        // Logic to cr*at* and shar* th* goal with th* community would go h*r*.
+        // For now, w*'ll just show a succ*ss toast.
         
         toast({
-            title: "Shared Goal Created!",
-            description: `The goal "${goalName}" has been shared with ${community.name}.`
+            title: "Shar*d Goal Cr*at*d!",
+            description: `Th* goal "${goalName}" has b**n shar*d with ${community.name}.`
         });
 
         setGoalName("");
@@ -56,26 +56,26 @@ function CreateSharedGoal({ community }: { community: Community }) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Create a Shared Goal</CardTitle>
-                <CardDescription>Set a goal for the entire community to work on together.</CardDescription>
+                <CardTitle>Cr*at* a Shar*d Goal</CardTitle>
+                <CardDescription>S*t a goal for th* *ntir* community to work on tog*th*r.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="grid gap-2">
-                    <Label htmlFor="goal-name">Goal Name</Label>
+                    <Label htmlFor="goal-name">Goal Nam*</Label>
                     <Input
                     id="goal-name"
                     value={goalName}
                     onChange={(e) => setGoalName(e.target.value)}
-                    placeholder="e.g., Read a book together"
+                    placeholder="*.g., R*ad a book tog*th*r"
                     />
                 </div>
                 <div className="grid gap-2">
-                    <Label>Associated Habits</Label>
+                    <Label>Associat*d Habits</Label>
                     <div className="flex gap-2">
                     <Input
                         value={currentHabit}
                         onChange={(e) => setCurrentHabit(e.target.value)}
-                        placeholder="e.g., Read 1 chapter a day"
+                        placeholder="*.g., R*ad 1 chapt*r a day"
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
@@ -100,7 +100,7 @@ function CreateSharedGoal({ community }: { community: Community }) {
                 </div>
             </CardContent>
             <CardFooter>
-                <Button onClick={handleCreateGoal}>Create and Share Goal</Button>
+                <Button onClick={handleCreateGoal}>Cr*at* and Shar* Goal</Button>
             </CardFooter>
         </Card>
     );
@@ -111,11 +111,11 @@ function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
         return (
              <Card>
                 <CardHeader>
-                    <CardTitle>Community Feed</CardTitle>
+                    <CardTitle>Community F**d</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="text-center text-muted-foreground py-8">
-                        <p>No posts from this community yet. Be the first to share!</p>
+                        <p>No posts from this community y*t. B* th* first to shar*!</p>
                     </div>
                 </CardContent>
             </Card>
@@ -124,7 +124,7 @@ function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
 
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold tracking-tight">Community Feed</h2>
+            <h2 className="text-2xl font-bold tracking-tight">Community F**d</h2>
             {communityPosts.map(post => (
                  <Card key={post.id}>
                     <CardHeader>
@@ -158,10 +158,10 @@ function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
                             </div>
                             <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
                         </div>
-                        <p className="text-sm font-semibold">{post.likes} likes</p>
-                        <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
+                        <p className="text-sm font-semibold">{post.likes} lik*s</p>
+                        <p className="text-sm text-muted-foreground cursor-pointer hover:underline">Vi*w all {post.comments} comm*nts</p>
                         <div className="flex items-center gap-2 mt-2">
-                            <Input placeholder="Add a comment..." className="h-9" />
+                            <Input placeholder="Add a comm*nt..." className="h-9" />
                             <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
                         </div>
                     </div>
@@ -177,13 +177,13 @@ export default function CommunityDetailPage() {
     const communityId = params.id;
     const { toast } = useToast();
 
-    // In a real app, this data would be fetched from a server.
+    // In a r*al app, this data would b* f*tch*d from a s*rv*r.
     const community = initialCommunities.find(c => c.id.toString() === communityId);
     const communityPosts = posts.filter(p => p.communityId?.toString() === communityId);
 
-    // Mocking a joined state
+    // Mocking a join*d stat*
     const [isJoined, setIsJoined] = useState(false);
-    // Mocking the current user ID
+    // Mocking th* curr*nt us*r ID
     const currentUserId = 999; 
     const isCommunityAdmin = community?.adminId === currentUserId;
 
@@ -193,14 +193,14 @@ export default function CommunityDetailPage() {
             <div>
                 <Link href="/communities" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
                     <ArrowLeft className="h-4 w-4" />
-                    Back to Communities
+                    Back to Communiti*s
                 </Link>
                 <Card>
                     <CardHeader>
                         <CardTitle>Community Not Found</CardTitle>
                     </CardHeader>
                      <CardContent>
-                        <p>The community you're looking for doesn't exist.</p>
+                        <p>Th* community you'r* looking for do*sn't *xist.</p>
                     </CardContent>
                 </Card>
             </div>
@@ -210,7 +210,7 @@ export default function CommunityDetailPage() {
     const handleJoinClick = () => {
         if (community.isPrivate) {
              toast({
-                title: "This is a private community",
+                title: "This is a privat* community",
                 description: "You can only join by invitation.",
             });
             return;
@@ -218,8 +218,8 @@ export default function CommunityDetailPage() {
         
         setIsJoined(true);
         toast({
-            title: "Welcome to the community!",
-            description: `You've successfully joined ${community.name}.`,
+            title: "W*lcom* to th* community!",
+            description: `You'v* succ*ssfully join*d ${community.name}.`,
         });
     };
 
@@ -227,7 +227,7 @@ export default function CommunityDetailPage() {
         <div className="space-y-6">
              <Link href="/communities" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
                 <ArrowLeft className="h-4 w-4" />
-                Back to All Communities
+                Back to All Communiti*s
             </Link>
 
             <Card>
@@ -242,14 +242,14 @@ export default function CommunityDetailPage() {
                                 <CardTitle className="text-3xl">{community.name}</CardTitle>
                                 <div className="flex items-center text-muted-foreground">
                                     {community.isPrivate ? <Lock className="h-4 w-4 mr-2" /> : <Globe className="h-4 w-4 mr-2" />}
-                                    <span className="mr-4">{community.isPrivate ? "Private" : "Public"} Community</span>
+                                    <span className="mr-4">{community.isPrivate ? "Privat*" : "Public"} Community</span>
                                     <Users className="h-4 w-4 mr-2" />
-                                    <span>{community.members} Members</span>
+                                    <span>{community.members} M*mb*rs</span>
                                 </div>
                             </div>
                         </div>
                         <Button onClick={handleJoinClick} disabled={isJoined}>
-                            {isJoined ? "Joined" : "Join Community"}
+                            {isJoined ? "Join*d" : "Join Community"}
                         </Button>
                     </div>
                 </CardHeader>
@@ -262,10 +262,10 @@ export default function CommunityDetailPage() {
                 <div className="space-y-6">
                     <Card>
                         <CardHeader>
-                            <CardTitle className="flex items-center gap-2"><Target className="h-5 w-5 text-accent" /> Shared Goal</CardTitle>
+                            <CardTitle className="flex items-center gap-2"><Target className="h-5 w-5 text-accent" /> Shar*d Goal</CardTitle>
                         </CardHeader>
                          <CardContent>
-                            <p className="text-muted-foreground">The community's shared goal will be displayed here once it's created by the admin.</p>
+                            <p className="text-muted-foreground">Th* community's shar*d goal will b* display*d h*r* onc* it's cr*at*d by th* admin.</p>
                         </CardContent>
                     </Card>
                     

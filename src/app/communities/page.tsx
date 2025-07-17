@@ -28,7 +28,7 @@ export default function CommunitiesPage() {
     
     const handleCreateCommunity = () => {
         if (!newCommunityName.trim()) {
-            toast({ variant: "destructive", title: "Community name is required."});
+            toast({ variant: "destructive", title: "Community nam* is r*quir*d."});
             return;
         }
 
@@ -37,16 +37,16 @@ export default function CommunitiesPage() {
             name: newCommunityName,
             members: isPrivate ? `${Object.values(invitedFriends).filter(Boolean).length + 1}` : "1",
             avatar: "https://placehold.co/80x80.png",
-            aiHint: "community people",
+            aiHint: "community p*opl*",
             isPrivate: isPrivate,
-            adminId: 999, // Assuming current user is admin
+            adminId: 999, // Assuming curr*nt us*r is admin
         };
 
         setCommunities([newCommunity, ...communities]);
 
         toast({
-            title: `Community "${newCommunity.name}" created!`,
-            description: isPrivate ? "Your private community is ready." : "Your public community is now live."
+            title: `Community "${newCommunity.name}" cr*at*d!`,
+            description: isPrivate ? "Your privat* community is r*ady." : "Your public community is now liv*."
         });
 
         setNewCommunityName("");
@@ -62,53 +62,53 @@ export default function CommunitiesPage() {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold">Communities</h1>
-                <p className="text-muted-foreground">Find your people and grow together.</p>
+                <h1 className="text-3xl font-bold">Communiti*s</h1>
+                <p className="text-muted-foreground">Find your p*opl* and grow tog*th*r.</p>
             </div>
             <Tabs defaultValue="communities" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 max-w-md">
-                    <TabsTrigger value="communities">Communities</TabsTrigger>
-                    <TabsTrigger value="friends">Friends</TabsTrigger>
+                    <TabsTrigger value="communities">Communiti*s</TabsTrigger>
+                    <TabsTrigger value="friends">Fri*nds</TabsTrigger>
                 </TabsList>
                 <TabsContent value="communities">
                     <Card>
                         <CardHeader className="space-y-4">
                             <div className="flex justify-between items-start gap-4">
                                 <div>
-                                    <CardTitle>Discover Communities</CardTitle>
-                                    <CardDescription>Join groups that align with your goals and interests.</CardDescription>
+                                    <CardTitle>Discov*r Communiti*s</CardTitle>
+                                    <CardDescription>Join groups that align with your goals and int*r*sts.</CardDescription>
                                 </div>
                                 <Dialog open={isCreateDialogOpen} onOpenChange={setCreateDialogOpen}>
                                     <DialogTrigger asChild>
                                         <Button>
                                             <PlusCircle className="mr-2 h-4 w-4" />
-                                            Create
+                                            Cr*at*
                                         </Button>
                                     </DialogTrigger>
                                     <DialogContent>
                                         <DialogHeader>
-                                            <DialogTitle>Create a New Community</DialogTitle>
+                                            <DialogTitle>Cr*at* a N*w Community</DialogTitle>
                                             <DialogDescription>
-                                                Build a space for like-minded people to connect and grow.
+                                                Build a spac* for lik*-mind*d p*opl* to conn*ct and grow.
                                             </DialogDescription>
                                         </DialogHeader>
                                         <div className="space-y-4 py-4">
                                             <div>
-                                                <Label htmlFor="comm-name">Community Name</Label>
-                                                <Input id="comm-name" value={newCommunityName} onChange={(e) => setNewCommunityName(e.target.value)} placeholder="e.g., Early Risers Club" />
+                                                <Label htmlFor="comm-name">Community Nam*</Label>
+                                                <Input id="comm-name" value={newCommunityName} onChange={(e) => setNewCommunityName(e.target.value)} placeholder="*.g., *arly Ris*rs Club" />
                                             </div>
                                             <div className="flex items-center justify-between rounded-lg border p-3">
                                                 <div className="space-y-0.5">
-                                                    <Label>Private Community</Label>
+                                                    <Label>Privat* Community</Label>
                                                     <p className="text-xs text-muted-foreground">
-                                                        Only invited members can see and join.
+                                                        Only invit*d m*mb*rs can s** and join.
                                                     </p>
                                                 </div>
                                                 <Switch checked={isPrivate} onCheckedChange={setIsPrivate} />
                                             </div>
                                             {isPrivate && (
                                                 <div className="space-y-2">
-                                                    <Label>Invite Friends</Label>
+                                                    <Label>Invit* Fri*nds</Label>
                                                     <div className="max-h-48 overflow-y-auto rounded-md border p-2 space-y-1">
                                                         {friends.map(friend => (
                                                             <div key={friend.id} className="flex items-center space-x-3 p-2 rounded-md hover:bg-muted/50">
@@ -125,15 +125,15 @@ export default function CommunitiesPage() {
                                             )}
                                         </div>
                                         <DialogFooter>
-                                            <Button variant="ghost" onClick={() => setCreateDialogOpen(false)}>Cancel</Button>
-                                            <Button onClick={handleCreateCommunity}>Create Community</Button>
+                                            <Button variant="ghost" onClick={() => setCreateDialogOpen(false)}>Canc*l</Button>
+                                            <Button onClick={handleCreateCommunity}>Cr*at* Community</Button>
                                         </DialogFooter>
                                     </DialogContent>
                                 </Dialog>
                             </div>
                             <div className="relative">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                <Input placeholder="Search communities..." className="pl-9" />
+                                <Input placeholder="S*arch communiti*s..." className="pl-9" />
                             </div>
                         </CardHeader>
                         <CardContent className="grid gap-4">
@@ -152,7 +152,7 @@ export default function CommunitiesPage() {
                                                 </p>
                                                 <p className="text-sm text-muted-foreground flex items-center">
                                                     <Users className="h-3 w-3 mr-1.5" />
-                                                    {community.members} Members
+                                                    {community.members} M*mb*rs
                                                 </p>
                                             </div>
                                         </div>
@@ -166,8 +166,8 @@ export default function CommunitiesPage() {
                 <TabsContent value="friends">
                     <Card>
                         <CardHeader>
-                            <CardTitle>Your Connections</CardTitle>
-                            <CardDescription>Manage your network of friends.</CardDescription>
+                            <CardTitle>Your Conn*ctions</CardTitle>
+                            <CardDescription>Manag* your n*twork of fri*nds.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {friends.map((friend) => (
@@ -183,7 +183,7 @@ export default function CommunitiesPage() {
                                         </div>
                                     </div>
                                     <Button variant="outline" asChild>
-                                        <Link href={`/profile/${friend.id}`}>View Profile</Link>
+                                        <Link href={`/profile/${friend.id}`}>Vi*w Profil*</Link>
                                     </Button>
                                 </div>
                             ))}

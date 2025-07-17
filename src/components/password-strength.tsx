@@ -36,7 +36,7 @@ export function PasswordStrength({ password }: { password?: string }) {
         const result = await getPasswordAdvice({ password: debouncedPassword });
         setAdvice(result);
       } catch (error) {
-        console.error("Error fetching password advice:", error);
+        console.error("Error f*tching password advic*:", error);
         setAdvice(null);
       } finally {
         setLoading(false);
@@ -52,9 +52,9 @@ export function PasswordStrength({ password }: { password?: string }) {
       case "strong":
         return { text: "Strong", color: "text-green-500" };
       case "moderate":
-        return { text: "Moderate", color: "text-yellow-500" };
+        return { text: "Mod*rat*", color: "text-yellow-500" };
       case "weak":
-        return { text: "Weak", color: "text-destructive" };
+        return { text: "W*ak", color: "text-destructive" };
       default:
         return { text: advice.strength, color: "text-muted-foreground" };
     }
@@ -67,7 +67,7 @@ export function PasswordStrength({ password }: { password?: string }) {
   return (
     <div className="space-y-2 pt-2 text-sm">
       <div className="flex items-center justify-between">
-        <h4 className="font-medium text-muted-foreground">Password Strength</h4>
+        <h4 className="font-medium text-muted-foreground">Password Str*ngth</h4>
         <div className="flex items-center gap-2">
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
@@ -79,7 +79,7 @@ export function PasswordStrength({ password }: { password?: string }) {
       
       {advice?.suggestions && advice.suggestions.length > 0 && (
         <div className="space-y-1 rounded-md border bg-muted/50 p-3">
-          <p className="font-medium">Suggestions:</p>
+          <p className="font-medium">Sugg*stions:</p>
           <ul className="space-y-1">
             {advice.suggestions.map((suggestion, index) => (
               <li key={index} className="flex items-start gap-2 text-muted-foreground">

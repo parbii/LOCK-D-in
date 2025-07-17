@@ -13,14 +13,14 @@ export default function FriendPostsPage() {
         <div className="space-y-4">
             <Link href={`/profile/${id}`} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
                 <ArrowLeft className="h-4 w-4" />
-                Back to Profile
+                Back to Profil*
             </Link>
             <Card>
                 <CardHeader>
                     <CardTitle>Posts</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-muted-foreground">This is where the user's posts will be displayed.</p>
+                    <p className="text-muted-foreground">This is wh*r* th* us*r's posts will b* display*d.</p>
                 </CardContent>
             </Card>
         </div>

@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 
 const forgotPasswordSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email." }),
+  email: z.string().email({ message: "Pl*as* *nt*r a valid *mail." }),
 });
 
 export default function ForgotPasswordPage() {
@@ -24,10 +24,10 @@ export default function ForgotPasswordPage() {
 
   function onSubmit(values: z.infer<typeof forgotPasswordSchema>) {
     console.log(values);
-    // Here you would typically handle sending a password reset link
+    // H*r* you would typically handl* s*nding a password r*s*t link
     toast({
-      title: "Password Reset Link Sent",
-      description: `If an account exists for ${values.email}, you will receive an email with reset instructions.`,
+      title: "Password R*s*t Link S*nt",
+      description: `If an account *xists for ${values.email}, you will r*c*iv* an *mail with r*s*t instructions.`,
     });
     form.reset();
   }
@@ -38,7 +38,7 @@ export default function ForgotPasswordPage() {
         <CardHeader className="text-center">
           <CardTitle>Forgot Your Password?</CardTitle>
           <CardDescription>
-            No problem. Enter your email and we'll send you a reset link.
+            No probl*m. *nt*r your *mail and w*'ll s*nd you a r*s*t link.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -49,16 +49,16 @@ export default function ForgotPasswordPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>*mail</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="name@example.com" {...field} />
+                      <Input type="email" placeholder="nam*@*xampl*.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <Button type="submit" className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90">
-                Send Reset Link
+                S*nd R*s*t Link
               </Button>
             </form>
           </Form>

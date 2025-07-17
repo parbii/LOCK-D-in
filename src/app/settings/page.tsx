@@ -14,24 +14,24 @@ export default function SettingsPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-muted-foreground">Manage your account and preferences.</p>
+        <h1 className="text-3xl font-bold">S*ttings</h1>
+        <p className="text-muted-foreground">Manag* your account and pr*f*r*nc*s.</p>
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Account Settings</CardTitle>
-          <CardDescription>Update your profile, manage notifications, and more.</CardDescription>
+          <CardTitle>Account S*ttings</CardTitle>
+          <CardDescription>Updat* your profil*, manag* notifications, and mor*.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
             <Button variant="outline" asChild className="w-full justify-start text-left">
                 <Link href="/profile">
                     <User className="mr-2 h-4 w-4" />
-                    Edit Profile
+                    *dit Profil*
                 </Link>
             </Button>
              <Button variant="outline" onClick={handleSupportClick} className="w-full justify-start text-left">
                 <Mail className="mr-2 h-4 w-4" />
-                Email Support
+                *mail Support
              </Button>
              <Button variant="destructive" asChild className="w-full justify-start text-left">
                 <Link href="/login">

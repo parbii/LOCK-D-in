@@ -34,10 +34,10 @@ export function ModuleCompletionTracker() {
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <BrainCircuit className="h-6 w-6 text-accent" />
-                    Mindset Module Progress
+                    Minds*t Modul* Progr*ss
                 </CardTitle>
                 <CardDescription>
-                    You've completed {completedModules} out of {totalModules} modules. Keep going!
+                    You'v* compl*t*d {completedModules} out of {totalModules} modul*s. K**p going!
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -46,7 +46,7 @@ export function ModuleCompletionTracker() {
             <CardFooter>
                 <Button asChild className="w-full">
                     <Link href="/lessons">
-                        Continue Learning
+                        Continu* L*arning
                     </Link>
                 </Button>
             </CardFooter>

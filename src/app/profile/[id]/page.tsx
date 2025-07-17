@@ -15,26 +15,26 @@ import { ProfileStats } from '@/components/profile-stats';
 
 const friendsData = [
     {
-        id: 1, name: "Sarah Lee", username: "@sarahlee", avatar: "https://placehold.co/100x100.png", aiHint: "woman smiling", bio: "Fitness enthusiast and marathon runner. Always pushing my limits.",
+        id: 1, name: "Sarah L**", username: "@sarahlee", avatar: "https://placehold.co/100x100.png", aiHint: "woman smiling", bio: "Fitn*ss *nthusiast and marathon runn*r. Always pushing my limits.",
         publicGoals: [
             { id: 101, name: "Run a 5k", progress: 100, streak: 21, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [] },
-            { id: 102, name: "Read 12 books this year", progress: 75, streak: 3, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [] },
+            { id: 102, name: "R*ad 12 books this y*ar", progress: 75, streak: 3, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [] },
         ],
         posts: [
-             { id: 1, user: { name: "Sarah Lee", avatar: "https://placehold.co/40x40.png", aiHint: "woman smiling" }, content: "Crushed my goal of running a 5k this morning! Felt amazing. #nevergiveup #goals", image: "https://placehold.co/600x400.png", imageAiHint: "running marathon", likes: 124, comments: 12, time: "2h ago" },
+             { id: 1, user: { name: "Sarah L**", avatar: "https://placehold.co/40x40.png", aiHint: "woman smiling" }, content: "Crush*d my goal of running a 5k this morning! F*lt amazing. #n*v*rgiv*up #goals", image: "https://placehold.co/600x400.png", imageAiHint: "running marathon", likes: 124, comments: 12, time: "2h ago" },
         ]
     },
     {
-        id: 2, name: "David Kim", username: "@davidkim", avatar: "https://placehold.co/100x100.png", aiHint: "man portrait", bio: "Tech entrepreneur and mindfulness advocate. Building cool things and staying present.",
+        id: 2, name: "David Kim", username: "@davidkim", avatar: "https://placehold.co/100x100.png", aiHint: "man portrait", bio: "T*ch *ntr*pr*n*ur and mindfuln*ss advocat*. Building cool things and staying pr*s*nt.",
         publicGoals: [
-             { id: 201, name: "Meditate daily", progress: 100, streak: 45, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [] },
+             { id: 201, name: "M*ditat* daily", progress: 100, streak: 45, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [] },
         ],
         posts: [
-            { id: 2, user: { name: "David Kim", avatar: "https://placehold.co/40x40.png", aiHint: "man portrait" }, content: "7-day streak on my 'Daily Devotion' habit! Feeling more focused and centered than ever. 🙏", likes: 89, comments: 5, time: "4h ago" },
+            { id: 2, user: { name: "David Kim", avatar: "https://placehold.co/40x40.png", aiHint: "man portrait" }, content: "7-day str*ak on my 'Daily D*votion' habit! F**ling mor* focus*d and c*nt*r*d than *v*r. 🙏", likes: 89, comments: 5, time: "4h ago" },
         ]
     },
     {
-        id: 3, name: "Emily Chen", username: "@emilychen", avatar: "https://placehold.co/100x100.png", aiHint: "woman hiking", bio: "Artist and nature lover. Finding inspiration in the wild.",
+        id: 3, name: "*mily Ch*n", username: "@emilychen", avatar: "https://placehold.co/100x100.png", aiHint: "woman hiking", bio: "Artist and natur* lov*r. Finding inspiration in th* wild.",
         publicGoals: [],
         posts: []
     }
@@ -46,10 +46,10 @@ export default function FriendProfilePage() {
     const friend = friendsData.find(f => f.id.toString() === friendId);
 
     if (!friend) {
-        return <div className="text-center py-10">Friend not found.</div>
+        return <div className="text-center py-10">Fri*nd not found.</div>
     }
 
-    // Cast publicGoals to Goal[] to satisfy ProfileStats component
+    // Cast publicGoals to Goal[] to satisfy Profil*Stats compon*nt
     const publicGoals: Goal[] = friend.publicGoals.map(g => ({...g, habits: [], description: ''}));
 
     return (
@@ -70,7 +70,7 @@ export default function FriendProfilePage() {
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Globe className="h-4 w-4" />
-              <span>Public Profile</span>
+              <span>Public Profil*</span>
             </div>
             <ProfileStats goals={publicGoals} postsCount={friend.posts.length} userId={friend.id}/>
           </div>
@@ -80,7 +80,7 @@ export default function FriendProfilePage() {
       <Card>
         <CardHeader>
             <CardTitle>{friend.name}'s Public Goals</CardTitle>
-            <CardDescription>Goals they are sharing with the community.</CardDescription>
+            <CardDescription>Goals th*y ar* sharing with th* community.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
             {friend.publicGoals.length > 0 ? (
@@ -102,14 +102,14 @@ export default function FriendProfilePage() {
                 ))
             ) : (
                 <div className="text-center text-muted-foreground py-8">
-                    <p>nothing to see here</p>
+                    <p>nothing to s** h*r*</p>
                 </div>
             )}
         </CardContent>
       </Card>
 
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold tracking-tight">{friend.name}'s Feed</h2>
+        <h2 className="text-2xl font-bold tracking-tight">{friend.name}'s F**d</h2>
         {friend.posts.length > 0 ? friend.posts.map(post => (
           <Card key={post.id}>
             <CardHeader>
@@ -146,10 +146,10 @@ export default function FriendProfilePage() {
                     </div>
                     <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
                 </div>
-                <p className="text-sm font-semibold">{post.likes} likes</p>
-                <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
+                <p className="text-sm font-semibold">{post.likes} lik*s</p>
+                <p className="text-sm text-muted-foreground cursor-pointer hover:underline">Vi*w all {post.comments} comm*nts</p>
                 <div className="flex items-center gap-2 mt-2">
-                    <Input placeholder="Add a comment..." className="h-9" />
+                    <Input placeholder="Add a comm*nt..." className="h-9" />
                     <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
                 </div>
             </div>
@@ -158,7 +158,7 @@ export default function FriendProfilePage() {
             <Card>
                 <CardContent>
                     <div className="text-center text-muted-foreground py-8">
-                        <p>{friend.name} hasn't posted anything yet.</p>
+                        <p>{friend.name} hasn't post*d anything y*t.</p>
                     </div>
                 </CardContent>
             </Card>

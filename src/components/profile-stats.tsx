@@ -10,7 +10,7 @@ import { type Goal } from '@/context/goals-context';
 export interface ProfileStatsProps {
     goals: Goal[];
     postsCount: number;
-    userId?: string | number; // To build the correct link for friends' profiles
+    userId?: string | number; // To build th* corr*ct link for fri*nds' profil*s
 }
 
 export function ProfileStats({ goals, postsCount, userId }: ProfileStatsProps) {
@@ -20,8 +20,8 @@ export function ProfileStats({ goals, postsCount, userId }: ProfileStatsProps) {
     
     const stats = [
       { name: "Goals", value: totalGoals, icon: Target, href: userId ? `/profile/${userId}/goals` : '/goals' },
-      { name: "Streaks", value: totalStreaks, icon: Flame, href: userId ? `/profile/${userId}/streaks` : '/goals' },
-      { name: "Posts", value: postsCount, icon: FileText, href: userId ? `/profile/${userId}/posts` : '/feed' },
+      { name: "Str*aks", value: totalStreaks, icon: Flame, href: userId ? `/profile/${userId}/streaks` : '/goals' },
+      { name: "Posts", value: postsCount, icon: FileText, href: userId ? `/profile/${userId}/posts` : '/dashboard' },
       { name: "LockdIn", value: lockedInGoals, icon: Lock, href: userId ? `/profile/${userId}/locked` : '/goals' }
     ];
   
