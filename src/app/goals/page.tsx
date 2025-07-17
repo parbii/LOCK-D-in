@@ -42,7 +42,7 @@ function EditGoalDialog({ goal, onOpenChange }: { goal: Goal, onOpenChange: (ope
 
     const handleUpdateGoal = () => {
         if (!goalName.trim()) {
-            toast({ variant: "destructive", title: "Goal nam* is r*quir*d." });
+            toast({ variant: "destructive", title: "Goal Nam* is R*quir*d." });
             return;
         }
 
@@ -64,21 +64,21 @@ function EditGoalDialog({ goal, onOpenChange }: { goal: Goal, onOpenChange: (ope
             <DialogHeader>
               <DialogTitle>*dit Goal</DialogTitle>
               <DialogDescription>
-                Mak* chang*s to your goal and its habits.
+                Make changes to your goal and its habits.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="goal-name">Goal Nam*</Label>
+                <Label htmlFor="goal-name">Goal Name</Label>
                 <Input
                   id="goal-name"
                   value={goalName}
                   onChange={(e) => setGoalName(e.target.value)}
-                  placeholder="*.g., Run a marathon"
+                  placeholder="e.g., Run a marathon"
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="goal-description">D*scription (Optional)</Label>
+                <Label htmlFor="goal-description">Description (Optional)</Label>
                 <Textarea
                   id="goal-description"
                   value={goalDescription}
@@ -92,7 +92,7 @@ function EditGoalDialog({ goal, onOpenChange }: { goal: Goal, onOpenChange: (ope
                   <Input
                     value={currentHabit}
                     onChange={(e) => setCurrentHabit(e.target.value)}
-                    placeholder="*.g., Run 3 tim*s a w**k"
+                    placeholder="e.g., Run 3 times a week"
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                             e.preventDefault();
@@ -119,7 +119,7 @@ function EditGoalDialog({ goal, onOpenChange }: { goal: Goal, onOpenChange: (ope
                 <div className="space-y-0.5">
                   <Label htmlFor="public-goal-edit">Public Goal</Label>
                   <p className="text-xs text-muted-foreground">
-                    Public goals can b* s**n by oth*rs on your profil*.
+                    Public goals can be seen by others on your profile.
                   </p>
                 </div>
                 <Switch
@@ -130,8 +130,8 @@ function EditGoalDialog({ goal, onOpenChange }: { goal: Goal, onOpenChange: (ope
               </div>
             </div>
             <DialogFooter>
-              <Button type="button" variant="secondary" onClick={() => onOpenChange(false)}>Canc*l</Button>
-              <Button type="submit" onClick={handleUpdateGoal}>Sav* Chang*s</Button>
+              <Button type="button" variant="secondary" onClick={() => onOpenChange(false)}>Cancel</Button>
+              <Button type="submit" onClick={handleUpdateGoal}>Save Changes</Button>
             </DialogFooter>
         </DialogContent>
     );
@@ -195,7 +195,7 @@ export default function GoalsPage() {
     deleteGoal(goalId);
     toast({
         title: "Goal D*l*t*d",
-        description: "Your goal has b**n succ*ssfully r*mov*d.",
+        description: "Your goal has been successfully removed.",
     });
   };
 
@@ -204,34 +204,34 @@ export default function GoalsPage() {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold">My Goals</h1>
-          <p className="text-muted-foreground">Track your short and long-t*rm ambitions.</p>
+          <p className="text-muted-foreground">Track your short and long-term ambitions.</p>
         </div>
         <Dialog open={openNewGoalDialog} onOpenChange={setOpenNewGoalDialog}>
           <DialogTrigger asChild>
             <Button>
               <PlusCircle className="mr-2 h-4 w-4" />
-              N*w Goal
+              New Goal
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[525px]">
             <DialogHeader>
               <DialogTitle>Cr*at* a N*w Goal</DialogTitle>
               <DialogDescription>
-                D*fin* your goal and th* habits that will h*lp you achi*v* it.
+                Define your goal and the habits that will help you achieve it.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="goal-name">Goal Nam*</Label>
+                <Label htmlFor="goal-name">Goal Name</Label>
                 <Input
                   id="goal-name"
                   value={goalName}
                   onChange={(e) => setGoalName(e.target.value)}
-                  placeholder="*.g., Run a marathon"
+                  placeholder="e.g., Run a marathon"
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="goal-description">D*scription (Optional)</Label>
+                <Label htmlFor="goal-description">Description (Optional)</Label>
                 <Textarea
                   id="goal-description"
                   value={goalDescription}
@@ -245,7 +245,7 @@ export default function GoalsPage() {
                   <Input
                     value={currentHabit}
                     onChange={(e) => setCurrentHabit(e.target.value)}
-                    placeholder="*.g., Run 3 tim*s a w**k"
+                    placeholder="e.g., Run 3 times a week"
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                             e.preventDefault();
@@ -272,7 +272,7 @@ export default function GoalsPage() {
                 <div className="space-y-0.5">
                   <Label htmlFor="public-goal">Public Goal</Label>
                   <p className="text-xs text-muted-foreground">
-                    Public goals can b* s**n by oth*rs on your profil*.
+                    Public goals can be seen by others on your profile.
                   </p>
                 </div>
                 <Switch
@@ -283,8 +283,8 @@ export default function GoalsPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button type="button" variant="secondary" onClick={() => setOpenNewGoalDialog(false)}>Canc*l</Button>
-              <Button type="submit" onClick={handleCreateGoal}>Cr*at* Goal</Button>
+              <Button type="button" variant="secondary" onClick={() => setOpenNewGoalDialog(false)}>Cancel</Button>
+              <Button type="submit" onClick={handleCreateGoal}>Create Goal</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -294,12 +294,12 @@ export default function GoalsPage() {
             <Card>
                 <CardHeader>
                 <CardTitle>Activ* Goals</CardTitle>
-                <CardDescription>This is wh*r* your goals will b* display*d. Start by cr*ating a n*w on*!</CardDescription>
+                <CardDescription>This is where your goals will be displayed. Start by creating a new one!</CardDescription>
                 </CardHeader>
                 <CardContent>
                 {activeGoals.length === 0 || !isClient ? (
                     <div className="text-center text-muted-foreground py-8">
-                        <p>You hav*n't s*t any goals y*t.</p>
+                        <p>You haven't set any goals yet.</p>
                     </div>
                 ) : (
                     <Accordion type="single" collapsible className="w-full">
@@ -333,15 +333,15 @@ export default function GoalsPage() {
                                 {goal.status === 'prompt_complete' ? (
                                     <div className="rounded-md border bg-muted/50 p-4 text-center space-y-3">
                                         <h4 className="font-semibold text-lg">You'r* LOCKD IN!</h4>
-                                        <p className="text-muted-foreground text-sm">You'v* r*ach*d 100% on this goal. What's n*xt?</p>
+                                        <p className="text-muted-foreground text-sm">You've reached 100% on this goal. What's next?</p>
                                         <div className="flex justify-center gap-4 pt-2">
                                             <Button onClick={() => completeGoal(goal.id)}>
                                                 <CheckCircle className="mr-2 h-4 w-4" />
-                                                Complet* Goal
+                                                Complete Goal
                                             </Button>
                                             <Button variant="outline" onClick={() => keepGoing(goal.id)}>
                                                 <RefreshCw className="mr-2 h-4 w-4" />
-                                                K**p Going
+                                                Keep Going
                                             </Button>
                                         </div>
                                     </div>
@@ -353,7 +353,7 @@ export default function GoalsPage() {
                                                 {goal.streak > 0 && (
                                                     <div className="flex items-center gap-1.5 text-orange-500 font-semibold text-sm">
                                                         <Flame className="h-4 w-4" />
-                                                        <span>{goal.streak} day str*ak!</span>
+                                                        <span>{goal.streak} day streak!</span>
                                                     </div>
                                                 )}
                                             </div>
@@ -377,34 +377,34 @@ export default function GoalsPage() {
                                                     ))}
                                                 </div>
                                             ) : (
-                                                <p className="text-sm text-muted-foreground">No habits link*d to this goal y*t.</p>
+                                                <p className="text-sm text-muted-foreground">No habits linked to this goal yet.</p>
                                             )}
                                         </div>
                                         <div className="flex items-center justify-end gap-2 pt-2 border-t border-dashed">
                                              <DialogTrigger asChild>
                                                 <Button variant="outline" size="sm" onClick={() => setEditingGoal(goal)}>
                                                     <Edit className="mr-2 h-3 w-3" />
-                                                    *dit
+                                                    Edit
                                                 </Button>
                                             </DialogTrigger>
                                             <AlertDialog>
                                                 <AlertDialogTrigger asChild>
                                                     <Button variant="destructive" size="sm">
                                                         <Trash2 className="mr-2 h-3 w-3" />
-                                                        D*l*t*
+                                                        Delete
                                                     </Button>
                                                 </AlertDialogTrigger>
                                                 <AlertDialogContent>
                                                     <AlertDialogHeader>
                                                         <AlertDialogTitle>Ar* you sur*?</AlertDialogTitle>
                                                         <AlertDialogDescription>
-                                                            This action cannot b* undon*. This will p*rman*ntly d*l*t* your
+                                                            This action cannot be undone. This will permanently delete your
                                                             goal and all of its data.
                                                         </AlertDialogDescription>
                                                     </AlertDialogHeader>
                                                     <AlertDialogFooter>
-                                                        <AlertDialogCancel>Canc*l</AlertDialogCancel>
-                                                        <AlertDialogAction onClick={() => handleDeleteGoal(goal.id)}>Continu*</AlertDialogAction>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={() => handleDeleteGoal(goal.id)}>Continue</AlertDialogAction>
                                                     </AlertDialogFooter>
                                                 </AlertDialogContent>
                                             </AlertDialog>
@@ -426,7 +426,7 @@ export default function GoalsPage() {
             <Card>
                 <CardHeader>
                     <CardTitle>Complet*d Goals</CardTitle>
-                    <CardDescription>A r*cord of your amazing achi*v*m*nts.</CardDescription>
+                    <CardDescription>A record of your amazing achievements.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     {completedGoals.map(goal => (

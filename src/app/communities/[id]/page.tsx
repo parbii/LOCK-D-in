@@ -36,7 +36,7 @@ function CreateSharedGoal({ community }: { community: Community }) {
 
     const handleCreateGoal = () => {
         if (!goalName.trim()) {
-            toast({ variant: "destructive", title: "Goal nam* is r*quir*d." });
+            toast({ variant: "destructive", title: "Goal Nam* is R*quir*d." });
             return;
         }
         
@@ -45,7 +45,7 @@ function CreateSharedGoal({ community }: { community: Community }) {
         
         toast({
             title: "Shar*d Goal Cr*at*d!",
-            description: `Th* goal "${goalName}" has b**n shar*d with ${community.name}.`
+            description: `The goal "${goalName}" has been shared with ${community.name}.`
         });
 
         setGoalName("");
@@ -57,25 +57,25 @@ function CreateSharedGoal({ community }: { community: Community }) {
         <Card>
             <CardHeader>
                 <CardTitle>Cr*at* a Shar*d Goal</CardTitle>
-                <CardDescription>S*t a goal for th* *ntir* community to work on tog*th*r.</CardDescription>
+                <CardDescription>Set a goal for the entire community to work on together.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="grid gap-2">
-                    <Label htmlFor="goal-name">Goal Nam*</Label>
+                    <Label htmlFor="goal-name">Goal Name</Label>
                     <Input
                     id="goal-name"
                     value={goalName}
                     onChange={(e) => setGoalName(e.target.value)}
-                    placeholder="*.g., R*ad a book tog*th*r"
+                    placeholder="e.g., Read a book together"
                     />
                 </div>
                 <div className="grid gap-2">
-                    <Label>Associat*d Habits</Label>
+                    <Label>Associated Habits</Label>
                     <div className="flex gap-2">
                     <Input
                         value={currentHabit}
                         onChange={(e) => setCurrentHabit(e.target.value)}
-                        placeholder="*.g., R*ad 1 chapt*r a day"
+                        placeholder="e.g., Read 1 chapter a day"
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
@@ -100,7 +100,7 @@ function CreateSharedGoal({ community }: { community: Community }) {
                 </div>
             </CardContent>
             <CardFooter>
-                <Button onClick={handleCreateGoal}>Cr*at* and Shar* Goal</Button>
+                <Button onClick={handleCreateGoal}>Create and Share Goal</Button>
             </CardFooter>
         </Card>
     );
@@ -115,7 +115,7 @@ function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
                 </CardHeader>
                 <CardContent>
                     <div className="text-center text-muted-foreground py-8">
-                        <p>No posts from this community y*t. B* th* first to shar*!</p>
+                        <p>No posts from this community yet. Be the first to share!</p>
                     </div>
                 </CardContent>
             </Card>
@@ -158,10 +158,10 @@ function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
                             </div>
                             <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
                         </div>
-                        <p className="text-sm font-semibold">{post.likes} lik*s</p>
-                        <p className="text-sm text-muted-foreground cursor-pointer hover:underline">Vi*w all {post.comments} comm*nts</p>
+                        <p className="text-sm font-semibold">{post.likes} likes</p>
+                        <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
                         <div className="flex items-center gap-2 mt-2">
-                            <Input placeholder="Add a comm*nt..." className="h-9" />
+                            <Input placeholder="Add a comment..." className="h-9" />
                             <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
                         </div>
                     </div>
@@ -193,14 +193,14 @@ export default function CommunityDetailPage() {
             <div>
                 <Link href="/communities" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
                     <ArrowLeft className="h-4 w-4" />
-                    Back to Communiti*s
+                    Back to Communities
                 </Link>
                 <Card>
                     <CardHeader>
                         <CardTitle>Community Not Found</CardTitle>
                     </CardHeader>
                      <CardContent>
-                        <p>Th* community you'r* looking for do*sn't *xist.</p>
+                        <p>The community you're looking for doesn't exist.</p>
                     </CardContent>
                 </Card>
             </div>
@@ -219,7 +219,7 @@ export default function CommunityDetailPage() {
         setIsJoined(true);
         toast({
             title: "W*lcom* to th* community!",
-            description: `You'v* succ*ssfully join*d ${community.name}.`,
+            description: `You've successfully joined ${community.name}.`,
         });
     };
 
@@ -227,7 +227,7 @@ export default function CommunityDetailPage() {
         <div className="space-y-6">
              <Link href="/communities" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
                 <ArrowLeft className="h-4 w-4" />
-                Back to All Communiti*s
+                Back to All Communities
             </Link>
 
             <Card>
@@ -242,14 +242,14 @@ export default function CommunityDetailPage() {
                                 <CardTitle className="text-3xl">{community.name}</CardTitle>
                                 <div className="flex items-center text-muted-foreground">
                                     {community.isPrivate ? <Lock className="h-4 w-4 mr-2" /> : <Globe className="h-4 w-4 mr-2" />}
-                                    <span className="mr-4">{community.isPrivate ? "Privat*" : "Public"} Community</span>
+                                    <span className="mr-4">{community.isPrivate ? "Private" : "Public"} Community</span>
                                     <Users className="h-4 w-4 mr-2" />
-                                    <span>{community.members} M*mb*rs</span>
+                                    <span>{community.members} Members</span>
                                 </div>
                             </div>
                         </div>
                         <Button onClick={handleJoinClick} disabled={isJoined}>
-                            {isJoined ? "Join*d" : "Join Community"}
+                            {isJoined ? "Joined" : "Join Community"}
                         </Button>
                     </div>
                 </CardHeader>
@@ -265,7 +265,7 @@ export default function CommunityDetailPage() {
                             <CardTitle className="flex items-center gap-2"><Target className="h-5 w-5 text-accent" /> Shar*d Goal</CardTitle>
                         </CardHeader>
                          <CardContent>
-                            <p className="text-muted-foreground">Th* community's shar*d goal will b* display*d h*r* onc* it's cr*at*d by th* admin.</p>
+                            <p className="text-muted-foreground">The community's shared goal will be displayed here once it's created by the admin.</p>
                         </CardContent>
                     </Card>
                     

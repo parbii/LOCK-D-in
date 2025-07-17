@@ -77,7 +77,7 @@ function CreatePost() {
                         <DialogContent>
                             <DialogHeader>
                                 <DialogTitle>Attach a Goal</DialogTitle>
-                                <DialogDescription>S*l*ct on* of your activ* goals to shar* in your post.</DialogDescription>
+                                <DialogDescription>Select one of your active goals to share in your post.</DialogDescription>
                             </DialogHeader>
                             <div className="max-h-80 overflow-y-auto py-4 space-y-2">
                                 {activeGoals.map(goal => (
@@ -93,7 +93,7 @@ function CreatePost() {
                                         </div>
                                     </button>
                                 ))}
-                                {activeGoals.length === 0 && <p className="text-sm text-center text-muted-foreground py-4">You hav* no activ* goals to attach.</p>}
+                                {activeGoals.length === 0 && <p className="text-sm text-center text-muted-foreground py-4">You have no active goals to attach.</p>}
                             </div>
                         </DialogContent>
                     </Dialog>
@@ -126,7 +126,7 @@ function DailyHabitsTracker() {
                     <Target className="h-6 w-6 text-accent" />
                     Today's Habits
                 </CardTitle>
-                <CardDescription>Ch*ck off your habits for th* day to build your str*ak.</CardDescription>
+                <CardDescription>Check off your habits for the day to build your streak.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 {activeGoals.map(goal => (
@@ -149,7 +149,7 @@ function DailyHabitsTracker() {
                         {goal.streak > 0 && (
                             <div className="flex items-center justify-end gap-1.5 text-orange-500 font-semibold text-sm">
                                 <Flame className="h-4 w-4" />
-                                <span>{goal.streak} day str*ak!</span>
+                                <span>{goal.streak} day streak!</span>
                             </div>
                         )}
                         
@@ -205,7 +205,7 @@ function RsvpEvents() {
             {rsvpdEvents.map(event => (
                  <Card key={event.id}>
                     <CardHeader>
-                        <p className="text-sm text-muted-foreground">You RSVP'd to an upcoming *v*nt:</p>
+                        <p className="text-sm text-muted-foreground">You RSVP'd to an upcoming event:</p>
                         <CardTitle>{event.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -222,7 +222,7 @@ function RsvpEvents() {
                             <span>{event.attendees} going</span>
                         </div>
                          <Button asChild className="mt-4 w-full">
-                            <Link href={`/service-events`}>Vi*w *v*nt</Link>
+                            <Link href={`/service-events`}>View Event</Link>
                          </Button>
                     </CardContent>
                  </Card>
@@ -277,10 +277,10 @@ export default function DashboardPage() {
                     </div>
                     <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
                 </div>
-                <p className="text-sm font-semibold">{post.likes} lik*s</p>
-                <p className="text-sm text-muted-foreground cursor-pointer hover:underline">Vi*w all {post.comments} comm*nts</p>
+                <p className="text-sm font-semibold">{post.likes} likes</p>
+                <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
                 <div className="flex items-center gap-2 mt-2">
-                    <Input placeholder="Add a comm*nt..." className="h-9" />
+                    <Input placeholder="Add a comment..." className="h-9" />
                     <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
                 </div>
             </div>

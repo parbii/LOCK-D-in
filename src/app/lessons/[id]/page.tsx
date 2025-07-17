@@ -53,13 +53,13 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
         setSubmitted(true);
         toast({
             title: "Modul* Compl*t*!",
-            description: `Gr*at job on finishing "${module.title}".`,
+            description: `Great job on finishing "${module.title}".`,
         });
     } else {
         toast({
             variant: "destructive",
             title: "Not Quit*",
-            description: "Som* answ*rs w*r* incorr*ct or missing. Pl*as* r*vi*w and try again.",
+            description: "Some answers were incorrect or missing. Please review and try again.",
         });
     }
   };
@@ -78,7 +78,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
     setSubmitted(true);
     toast({
         title: "Modul* Compl*t*!",
-        description: `Gr*at job on finishing "${module.title}".`,
+        description: `Great job on finishing "${module.title}".`,
     });
   };
 
@@ -87,7 +87,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
         toast({
             variant: "destructive",
             title: "R*fl*ction is *mpty",
-            description: "Pl*as* writ* som*thing b*for* saving.",
+            description: "Please write something before saving.",
         });
         return;
     }
@@ -100,7 +100,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
     });
     toast({
         title: "R*fl*ction Sav*d!",
-        description: "You can vi*w your sav*d r*fl*ctions on your profil* pag*.",
+        description: "You can view your saved reflections on your profile page.",
     });
     setReflectionText("");
   };
@@ -111,7 +111,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
       name: heading,
       description: details,
       isPublic: false,
-      habits: [{ id: Date.now(), text: "Work on this chall*ng* daily." }],
+      habits: [{ id: Date.now(), text: "Work on this challenge daily." }],
       progress: 0,
       streak: 0,
       lastCompleted: null,
@@ -120,7 +120,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
     addGoal(newGoal);
     toast({
       title: "Chall*ng* Acc*pt*d!",
-      description: `A n*w goal "${heading}" has b**n add*d to your list.`,
+      description: `A new goal "${heading}" has been added to your list.`,
     });
     router.push('/goals');
   };
@@ -132,25 +132,25 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
         <div>
             <Link href="/lessons" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
                 <ArrowLeft className="h-4 w-4" />
-                Back to Modul*s
+                Back to Modules
             </Link>
             <Card className="text-center">
                 <CardHeader>
                     <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
                     <CardTitle className="text-2xl">Modul* Compl*t*!</CardTitle>
-                    <CardDescription>You'v* succ*ssfully compl*t*d "{module.title}".</CardDescription>
+                    <CardDescription>You've successfully completed "{module.title}".</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p>K**p up th* gr*at work. *v*ry st*p forward is a st*p toward r*fining your minds*t.</p>
+                    <p>Keep up the great work. Every step forward is a step toward refining your mindset.</p>
                 </CardContent>
                 <CardFooter className="flex-col sm:flex-row justify-center gap-4">
                      <Button variant="outline" asChild>
-                        <Link href="/lessons">Back to All Modul*s</Link>
+                        <Link href="/lessons">Back to All Modules</Link>
                     </Button>
                     {nextModuleId && (
                         <Button asChild>
                             <Link href={`/lessons/${nextModuleId}`}>
-                                N*xt Modul* <ArrowRight className="ml-2 h-4 w-4" />
+                                Next Module <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
                         </Button>
                     )}
@@ -164,13 +164,13 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
     <div>
       <Link href="/lessons" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
         <ArrowLeft className="h-4 w-4" />
-        Back to Modul*s
+        Back to Modules
       </Link>
       <div className="mb-6">
         <p className="text-base font-semibold text-accent">{module.title}</p>
         <h1 className="text-4xl font-bold">{lesson.title}</h1>
         <div className="flex items-center gap-4 text-sm text-muted-foreground mt-2">
-            <span>{lesson.duration_minutes} min l*sson</span>
+            <span>{lesson.duration_minutes} min lesson</span>
         </div>
       </div>
       
@@ -236,10 +236,10 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
                                     <CardDescription className="whitespace-pre-line">{section.prompt}</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <Textarea placeholder="Writ* your r*fl*ction h*r*..." rows={8} value={reflectionText} onChange={(e) => setReflectionText(e.target.value)} />
+                                    <Textarea placeholder="Write your reflection here..." rows={8} value={reflectionText} onChange={(e) => setReflectionText(e.target.value)} />
                                 </CardContent>
                                 <CardFooter>
-                                    <Button onClick={() => handleSaveReflection(section.heading)}>Sav* R*fl*ction</Button>
+                                    <Button onClick={() => handleSaveReflection(section.heading)}>Save Reflection</Button>
                                 </CardFooter>
                             </Card>
                         );
@@ -253,7 +253,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
                                    <p>{section.challenge_details}</p>
                                 </CardContent>
                                 <CardFooter>
-                                    <Button onClick={() => handleAcceptChallenge(section.heading!, section.challenge_details!)}>Acc*pt Chall*ng*</Button>
+                                    <Button onClick={() => handleAcceptChallenge(section.heading!, section.challenge_details!)}>Accept Challenge</Button>
                                 </CardFooter>
                             </Card>
                         )
@@ -287,7 +287,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
                 <Card>
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Knowl*dg* Ch*ck</CardTitle>
-                        <CardDescription>T*st your und*rstanding of th* k*y conc*pts.</CardDescription>
+                        <CardDescription>Test your understanding of the key concepts.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         {lesson.assessment.questions.map((q, qIndex) => (
@@ -307,7 +307,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
                         ))}
                     </CardContent>
                     <CardFooter>
-                        <Button className="w-full" onClick={handleSubmit}>Submit Answ*rs</Button>
+                        <Button className="w-full" onClick={handleSubmit}>Submit Answers</Button>
                     </CardFooter>
                 </Card>
             )}
@@ -318,10 +318,10 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
                     </CardHeader>
                     <CardContent>
                         <p className="font-semibold mb-2">{lesson.assessment.question_text}</p>
-                        <Textarea placeholder="Your answ*r..." value={shortAnswer} onChange={(e) => setShortAnswer(e.target.value)} />
+                        <Textarea placeholder="Your answer..." value={shortAnswer} onChange={(e) => setShortAnswer(e.target.value)} />
                     </CardContent>
                     <CardFooter>
-                        <Button className="w-full" onClick={handleShortAnswerSubmit}>Submit Answ*r</Button>
+                        <Button className="w-full" onClick={handleShortAnswerSubmit}>Submit Answer</Button>
                     </CardFooter>
                 </Card>
             )}
@@ -346,14 +346,14 @@ export default function LessonPage() {
         <div className="p-8">
             <Link href="/lessons" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
                 <ArrowLeft className="h-4 w-4" />
-                Back to Modul*s
+                Back to Modules
             </Link>
             <Card>
                 <CardHeader>
                     <CardTitle>Cont*nt Not Found</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p>Th* cont*nt for this l*sson is not availabl* y*t. Pl*as* ch*ck back lat*r.</p>
+                    <p>The content for this lesson is not available yet. Please check back later.</p>
                 </CardContent>
             </Card>
         </div>

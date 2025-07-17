@@ -41,18 +41,18 @@ export function DashboardHeader() {
           <DropdownMenuItem asChild>
              <Link href="/profile">
                 <User className="mr-2 h-4 w-4" />
-                <span>Profil*</span>
+                <span>Profile</span>
              </Link>
           </DropdownMenuItem>
            <DropdownMenuItem asChild>
              <Link href="/settings">
                 <Settings className="mr-2 h-4 w-4" />
-                <span>S*ttings</span>
+                <span>Settings</span>
              </Link>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleSupportClick}>
             <Mail className="mr-2 h-4 w-4" />
-            <span>*mail Support</span>
+            <span>Email Support</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>

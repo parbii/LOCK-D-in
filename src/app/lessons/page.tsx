@@ -13,7 +13,7 @@ export default function LessonsPage() {
     <div>
       <div className="mb-6">
         <h1 className="text-3xl font-bold">Minds*t Modul*s</h1>
-        <p className="text-muted-foreground">Th* 10 modul*s to forg* a r*fin*d minds*t.</p>
+        <p className="text-muted-foreground">The 10 modules to forge a refined mindset.</p>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {modules.map((module) => (
@@ -22,14 +22,14 @@ export default function LessonsPage() {
               <CardHeader>
                 <div className="flex justify-between items-start">
                     <div>
-                        <p className="text-sm font-medium text-muted-foreground">Modul* {module.id}</p>
+                        <p className="text-sm font-medium text-muted-foreground">Module {module.id}</p>
                         <CardTitle>{module.title}</CardTitle>
                     </div>
                     {module.completed && <CheckCircle className="h-6 w-6 text-green-500" />}
                 </div>
               </CardHeader>
               <CardContent>
-                <CardDescription>Click to start l*sson.</CardDescription>
+                <CardDescription>Click to start lesson.</CardDescription>
               </CardContent>
             </Card>
           </Link>

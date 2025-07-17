@@ -37,7 +37,7 @@ export function ModuleCompletionTracker() {
                     Minds*t Modul* Progr*ss
                 </CardTitle>
                 <CardDescription>
-                    You'v* compl*t*d {completedModules} out of {totalModules} modul*s. K**p going!
+                    You've completed {completedModules} out of {totalModules} modules. Keep going!
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -46,7 +46,7 @@ export function ModuleCompletionTracker() {
             <CardFooter>
                 <Button asChild className="w-full">
                     <Link href="/lessons">
-                        Continu* L*arning
+                        Continue Learning
                     </Link>
                 </Button>
             </CardFooter>

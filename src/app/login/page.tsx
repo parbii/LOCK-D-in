@@ -14,8 +14,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 
 const loginSchema = z.object({
-  email: z.string().email({ message: "Pl*as* *nt*r a valid *mail." }),
-  password: z.string().min(1, { message: "Password is r*quir*d." }),
+  email: z.string().email({ message: "Please enter a valid email." }),
+  password: z.string().min(1, { message: "Password is required." }),
 });
 
 export default function LoginPage() {
@@ -37,7 +37,7 @@ export default function LoginPage() {
       <Card className="w-full">
         <CardHeader className="text-center">
           <CardTitle>W*lcom* Back</CardTitle>
-          <CardDescription>Sign in to g*t LOCKD IN</CardDescription>
+          <CardDescription>Sign in to get LOCKD IN</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <Form {...form}>
@@ -47,9 +47,9 @@ export default function LoginPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>*mail</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="nam*@*xampl*.com" {...field} />
+                      <Input type="email" placeholder="name@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -82,7 +82,7 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
-            Don't hav* an account?{" "}
+            Don't have an account?{" "}
             <Link href="/signup" className="font-medium text-accent underline-offset-4 hover:underline">
                 Sign up
             </Link>

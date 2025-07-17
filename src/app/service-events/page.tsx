@@ -34,10 +34,10 @@ export interface ServiceEvent {
 const initialEvents: ServiceEvent[] = [
     {
         id: 1,
-        title: "Community Park Cl*anup",
-        description: "L*t's g*t tog*th*r to cl*an up and b*autify our local park. Glov*s and bags will b* provid*d.",
-        community: "Fitn*ss Fanatics",
-        location: "C*ntral Park",
+        title: "Community Park Cleanup",
+        description: "Let's get together to clean up and beautify our local park. Gloves and bags will be provided.",
+        community: "Fitness Fanatics",
+        location: "Central Park",
         date: new Date(2024, 10, 15, 9),
         attendees: 25,
         image: "https://placehold.co/600x400.png",
@@ -45,21 +45,21 @@ const initialEvents: ServiceEvent[] = [
     },
     {
         id: 2,
-        title: "M*ntorship Day for Startups",
-        description: "An onlin* *v*nt wh*r* *xp*ri*nc*d *ntr*pr*n*urs m*ntor n*wcom*rs in th* startup world.",
-        community: "Startup Grind*rs",
-        location: "Onlin*",
+        title: "Mentorship Day for Startups",
+        description: "An online event where experienced entrepreneurs mentor newcomers in the startup world.",
+        community: "Startup Grinders",
+        location: "Online",
         date: new Date(2024, 11, 5, 14),
         attendees: 150,
         image: "https://placehold.co/600x400.png",
-        imageAiHint: "busin*ss m*ntorship",
+        imageAiHint: "business mentorship",
     },
 ];
 
 // Mock data for communiti*s th* us*r has join*d
 const joinedCommunities = [
-    { id: 1, name: "Fitn*ss Fanatics" },
-    { id: 3, name: "Startup Grind*rs" },
+    { id: 1, name: "Fitness Fanatics" },
+    { id: 3, name: "Startup Grinders" },
 ];
 
 export default function ServiceEventsPage() {
@@ -109,7 +109,7 @@ export default function ServiceEventsPage() {
 
         toast({
             title: "You'r* going!",
-            description: `You hav* succ*ssfully RSVP'd to "${eventToRsvp.title}".`
+            description: `You have successfully RSVP'd to "${eventToRsvp.title}".`
         });
     };
 
@@ -118,7 +118,7 @@ export default function ServiceEventsPage() {
             toast({
                 variant: "destructive",
                 title: "Incompl*t* Form",
-                description: "Pl*as* fill out all fi*lds to cr*at* an *v*nt.",
+                description: "Please fill out all fields to create an event.",
             });
             return;
         }
@@ -132,7 +132,7 @@ export default function ServiceEventsPage() {
             date,
             attendees: 1, // Starts with th* cr*ator
             image: "https://placehold.co/600x400.png",
-            imageAiHint: "community *v*nt",
+            imageAiHint: "community event",
         };
 
         setEvents(prev => [newEvent, ...prev]);
@@ -147,7 +147,7 @@ export default function ServiceEventsPage() {
 
         toast({
             title: "*v*nt Cr*at*d!",
-            description: `Your *v*nt "${newEvent.title}" is now liv*.`
+            description: `Your event "${newEvent.title}" is now live.`
         });
     };
 
@@ -156,40 +156,40 @@ export default function ServiceEventsPage() {
             <div className="flex justify-between items-center mb-6">
                 <div>
                     <h1 className="text-3xl font-bold">S*rvic* *v*nts</h1>
-                    <p className="text-muted-foreground">*ngag* with your community through s*rvic*.</p>
+                    <p className="text-muted-foreground">Engage with your community through service.</p>
                 </div>
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                         <Button>
                             <PlusCircle className="mr-2 h-4 w-4" />
-                            Cr*at* *v*nt
+                            Create Event
                         </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
                             <DialogTitle>Cr*at* a N*w S*rvic* *v*nt</DialogTitle>
                             <DialogDescription>
-                                Organiz* an *v*nt to bring your community tog*th*r and mak* a diff*r*nc*.
+                                Organize an event to bring your community together and make a difference.
                             </DialogDescription>
                         </DialogHeader>
                         <div className="grid gap-4 py-4">
                             <div className="grid gap-2">
-                                <Label htmlFor="title">*v*nt Titl*</Label>
-                                <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="*.g., Charity Fun Run" />
+                                <Label htmlFor="title">Event Title</Label>
+                                <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g., Charity Fun Run" />
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="description">D*scription</Label>
-                                <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="T*ll us about th* *v*nt" />
+                                <Label htmlFor="description">Description</Label>
+                                <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Tell us about the event" />
                             </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="location">Location</Label>
-                                <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="*.g., City Hall or Onlin*" />
+                                <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g., City Hall or Online" />
                             </div>
                              <div className="grid gap-2">
                                 <Label>Community</Label>
                                 <Select onValueChange={setCommunity} value={community}>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="S*l*ct a community" />
+                                        <SelectValue placeholder="Select a community" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {joinedCommunities.map(c => (
@@ -199,7 +199,7 @@ export default function ServiceEventsPage() {
                                 </Select>
                             </div>
                             <div className="grid gap-2">
-                                <Label>Dat*</Label>
+                                <Label>Date</Label>
                                 <Popover>
                                     <PopoverTrigger asChild>
                                         <Button
@@ -210,7 +210,7 @@ export default function ServiceEventsPage() {
                                             )}
                                         >
                                             <CalendarIcon className="mr-2 h-4 w-4" />
-                                            {date ? format(date, "PPP") : <span>Pick a dat*</span>}
+                                            {date ? format(date, "PPP") : <span>Pick a date</span>}
                                         </Button>
                                     </PopoverTrigger>
                                     <PopoverContent className="w-auto p-0">
@@ -225,8 +225,8 @@ export default function ServiceEventsPage() {
                             </div>
                         </div>
                         <DialogFooter>
-                            <Button variant="ghost" onClick={() => setOpen(false)}>Canc*l</Button>
-                            <Button onClick={handleCreateEvent}>Cr*at* *v*nt</Button>
+                            <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+                            <Button onClick={handleCreateEvent}>Create Event</Button>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
@@ -261,7 +261,7 @@ export default function ServiceEventsPage() {
                                 onClick={() => handleRsvp(event)}
                                 disabled={rsvpdEvents.includes(event.id)}
                             >
-                                {rsvpdEvents.includes(event.id) ? "Att*nding" : "RSVP"}
+                                {rsvpdEvents.includes(event.id) ? "Attending" : "RSVP"}
                             </Button>
                         </CardFooter>
                     </Card>
