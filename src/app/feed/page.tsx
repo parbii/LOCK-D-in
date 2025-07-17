@@ -18,49 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { ModuleCompletionTracker } from "@/components/module-completion-tracker";
+import { posts } from "@/lib/posts-data";
 
-
-// Mock data for feed posts
-const posts = [
-  {
-    id: 1,
-    user: {
-      name: "Jane Doe",
-      avatar: "https://placehold.co/40x40.png",
-      aiHint: "woman smiling"
-    },
-    content: "Crushed my goal of running a 5k this morning! Felt amazing. #nevergiveup #goals",
-    image: "https://placehold.co/600x400.png",
-    imageAiHint: "running marathon",
-    likes: 124,
-    comments: 12,
-    time: "2h ago"
-  },
-  {
-    id: 2,
-    user: {
-      name: "John Smith",
-      avatar: "https://placehold.co/40x40.png",
-      aiHint: "man portrait"
-    },
-    content: "7-day streak on my 'Daily Devotion' habit! Feeling more focused and centered than ever. 🙏",
-    likes: 89,
-    comments: 5,
-    time: "4h ago"
-  },
-    {
-    id: 3,
-    user: {
-      name: "Alex Johnson",
-      avatar: "https://placehold.co/40x40.png",
-      aiHint: "person thinking"
-    },
-    content: "The 'Know Your Why' module was a game changer. Really digging deep into my motivations. Highly recommend!",
-    likes: 210,
-    comments: 23,
-    time: "1d ago"
-  }
-];
 
 function CreatePost() {
     const { activeGoals } = useGoals();

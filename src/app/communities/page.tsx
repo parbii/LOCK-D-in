@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, Search, PlusCircle, Lock, Globe, X } from "lucide-react";
-import { useGoals } from "@/context/goals-context";
+import { Users, Search, PlusCircle, Lock, Globe, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -15,101 +14,17 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import { initialCommunities, friends, type Community } from "@/lib/communities-data";
 
-interface Community {
-    id: number;
-    name: string;
-    members: string;
-    avatar: string;
-    aiHint: string;
-    isPrivate: boolean;
-}
-
-const initialCommunities: Community[] = [
-    {
-        id: 1,
-        name: "Fitness Fanatics",
-        members: "1.2k",
-        avatar: "https://placehold.co/80x80.png",
-        aiHint: "group fitness",
-        isPrivate: false,
-    },
-    {
-        id: 2,
-        name: "Mindful Achievers",
-        members: "850",
-        avatar: "https://placehold.co/80x80.png",
-        aiHint: "meditation group",
-        isPrivate: false,
-    },
-    {
-        id: 3,
-        name: "Startup Grinders",
-        members: "2.5k",
-        avatar: "https://placehold.co/80x80.png",
-        aiHint: "business meeting",
-        isPrivate: false,
-    },
-    {
-        id: 4,
-        name: "Creative Minds",
-        members: "600",
-        avatar: "https://placehold.co/80x80.png",
-        aiHint: "art workshop",
-        isPrivate: false,
-    },
-];
-
-const friends = [
-    {
-        id: 1,
-        name: "Sarah Lee",
-        username: "@sarahlee",
-        avatar: "https://placehold.co/40x40.png",
-        aiHint: "woman smiling"
-    },
-    {
-        id: 2,
-        name: "David Kim",
-        username: "@davidkim",
-        avatar: "https://placehold.co/40x40.png",
-        aiHint: "man portrait"
-    },
-    {
-        id: 3,
-        name: "Emily Chen",
-        username: "@emilychen",
-        avatar: "https://placehold.co/40x40.png",
-        aiHint: "woman hiking"
-    }
-]
 
 export default function CommunitiesPage() {
-    const { activeGoals } = useGoals();
     const { toast } = useToast();
     const [communities, setCommunities] = useState<Community[]>(initialCommunities);
-    const [joinedCommunities, setJoinedCommunities] = useState<number[]>([]);
     
     const [isCreateDialogOpen, setCreateDialogOpen] = useState(false);
     const [newCommunityName, setNewCommunityName] = useState("");
     const [isPrivate, setIsPrivate] = useState(false);
     const [invitedFriends, setInvitedFriends] = useState<Record<number, boolean>>({});
-
-    const handleJoinClick = (community: Community) => {
-        if (community.isPrivate) {
-             toast({
-                title: "This is a private community",
-                description: "You can only join by invitation.",
-            });
-            return;
-        }
-        
-        setJoinedCommunities([...joinedCommunities, community.id]);
-        toast({
-            title: "Welcome to the community!",
-            description: "You've successfully joined.",
-        });
-    };
     
     const handleCreateCommunity = () => {
         if (!newCommunityName.trim()) {
@@ -124,10 +39,10 @@ export default function CommunitiesPage() {
             avatar: "https://placehold.co/80x80.png",
             aiHint: "community people",
             isPrivate: isPrivate,
+            adminId: 999, // Assuming current user is admin
         };
 
         setCommunities([newCommunity, ...communities]);
-        setJoinedCommunities([...joinedCommunities, newCommunity.id]);
 
         toast({
             title: `Community "${newCommunity.name}" created!`,
@@ -221,32 +136,29 @@ export default function CommunitiesPage() {
                                 <Input placeholder="Search communities..." className="pl-9" />
                             </div>
                         </CardHeader>
-                        <CardContent className="grid gap-6">
+                        <CardContent className="grid gap-4">
                             {communities.map((community) => (
-                                <div key={community.id} className="flex items-center justify-between space-x-4">
-                                    <div className="flex items-center space-x-4">
-                                        <Avatar className="h-16 w-16">
-                                            <AvatarImage src={community.avatar} data-ai-hint={community.aiHint} />
-                                            <AvatarFallback>{community.name.charAt(0)}</AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <p className="font-semibold flex items-center gap-2">
-                                                {community.name}
-                                                {community.isPrivate ? <Lock className="h-4 w-4 text-muted-foreground" /> : <Globe className="h-4 w-4 text-muted-foreground" />}
-                                            </p>
-                                            <p className="text-sm text-muted-foreground flex items-center">
-                                                <Users className="h-3 w-3 mr-1.5" />
-                                                {community.members} Members
-                                            </p>
+                                <Link href={`/communities/${community.id}`} key={community.id} className="block hover:bg-muted/50 p-4 rounded-lg -m-4">
+                                    <div className="flex items-center justify-between space-x-4">
+                                        <div className="flex items-center space-x-4">
+                                            <Avatar className="h-16 w-16">
+                                                <AvatarImage src={community.avatar} data-ai-hint={community.aiHint} />
+                                                <AvatarFallback>{community.name.charAt(0)}</AvatarFallback>
+                                            </Avatar>
+                                            <div>
+                                                <p className="font-semibold flex items-center gap-2">
+                                                    {community.name}
+                                                    {community.isPrivate ? <Lock className="h-4 w-4 text-muted-foreground" /> : <Globe className="h-4 w-4 text-muted-foreground" />}
+                                                </p>
+                                                <p className="text-sm text-muted-foreground flex items-center">
+                                                    <Users className="h-3 w-3 mr-1.5" />
+                                                    {community.members} Members
+                                                </p>
+                                            </div>
                                         </div>
+                                        <ArrowRight className="h-5 w-5 text-muted-foreground" />
                                     </div>
-                                    <Button 
-                                      onClick={() => handleJoinClick(community)}
-                                      disabled={joinedCommunities.includes(community.id)}
-                                    >
-                                      {joinedCommunities.includes(community.id) ? "Joined" : "Join"}
-                                    </Button>
-                                </div>
+                                </Link>
                             ))}
                         </CardContent>
                     </Card>
