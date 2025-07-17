@@ -1,7 +1,7 @@
 
 "use client";
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useGoals } from "@/context/goals-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useReflections } from '@/context/reflections-context';
 import Link from 'next/link';
 import { format } from 'date-fns';
+import { useToast } from "@/hooks/use-toast";
 
 function ReflectionsList() {
     const { reflections } = useReflections();
@@ -53,6 +54,37 @@ function ReflectionsList() {
 export default function ProfilePage() {
   const { activeGoals } = useGoals();
   const totalPosts = 0; // Placeholder
+  const { toast } = useToast();
+  const [avatarSrc, setAvatarSrc] = useState("https://placehold.co/100x100.png");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const savedAvatar = localStorage.getItem('userAvatar');
+    if (savedAvatar) {
+      setAvatarSrc(savedAvatar);
+    }
+  }, []);
+
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setAvatarSrc(result);
+        localStorage.setItem('userAvatar', result);
+        toast({
+          title: "Profil* Pictur* Updat*d",
+          description: "Your new avatar has been saved.",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleEditClick = () => {
+    fileInputRef.current?.click();
+  };
 
   return (
     <div className="space-y-6">
@@ -61,11 +93,19 @@ export default function ProfilePage() {
           <div className="flex flex-col items-center text-center gap-6">
             <div className="relative">
               <Avatar className="w-24 h-24 text-4xl">
-                <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="profile avatar" />
+                <AvatarImage src={avatarSrc} data-ai-hint="profile avatar" />
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
-              <Button size="icon" className="absolute bottom-0 right-0 rounded-full h-8 w-8">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleAvatarChange}
+                className="hidden"
+                accept="image/*"
+              />
+              <Button size="icon" className="absolute bottom-0 right-0 rounded-full h-8 w-8" onClick={handleEditClick}>
                 <Edit className="h-4 w-4" />
+                <span className="sr-only">Edit profile picture</span>
               </Button>
             </div>
             <div className="space-y-1">
