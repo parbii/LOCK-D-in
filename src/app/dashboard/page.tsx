@@ -10,7 +10,7 @@ import { Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile, Target, Fl
 import { useGoals, type Goal } from "@/context/goals-context";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { format } from "date-fns";
 import Link from "next/link";
 import { type ServiceEvent } from "../service-events/page";
@@ -19,19 +19,59 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Badge } from "@/components/ui/badge";
 import { ModuleCompletionTracker } from "@/components/module-completion-tracker";
 import { posts } from "@/lib/posts-data";
+import { useToast } from "@/hooks/use-toast";
 
 
 function CreatePost() {
     const { activeGoals } = useGoals();
+    const { toast } = useToast();
     const [postContent, setPostContent] = useState('');
     const [isGoalDialogOpen, setGoalDialogOpen] = useState(false);
     const [attachedGoal, setAttachedGoal] = useState<Goal | null>(null);
+    const [attachedImage, setAttachedImage] = useState<string | null>(null);
+    const imageInputRef = useRef<HTMLInputElement>(null);
 
     const handleAttachGoal = (goal: Goal) => {
         setAttachedGoal(goal);
         setGoalDialogOpen(false);
     }
+
+    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setAttachedImage(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
     
+    const handleAddStreak = () => {
+        if (activeGoals.length === 0) {
+            toast({
+                variant: "destructive",
+                title: "No Activ* Str*aks",
+                description: "You need an active goal with a streak to share it.",
+            });
+            return;
+        }
+
+        const longesTStreakGoal = activeGoals.reduce((prev, current) => (prev.streak > current.streak) ? prev : current);
+
+        if (longesTStreakGoal.streak === 0) {
+             toast({
+                variant: "destructive",
+                title: "No Activ* Str*aks",
+                description: "Start completing daily habits to build a streak!",
+            });
+            return;
+        }
+        
+        const streakText = `I'm on a ${longesTStreakGoal.streak}-day streak for my goal: "${longesTStreakGoal.name}"! 🔥`;
+        setPostContent(prev => prev ? `${prev}\n${streakText}` : streakText);
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -51,8 +91,8 @@ function CreatePost() {
                         rows={3}
                     />
                 </div>
-                {attachedGoal && (
-                    <div className="pl-14">
+                <div className="pl-14 space-y-2">
+                    {attachedGoal && (
                         <Badge variant="secondary" className="flex items-center gap-2 max-w-max">
                             <Target className="h-3 w-3" />
                             <span>{attachedGoal.name}</span>
@@ -60,12 +100,32 @@ function CreatePost() {
                                 <X className="h-3 w-3" />
                             </button>
                         </Badge>
-                    </div>
-                )}
+                    )}
+                    {attachedImage && (
+                        <div className="relative w-full aspect-video rounded-lg overflow-hidden border">
+                            <Image src={attachedImage} alt="Post preview" layout="fill" objectFit="cover" />
+                             <Button
+                                size="icon"
+                                variant="destructive"
+                                className="absolute top-2 right-2 h-7 w-7 rounded-full"
+                                onClick={() => setAttachedImage(null)}
+                            >
+                                <X className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    )}
+                </div>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
                  <div className="flex gap-2 text-muted-foreground">
-                    <Button variant="ghost" size="icon" aria-label="Add Photo">
+                    <input 
+                        type="file" 
+                        ref={imageInputRef} 
+                        onChange={handleImageUpload}
+                        className="hidden"
+                        accept="image/*"
+                    />
+                    <Button variant="ghost" size="icon" aria-label="Add Photo" onClick={() => imageInputRef.current?.click()}>
                         <ImageIcon className="h-5 w-5" />
                     </Button>
                      <Dialog open={isGoalDialogOpen} onOpenChange={setGoalDialogOpen}>
@@ -77,7 +137,7 @@ function CreatePost() {
                         <DialogContent>
                             <DialogHeader>
                                 <DialogTitle>Attach a Goal</DialogTitle>
-                                <DialogDescription>Select one of your active goals to share in your post.</DialogDescription>
+                                <DialogDescription>S*l*ct on* of your activ* goals to shar* in your post.</DialogDescription>
                             </DialogHeader>
                             <div className="max-h-80 overflow-y-auto py-4 space-y-2">
                                 {activeGoals.map(goal => (
@@ -93,11 +153,11 @@ function CreatePost() {
                                         </div>
                                     </button>
                                 ))}
-                                {activeGoals.length === 0 && <p className="text-sm text-center text-muted-foreground py-4">You have no active goals to attach.</p>}
+                                {activeGoals.length === 0 && <p className="text-sm text-center text-muted-foreground py-4">You hav* no activ* goals to attach.</p>}
                             </div>
                         </DialogContent>
                     </Dialog>
-                    <Button variant="ghost" size="icon" aria-label="Mention Streak">
+                    <Button variant="ghost" size="icon" aria-label="Mention Streak" onClick={handleAddStreak}>
                         <Flame className="h-5 w-5" />
                     </Button>
                  </div>
@@ -126,7 +186,7 @@ function DailyHabitsTracker() {
                     <Target className="h-6 w-6 text-accent" />
                     Today's Habits
                 </CardTitle>
-                <CardDescription>Check off your habits for the day to build your streak.</CardDescription>
+                <CardDescription>Ch*ck off your habits for th* day to build your str*ak.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 {activeGoals.map(goal => (
@@ -149,7 +209,7 @@ function DailyHabitsTracker() {
                         {goal.streak > 0 && (
                             <div className="flex items-center justify-end gap-1.5 text-orange-500 font-semibold text-sm">
                                 <Flame className="h-4 w-4" />
-                                <span>{goal.streak} day streak!</span>
+                                <span>{goal.streak} day str*ak!</span>
                             </div>
                         )}
                         
@@ -205,7 +265,7 @@ function RsvpEvents() {
             {rsvpdEvents.map(event => (
                  <Card key={event.id}>
                     <CardHeader>
-                        <p className="text-sm text-muted-foreground">You RSVP'd to an upcoming event:</p>
+                        <p className="text-sm text-muted-foreground">You RSVP'd to an upcoming *v*nt:</p>
                         <CardTitle>{event.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -222,7 +282,7 @@ function RsvpEvents() {
                             <span>{event.attendees} going</span>
                         </div>
                          <Button asChild className="mt-4 w-full">
-                            <Link href={`/service-events`}>View Event</Link>
+                            <Link href={`/service-events`}>Vi*w *v*nt</Link>
                          </Button>
                     </CardContent>
                  </Card>
@@ -278,7 +338,7 @@ export default function DashboardPage() {
                     <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
                 </div>
                 <p className="text-sm font-semibold">{post.likes} likes</p>
-                <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
+                <p className="text-sm text-muted-foreground cursor-pointer hover:underline">Vi*w all {post.comments} comm*nts</p>
                 <div className="flex items-center gap-2 mt-2">
                     <Input placeholder="Add a comment..." className="h-9" />
                     <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
@@ -290,3 +350,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
