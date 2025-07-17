@@ -95,7 +95,7 @@ export default function ProfilePage() {
           <div className="flex flex-col items-center text-center gap-6">
             <div className="relative">
               <Avatar className="w-24 h-24 text-4xl">
-                <AvatarImage src={avatarSrc} data-ai-hint="profile avatar" />
+                <AvatarImage src={avatarSrc} data-ai-hint="profile avatar" className="object-cover" />
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
               <input
