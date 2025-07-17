@@ -16,10 +16,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useToast } from '@/hooks/use-toast';
 import { useReflections } from '@/context/reflections-context';
+import { useGoals, type Goal } from '@/context/goals-context';
 
 function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useModules>['modules'][0], lesson: Lesson }) {
   const { completeModule, modules } = useModules();
   const { addReflection } = useReflections();
+  const { addGoal } = useGoals();
   const { toast } = useToast();
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, string | number>>({});
@@ -101,6 +103,26 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
         description: "You can view your saved reflections on your profile page.",
     });
     setReflectionText("");
+  };
+
+  const handleAcceptChallenge = (heading: string, details: string) => {
+    const newGoal: Goal = {
+      id: Date.now(),
+      name: heading,
+      description: details,
+      isPublic: false, // Default to private, user can change later
+      habits: [],
+      progress: 0,
+      streak: 0,
+      lastCompleted: null,
+      status: 'active',
+    };
+    addGoal(newGoal);
+    toast({
+      title: "Challenge Accepted!",
+      description: `A new goal "${heading}" has been added to your list.`,
+    });
+    router.push('/goals');
   };
 
   const nextModuleId = module.id < modules.length ? module.id + 1 : null;
@@ -231,7 +253,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
                                    <p>{section.challenge_details}</p>
                                 </CardContent>
                                 <CardFooter>
-                                    <Button>Accept Challenge</Button>
+                                    <Button onClick={() => handleAcceptChallenge(section.heading!, section.challenge_details!)}>Accept Challenge</Button>
                                 </CardFooter>
                             </Card>
                         )
@@ -340,3 +362,5 @@ export default function LessonPage() {
   
   return <LessonClientPage module={module} lesson={lesson} />;
 }
+
+    
