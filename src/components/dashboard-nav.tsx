@@ -34,7 +34,7 @@ export function DashboardNav() {
     <Sidebar>
       <SidebarHeader className="!flex-row items-center">
         <Lock className="h-6 w-6 text-accent" />
-        <span className="text-lg font-semibold">LockdIn</span>
+        <span className="text-lg font-semibold">LOCKDIn</span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>

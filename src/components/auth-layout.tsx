@@ -6,7 +6,7 @@ function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2 text-2xl font-bold text-foreground">
       <Lock className="text-accent h-7 w-7" />
-      <span>LockdIn</span>
+      <span>LOCKDIn</span>
     </Link>
   );
 }

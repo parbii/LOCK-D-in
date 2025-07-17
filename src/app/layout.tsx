@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'LockdIn',
+  title: 'LOCKDIn',
   description: 'Forge a refined mindset, achieve goals, and uplift communities.',
 };
 
