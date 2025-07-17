@@ -702,5 +702,49 @@ export const lessonContent = [
                 }
             }
         ]
+    },
+    {
+        "moduleID": "KP_Purpose_M10",
+        "title": "Module 10: What is Your Purpose?",
+        "description": "This capstone module helps learners synthesize all previous lessons to define and articulate their personal, God-given purpose.",
+        "order": 10,
+        "lessons": [
+            {
+                "lessonID": "KP_Purpose_M10_L1",
+                "title": "Defining Your Life's Mission",
+                "order": 1,
+                "objective": "Learners will integrate concepts from all previous modules to craft a personal purpose statement that will guide their future endeavors.",
+                "duration_minutes": 50,
+                "content_sections": [
+                    {
+                        "type": "teaching_point",
+                        "heading": "The Culmination of Your Journey",
+                        "points": [
+                            {
+                                "sub_heading": "More Than Just Making and Spending",
+                                "text": "This lesson challenges the common societal narrative that life's primary aim is simply to accumulate wealth and material possessions. We'll explore the profound truth that every individual is put on this Earth for a deeper reason—a unique purpose that transcends financial gain. Discover how recognizing this can shift your perspective and unlock a more fulfilling existence."
+                            },
+                            {
+                                "sub_heading": "Unearthing Your Passions: The Path to Purpose",
+                                "text": "Your passions aren't random; they are divinely placed within your heart for a reason. This lesson guides you through the process of identifying and reconnecting with what truly ignites your soul. Whether it's a love for basketball and helping others (like the app creator's example) or something entirely different, your passions serve as powerful clues to your ultimate purpose. Learn how to listen to these internal cues and understand their significance."
+                            },
+                            {
+                                "sub_heading": "From Passion to Impact: Living Your Purpose",
+                                "text": "Once you've identified your passions, the next step is to understand how to leverage them to portray positive change and meaning in the world. This lesson focuses on connecting your unique gifts and interests to tangible actions that contribute beyond yourself. We'll explore strategies for aligning your daily choices and long-term goals with your purpose, whether you achieve it fully or consistently work towards it."
+                            },
+                            {
+                                "sub_heading": "The Interconnectedness of Purpose",
+                                "text": "This module serves as the capstone, tying together all the previous lessons. It emphasizes that every aspect of life, from faith and intentionality to teamwork and continuous growth, is interwoven with the grander theme of purpose. We'll reinforce the idea that nothing truly significant happens without a driving purpose behind it, and that when each of us strives to live out our individual purpose, we collectively contribute to a more meaningful and impactful world."
+                            }
+                        ]
+                    }
+                ],
+                "resources": [],
+                "assessment": {
+                    "type": "short_answer",
+                    "question_text": "What is your purpose?"
+                }
+            }
+        ]
     }
 ];
