@@ -24,6 +24,8 @@ interface GoalsContextType {
   activeGoals: Goal[];
   completedGoals: Goal[];
   addGoal: (goal: Goal) => void;
+  updateGoal: (goal: Goal) => void;
+  deleteGoal: (goalId: number) => void;
   checkedHabits: Record<number, boolean>;
   handleHabitCheck: (habitId: number, goalId: number) => void;
   getTodaysDate: () => string;
@@ -91,6 +93,17 @@ export const GoalsProvider = ({ children }: { children: ReactNode }) => {
   const addGoal = (goal: Goal) => {
     setGoals(prevGoals => [...prevGoals, {...goal, status: 'active'}]);
   };
+  
+  const updateGoal = (updatedGoal: Goal) => {
+    setGoals(prevGoals => prevGoals.map(goal =>
+      goal.id === updatedGoal.id ? updatedGoal : goal
+    ));
+  };
+
+  const deleteGoal = (goalId: number) => {
+    setGoals(prevGoals => prevGoals.filter(goal => goal.id !== goalId));
+  };
+
 
   const handleHabitCheck = (habitId: number, goalId: number) => {
     const newCheckedState = {
@@ -152,7 +165,7 @@ export const GoalsProvider = ({ children }: { children: ReactNode }) => {
 
 
   return (
-    <GoalsContext.Provider value={{ activeGoals, completedGoals, addGoal, checkedHabits, handleHabitCheck, getTodaysDate, completeGoal, keepGoing }}>
+    <GoalsContext.Provider value={{ activeGoals, completedGoals, addGoal, updateGoal, deleteGoal, checkedHabits, handleHabitCheck, getTodaysDate, completeGoal, keepGoing }}>
       {children}
     </GoalsContext.Provider>
   );
