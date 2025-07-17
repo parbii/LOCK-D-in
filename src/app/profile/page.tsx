@@ -24,7 +24,7 @@ function ReflectionsList() {
                 <Button asChild className="mt-4">
                     <Link href="/lessons">
                         <BrainCircuit className="mr-2 h-4 w-4" />
-                        Go to Mindset Modules
+                        Go to Minds*t Modul*s
                     </Link>
                 </Button>
             </div>
@@ -57,8 +57,10 @@ export default function ProfilePage() {
   const { toast } = useToast();
   const [avatarSrc, setAvatarSrc] = useState("https://placehold.co/100x100.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     const savedAvatar = localStorage.getItem('userAvatar');
     if (savedAvatar) {
       setAvatarSrc(savedAvatar);
@@ -120,7 +122,7 @@ export default function ProfilePage() {
               <span>My Public Profile</span>
             </div>
             
-            <ProfileStats goals={activeGoals} postsCount={totalPosts} />
+            {isClient && <ProfileStats goals={activeGoals} postsCount={totalPosts} />}
 
           </div>
         </CardContent>
