@@ -236,16 +236,16 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
                     </CardHeader>
                     <CardContent className="space-y-6">
                         {lesson.assessment.questions.map((q, qIndex) => (
-                            <div key={qIndex} className="space-y-3">
-                                <p className="font-semibold">{qIndex + 1}. {q.question_text}</p>
+                            <div key={qIndex}>
+                                <p className="font-semibold mb-3">{qIndex + 1}. {q.question_text}</p>
                                 <RadioGroup onValueChange={(value) => handleAnswerChange(qIndex, value)}>
                                     <div className="space-y-2 pl-2">
-                                    {q.options.map((option, oIndex) => (
-                                        <div key={oIndex} className="flex items-center space-x-2">
-                                            <RadioGroupItem value={`${oIndex}`} id={`q${qIndex}-o${oIndex}`} />
-                                            <Label htmlFor={`q${qIndex}-o${oIndex}`}>{option}</Label>
-                                        </div>
-                                    ))}
+                                        {q.options.map((option, oIndex) => (
+                                            <div key={oIndex} className="flex items-center space-x-2">
+                                                <RadioGroupItem value={`${oIndex}`} id={`q${qIndex}-o${oIndex}`} />
+                                                <Label htmlFor={`q${qIndex}-o${oIndex}`}>{option}</Label>
+                                            </div>
+                                        ))}
                                     </div>
                                 </RadioGroup>
                             </div>
@@ -277,10 +277,13 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
 }
 
 
-export default function LessonPage({ params }: { params: { id: string } }) {
+export default function LessonPage() {
+  const params = useParams();
   const { modules } = useModules();
-  const module = modules.find(m => m.id.toString() === params.id);
-  const lessonModuleData = lessonContent.find(lc => lc.order.toString() === params.id);
+  
+  const moduleId = params.id as string;
+  const module = modules.find(m => m.id.toString() === moduleId);
+  const lessonModuleData = lessonContent.find(lc => lc.order.toString() === moduleId);
   const lesson = lessonModuleData?.lessons[0];
 
   if (!module || !lesson) {
