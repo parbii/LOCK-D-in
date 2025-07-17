@@ -1,14 +1,14 @@
+
+"use client";
+
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
-import type { Metadata } from "next";
-import { modules } from '@/lib/modules-data';
-
-export const metadata: Metadata = {
-  title: "Mindset Modules - LockdIn",
-};
+import { useModules } from '@/lib/modules-data';
 
 export default function LessonsPage() {
+  const { modules } = useModules();
+
   return (
     <div>
       <div className="mb-6">

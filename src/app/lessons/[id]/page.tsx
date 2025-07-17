@@ -1,25 +1,104 @@
 
+"use client";
+
+import { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, FileText, Film, Lightbulb, MessageSquare, CheckCircle, Target, Star, Book, Edit } from "lucide-react";
+import { ArrowLeft, BookOpen, FileText, Film, Lightbulb, MessageSquare, CheckCircle, Target, Star, Book, Edit, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
-import { modules } from "@/lib/modules-data";
-import { lessonContent, type Lesson } from "@/lib/lesson-content";
+import { useModules } from "@/lib/modules-data";
+import { lessonContent, type Lesson, type QuizQuestion } from "@/lib/lesson-content";
 import { Badge } from "@/components/ui/badge";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { useToast } from '@/hooks/use-toast';
 
+function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useModules>['modules'][0], lesson: Lesson }) {
+  const { completeModule, modules } = useModules();
+  const { toast } = useToast();
+  const router = useRouter();
+  const [answers, setAnswers] = useState<Record<number, string | number>>({});
+  const [shortAnswer, setShortAnswer] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  
+  const handleAnswerChange = (qIndex: number, value: string) => {
+    setAnswers(prev => ({...prev, [qIndex]: value}));
+  };
 
-export function generateStaticParams() {
-    return modules.map(m => ({ id: m.id.toString() }));
-}
+  const handleSubmit = () => {
+    let isCorrect = true;
+    if (lesson.assessment.type === 'quiz' && lesson.assessment.questions) {
+        lesson.assessment.questions.forEach((q, index) => {
+            const selectedOptionIndex = parseInt(answers[index] as string, 10);
+            if (q.options[selectedOptionIndex] !== q.correct_answer) {
+                isCorrect = false;
+            }
+        });
+    }
 
+    if(isCorrect) {
+        completeModule(module.id);
+        setSubmitted(true);
+        toast({
+            title: "Module Complete!",
+            description: `Great job on finishing "${module.title}".`,
+        });
+    } else {
+        toast({
+            variant: "destructive",
+            title: "Not Quite",
+            description: "Some answers were incorrect. Please review the material and try again.",
+        });
+    }
+  };
 
-function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], lesson: Lesson }) {
-  if (!module || !lesson) {
-    return <div>Module or lesson not found</div>;
+  const handleShortAnswerSubmit = () => {
+    // For open-ended questions, we can just mark it complete on submission.
+    // In a real app, you might save this to a database for review.
+    completeModule(module.id);
+    setSubmitted(true);
+    toast({
+        title: "Module Complete!",
+        description: `Great job on finishing "${module.title}".`,
+    });
+  }
+
+  const nextModuleId = module.id < modules.length ? module.id + 1 : null;
+
+  if (submitted || module.completed) {
+    return (
+        <div>
+            <Link href="/lessons" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
+                <ArrowLeft className="h-4 w-4" />
+                Back to Modules
+            </Link>
+            <Card className="text-center">
+                <CardHeader>
+                    <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                    <CardTitle className="text-2xl">Module Complete!</CardTitle>
+                    <CardDescription>You've successfully completed "{module.title}".</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <p>Keep up the great work. Every step forward is a step toward refining your mindset.</p>
+                </CardContent>
+                <CardFooter className="flex-col sm:flex-row justify-center gap-4">
+                     <Button variant="outline" asChild>
+                        <Link href="/lessons">Back to All Modules</Link>
+                    </Button>
+                    {nextModuleId && (
+                        <Button asChild>
+                            <Link href={`/lessons/${nextModuleId}`}>
+                                Next Module <ArrowRight className="ml-2 h-4 w-4" />
+                            </Link>
+                        </Button>
+                    )}
+                </CardFooter>
+            </Card>
+        </div>
+    )
   }
 
   return (
@@ -145,14 +224,17 @@ function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], les
                 </Card>
             )}
 
-            {lesson.assessment && lesson.assessment.questions && lesson.assessment.questions.length > 0 && (
+            {lesson.assessment?.type === 'quiz' && lesson.assessment.questions && lesson.assessment.questions.length > 0 && (
                 <Card>
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Knowledge Check</CardTitle>
                         <CardDescription>Test your understanding of the key concepts.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                        <RadioGroup>
+                        <RadioGroup onValueChange={(value) => {
+                            const [qIndex] = value.split('-').map(Number);
+                            handleAnswerChange(qIndex, value.split('-')[1]);
+                        }}>
                             {lesson.assessment.questions.map((q, qIndex) => (
                                 <div key={qIndex} className="space-y-3">
                                     <p className="font-semibold">{qIndex + 1}. {q.question_text}</p>
@@ -169,21 +251,21 @@ function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], les
                         </RadioGroup>
                     </CardContent>
                     <CardFooter>
-                        <Button className="w-full">Submit Answers</Button>
+                        <Button className="w-full" onClick={handleSubmit}>Submit Answers</Button>
                     </CardFooter>
                 </Card>
             )}
-             {lesson.assessment && lesson.assessment.question_text && (
+             {lesson.assessment?.type === 'short_answer' && lesson.assessment.question_text && (
                  <Card>
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5 text-accent" /> Knowledge Check</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="font-semibold mb-2">{lesson.assessment.question_text}</p>
-                        <Textarea placeholder="Your answer..."/>
+                        <Textarea placeholder="Your answer..." value={shortAnswer} onChange={(e) => setShortAnswer(e.target.value)} />
                     </CardContent>
                     <CardFooter>
-                        <Button className="w-full">Submit Answer</Button>
+                        <Button className="w-full" onClick={handleShortAnswerSubmit}>Submit Answer</Button>
                     </CardFooter>
                 </Card>
             )}
@@ -195,10 +277,8 @@ function LessonClientPage({ module, lesson }: { module: (typeof modules)[0], les
 
 
 export default function LessonPage({ params }: { params: { id: string } }) {
+  const { modules } = useModules();
   const module = modules.find(m => m.id.toString() === params.id);
-  // Find the lesson content by matching the module order/ID.
-  // This assumes the order in lessonContent matches the module IDs.
-  // A more robust solution might use a matching key if available.
   const lessonModuleData = lessonContent.find(lc => lc.order.toString() === params.id);
   const lesson = lessonModuleData?.lessons[0];
 

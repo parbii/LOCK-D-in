@@ -28,18 +28,18 @@ interface Resource {
     url: string;
 }
 
-interface Assessment {
-    type: string;
+export interface Assessment {
+    type: "quiz" | "short_answer" | "none";
     quiz_id?: string;
     questions?: QuizQuestion[];
     question_text?: string;
     expected_keywords?: string[];
 }
 
-interface QuizQuestion {
+export interface QuizQuestion {
     question_text: string;
     options: string[];
-    correct_answer_index: number;
+    correct_answer: string;
 }
 
 
@@ -117,12 +117,12 @@ export const lessonContent = [
                         {
                             "question_text": "According to Matthew 6:33, what should we seek first?",
                             "options": ["Wealth and success", "His kingdom and his righteousness", "Personal happiness", "Financial security"],
-                            "correct_answer_index": 1
+                            "correct_answer": "His kingdom and his righteousness"
                         },
                         {
                             "question_text": "What does 'putting God first' primarily involve?",
                             "options": ["Attending church every Sunday", "Making Him the intentional priority in all areas of life", "Only praying when you need something", "Ignoring personal ambitions"],
-                            "correct_answer_index": 1
+                            "correct_answer": "Making Him the intentional priority in all areas of life"
                         }
                     ]
                 }
@@ -294,12 +294,12 @@ export const lessonContent = [
                 {
                     "question_text": "According to the lesson, what is a key takeaway from how basketball players handle missed shots?",
                     "options": ["They dwell on their mistakes", "They immediately blame teammates", "They practice a 'short memory' and focus on the next play", "They quit the game"],
-                    "correct_answer_index": 2
+                    "correct_answer": "They practice a 'short memory' and focus on the next play"
                 },
                 {
                     "question_text": "Philippians 4:13 emphasizes strength from what source?",
                     "options": ["Personal willpower", "Team support", "Human connections", "Christ who gives strength"],
-                    "correct_answer_index": 3
+                    "correct_answer": "Christ who gives strength"
                 }
                 ]
             }
@@ -355,7 +355,7 @@ export const lessonContent = [
                                 "Avoiding all risks in life.",
                                 "Only focusing on the past."
                             ],
-                            "correct_answer_index": 1
+                            "correct_answer": "Reframing negative thoughts into positive possibilities."
                         }
                     ]
                 }
@@ -411,7 +411,7 @@ export const lessonContent = [
                                 "Watching viral videos.",
                                 "Playing games."
                             ],
-                            "correct_answer_index": 1
+                            "correct_answer": "Building a professional brand and network."
                         }
                     ]
                 }
@@ -504,7 +504,7 @@ export const lessonContent = [
                                 "Always be yourself and be confident in your core values and morals.",
                                 "Only show your true self in casual settings."
                             ],
-                            "correct_answer_index": 2
+                            "correct_answer": "Always be yourself and be confident in your core values and morals."
                         },
                         {
                             "question_text": "What is a key benefit of embracing your unique strengths?",
@@ -514,7 +514,7 @@ export const lessonContent = [
                                 "It fosters a deeper appreciation for your capabilities and contributions.",
                                 "It means you don't need to develop new skills."
                             ],
-                            "correct_answer_index": 2
+                            "correct_answer": "It fosters a deeper appreciation for your capabilities and contributions."
                         },
                         {
                             "question_text": "What is 'Imposter Syndrome'?",
@@ -524,7 +524,7 @@ export const lessonContent = [
                                 "A type of confidence.",
                                 "A feeling of excitement about new opportunities."
                             ],
-                            "correct_answer_index": 1
+                            "correct_answer": "The nagging feeling that you are not good enough or don't belong."
                         },
                         {
                             "question_text": "Where does true confidence originate from, according to this module?",
@@ -534,7 +534,7 @@ export const lessonContent = [
                                 "Your authentic self and core values.",
                                 "Avoiding all difficult situations."
                             ],
-                            "correct_answer_index": 2
+                            "correct_answer": "Your authentic self and core values."
                         }
                     ]
                 }
@@ -590,7 +590,7 @@ export const lessonContent = [
                                 "Individual effort is the only thing that matters.",
                                 "Working with others makes things more complicated."
                             ],
-                            "correct_answer_index": 1
+                            "correct_answer": "Collaboration and community lead to greater success and growth."
                         },
                         {
                             "question_text": "According to the module, what is often the fastest way to grow something?",
@@ -600,7 +600,7 @@ export const lessonContent = [
                                 "Working together in small communities.",
                                 "Competing against everyone else."
                             ],
-                            "correct_answer_index": 2
+                            "correct_answer": "Working together in small communities."
                         },
                         {
                             "question_text": "Why is it emphasized that you cannot do everything alone?",
@@ -610,7 +610,7 @@ export const lessonContent = [
                                 "Because working alone is boring.",
                                 "To suggest you should never try anything on your own."
                             ],
-                            "correct_answer_index": 1
+                            "correct_answer": "To highlight the exponential power of diverse skills and energies working together."
                         },
                         {
                             "question_text": "Which of the following is crucial for building strong, supportive communities?",
@@ -620,7 +620,7 @@ export const lessonContent = [
                                 "Fostering effective communication and mutual respect.",
                                 "Only interacting with people exactly like yourself."
                             ],
-                            "correct_answer_index": 2
+                            "correct_answer": "Fostering effective communication and mutual respect."
                         }
                     ]
                 }
@@ -676,7 +676,7 @@ export const lessonContent = [
                                 "It's a continuous journey of growth and improvement.",
                                 "It only applies to a select few individuals."
                             ],
-                            "correct_answer_index": 2
+                            "correct_answer": "It's a continuous journey of growth and improvement."
                         },
                         {
                             "question_text": "Why should you never be comfortable or complacent, even after achieving success?",
@@ -686,7 +686,7 @@ export const lessonContent = [
                                 "Because you should always compare yourself to others.",
                                 "Because being comfortable means you've failed."
                             ],
-                            "correct_answer_index": 1
+                            "correct_answer": "Because there is always room to grow and improve."
                         },
                         {
                             "question_text": "What is a common pitfall of striving for an unattainable 'perfect' outcome?",
@@ -696,7 +696,7 @@ export const lessonContent = [
                                 "It can cause procrastination and discouragement.",
                                 "It ensures you will never make a mistake."
                             ],
-                            "correct_answer_index": 2
+                            "correct_answer": "It can cause procrastination and discouragement."
                         }
                     ]
                 }

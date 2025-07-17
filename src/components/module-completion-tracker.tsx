@@ -4,12 +4,13 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { modules } from "@/lib/modules-data";
+import { useModules } from "@/lib/modules-data";
 import { BrainCircuit } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 export function ModuleCompletionTracker() {
+    const { modules } = useModules();
     const [isClient, setIsClient] = React.useState(false);
 
     React.useEffect(() => {

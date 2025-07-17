@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { BarChart, Users, Activity, Target, Shield, MessageSquare, ThumbsUp, Lock, FileText, Send } from "lucide-react";
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
-import { modules } from "@/lib/modules-data";
+import { useModules } from "@/lib/modules-data";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 
@@ -105,6 +105,7 @@ function OrganizationApplication() {
 
 
 export default function LeaderDashboardPage() {
+  const { modules } = useModules();
   const allModulesCompleted = modules.every(module => module.completed);
   // This would come from user data in a real app.
   const [isLeader, setIsLeader] = useState(false); 
