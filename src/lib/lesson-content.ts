@@ -447,5 +447,89 @@ export const lessonContent = [
                 "assessment": { "type": "none" }
             }
         ]
+    },
+    {
+        "moduleID": "KP_Authenticity_M7",
+        "title": "Module 7: Authenticity",
+        "description": "This module explores the power of being your true self, embracing unique strengths, and building genuine confidence.",
+        "order": 7,
+        "lessons": [
+            {
+                "lessonID": "KP_Authenticity_M7_L1",
+                "title": "Authenticity: Your Greatest Asset",
+                "order": 1,
+                "objective": "Learners will understand the importance of authenticity and gain strategies to embrace their unique strengths and overcome imposter syndrome.",
+                "duration_minutes": 40,
+                "content_sections": [
+                     {
+                        "type": "teaching_point",
+                        "heading": "The Power of Being Your True Self",
+                        "points": [{ "sub_heading": "", "text": "In a world that often pressures us to conform, this lesson highlights the liberating power of authenticity. We'll explore why staying true to your core values and morals, regardless of the situation or audience, is fundamental to inner peace and lasting success. Whether you're in a professional setting requiring a different tone or a casual social gathering, your authentic self is your greatest asset. Discover how genuine self-expression can build trust and deeper connections."}]
+                    },
+                    {
+                        "type": "teaching_point",
+                        "heading": "Embracing Your Unique Strengths",
+                        "points": [{ "sub_heading": "", "text": "Each of us possesses a unique combination of talents, perspectives, and experiences. This lesson is dedicated to helping you identify and celebrate your individual strengths. We'll guide you through exercises designed to uncover what makes you uniquely you, fostering a deeper appreciation for your capabilities and contributions. Understanding your strengths is the first step towards confidently leveraging them in all areas of your life."}]
+                    },
+                    {
+                        "type": "teaching_point",
+                        "heading": "Conquering Imposter Syndrome: You Belong Here",
+                        "points": [{ "sub_heading": "", "text": "Imposter syndrome—the nagging feeling that you're not good enough or don't belong, despite evidence of your competence—can be debilitating. This lesson confronts imposter syndrome head-on. We'll help you recognize its signs and provide strategies to challenge those self-defeating thoughts. Remember, if you've been placed in a certain room or position, it's because you earned it and God has a purpose for you there. You are meant to be exactly where you are."}]
+                    },
+                    {
+                        "type": "teaching_point",
+                        "heading": "Confidence in Your Core",
+                        "points": [{ "sub_heading": "", "text": "True confidence stems from within, rooted in your authentic self. This lesson explores how embracing who you are naturally boosts your self-esteem and influences how others perceive you. We'll discuss practical ways to project genuine confidence, not arrogance, by being comfortable in your own skin. Learn to stand firm in your convictions and express yourself with clarity and conviction, knowing your value."}]
+                    }
+                ],
+                "resources": [],
+                "assessment": {
+                    "type": "quiz",
+                    "quiz_id": "M7_L1_Quiz",
+                    "questions": [
+                        {
+                            "question_text": "What is the core message of the 'Authenticity' module?",
+                            "options": [
+                                "Always conform to others' expectations.",
+                                "You should change your core values based on the situation.",
+                                "Always be yourself and be confident in your core values and morals.",
+                                "Only show your true self in casual settings."
+                            ],
+                            "correct_answer_index": 2
+                        },
+                        {
+                            "question_text": "What is a key benefit of embracing your unique strengths?",
+                            "options": [
+                                "It makes you exactly like everyone else.",
+                                "It helps you avoid any challenges.",
+                                "It fosters a deeper appreciation for your capabilities and contributions.",
+                                "It means you don't need to develop new skills."
+                            ],
+                            "correct_answer_index": 2
+                        },
+                        {
+                            "question_text": "What is 'Imposter Syndrome'?",
+                            "options": [
+                                "The feeling that you are more qualified than others.",
+                                "The nagging feeling that you are not good enough or don't belong.",
+                                "A type of confidence.",
+                                "A feeling of excitement about new opportunities."
+                            ],
+                            "correct_answer_index": 1
+                        },
+                        {
+                            "question_text": "Where does true confidence originate from, according to this module?",
+                            "options": [
+                                "External validation from others.",
+                                "Conforming to popular trends.",
+                                "Your authentic self and core values.",
+                                "Avoiding all difficult situations."
+                            ],
+                            "correct_answer_index": 2
+                        }
+                    ]
+                }
+            }
+        ]
     }
 ];
