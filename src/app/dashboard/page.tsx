@@ -18,11 +18,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { ModuleCompletionTracker } from "@/components/module-completion-tracker";
-import { posts } from "@/lib/posts-data";
+import { initialPosts, type Post } from "@/lib/posts-data";
 import { useToast } from "@/hooks/use-toast";
 
 
-function CreatePost() {
+function CreatePost({ addPost }: { addPost: (post: Omit<Post, 'id' | 'user' | 'likes' | 'comments' | 'time'>) => void }) {
     const { activeGoals } = useGoals();
     const { toast } = useToast();
     const [postContent, setPostContent] = useState('');
@@ -72,6 +72,40 @@ function CreatePost() {
         setPostContent(prev => prev ? `${prev}\n${streakText}` : streakText);
     };
 
+    const handlePost = () => {
+        if (!postContent.trim() && !attachedImage) {
+            toast({
+                variant: "destructive",
+                title: "Cannot cr*at* *mpty post",
+                description: "Please add some content or an image.",
+            });
+            return;
+        }
+
+        let content = postContent;
+        if (attachedGoal) {
+            content = `Attached Goal: ${attachedGoal.name}\n\n${postContent}`;
+        }
+        
+        addPost({
+            content,
+            image: attachedImage || undefined,
+            imageAiHint: attachedImage ? 'user uploaded' : undefined,
+        });
+
+        // Reset form
+        setPostContent('');
+        setAttachedGoal(null);
+        setAttachedImage(null);
+        if (imageInputRef.current) {
+            imageInputRef.current.value = "";
+        }
+         toast({
+            title: "Post Cr*at*d!",
+            description: "Your post is now live on your dashboard.",
+        });
+    }
+
     return (
         <Card>
             <CardHeader>
@@ -108,7 +142,10 @@ function CreatePost() {
                                 size="icon"
                                 variant="destructive"
                                 className="absolute top-2 right-2 h-7 w-7 rounded-full"
-                                onClick={() => setAttachedImage(null)}
+                                onClick={() => {
+                                    setAttachedImage(null);
+                                    if(imageInputRef.current) imageInputRef.current.value = "";
+                                }}
                             >
                                 <X className="h-4 w-4" />
                             </Button>
@@ -161,7 +198,7 @@ function CreatePost() {
                         <Flame className="h-5 w-5" />
                     </Button>
                  </div>
-                <Button>Post</Button>
+                <Button onClick={handlePost}>Post</Button>
             </CardFooter>
         </Card>
     );
@@ -292,13 +329,31 @@ function RsvpEvents() {
 }
 
 export default function DashboardPage() {
+    const [posts, setPosts] = useState<Post[]>(initialPosts);
+
+    const addPost = (newPostData: Omit<Post, 'id' | 'user' | 'likes' | 'comments' | 'time'>) => {
+        const newPost: Post = {
+            id: Date.now(),
+            user: {
+                name: "Current User", // Replace with actual user data
+                avatar: "https://placehold.co/40x40.png",
+                aiHint: "profile avatar"
+            },
+            ...newPostData,
+            likes: 0,
+            comments: 0,
+            time: "Just now"
+        };
+        setPosts(prevPosts => [newPost, ...prevPosts]);
+    };
+
   return (
     <div className="max-w-2xl mx-auto">
         <DailyHabitsTracker />
         <ModuleCompletionTracker />
         <RsvpEvents />
       <div className="space-y-6 mt-6">
-        <CreatePost />
+        <CreatePost addPost={addPost} />
 
         {/* Feed Posts */}
         {posts.map(post => (
@@ -321,7 +376,7 @@ export default function DashboardPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="mb-4">{post.content}</p>
+              <p className="mb-4 whitespace-pre-wrap">{post.content}</p>
               {post.image && (
                  <div className="relative aspect-video w-full rounded-lg overflow-hidden border">
                     <Image src={post.image} alt="Post image" layout="fill" objectFit="cover" data-ai-hint={post.imageAiHint}/>
@@ -350,5 +405,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    

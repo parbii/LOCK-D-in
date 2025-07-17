@@ -17,7 +17,7 @@ export interface Post {
 
 
 // Mock data for feed posts
-export const posts: Post[] = [
+export const initialPosts: Post[] = [
   {
     id: 1,
     user: {
@@ -74,3 +74,5 @@ export const posts: Post[] = [
     communityId: 3
   }
 ];
+
+export const posts: Post[] = initialPosts;
