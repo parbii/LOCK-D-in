@@ -15,14 +15,17 @@ import { Badge } from "@/components/ui/badge";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useToast } from '@/hooks/use-toast';
+import { useReflections } from '@/context/reflections-context';
 
 function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useModules>['modules'][0], lesson: Lesson }) {
   const { completeModule, modules } = useModules();
+  const { addReflection } = useReflections();
   const { toast } = useToast();
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, string | number>>({});
   const [shortAnswer, setShortAnswer] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [reflectionText, setReflectionText] = useState("");
   
   const handleAnswerChange = (qIndex: number, value: string) => {
     setAnswers(prev => ({...prev, [qIndex]: value}));
@@ -60,15 +63,45 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
   };
 
   const handleShortAnswerSubmit = () => {
-    // For open-ended questions, we can just mark it complete on submission.
-    // In a real app, you might save this to a database for review.
+    if (shortAnswer.trim()) {
+        addReflection({
+            moduleId: module.id,
+            moduleTitle: module.title,
+            lessonTitle: lesson.title,
+            reflectionText: shortAnswer,
+            date: new Date().toISOString(),
+        });
+    }
     completeModule(module.id);
     setSubmitted(true);
     toast({
         title: "Module Complete!",
         description: `Great job on finishing "${module.title}".`,
     });
-  }
+  };
+
+  const handleSaveReflection = (heading: string) => {
+    if (!reflectionText.trim()) {
+        toast({
+            variant: "destructive",
+            title: "Reflection is empty",
+            description: "Please write something before saving.",
+        });
+        return;
+    }
+    addReflection({
+        moduleId: module.id,
+        moduleTitle: module.title,
+        lessonTitle: `${lesson.title} - ${heading}`,
+        reflectionText: reflectionText,
+        date: new Date().toISOString(),
+    });
+    toast({
+        title: "Reflection Saved!",
+        description: "You can view your saved reflections on your profile page.",
+    });
+    setReflectionText("");
+  };
 
   const nextModuleId = module.id < modules.length ? module.id + 1 : null;
 
@@ -181,10 +214,10 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
                                     <CardDescription className="whitespace-pre-line">{section.prompt}</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <Textarea placeholder="Write your reflection here..." rows={8}/>
+                                    <Textarea placeholder="Write your reflection here..." rows={8} value={reflectionText} onChange={(e) => setReflectionText(e.target.value)} />
                                 </CardContent>
                                 <CardFooter>
-                                    <Button>Save Reflection</Button>
+                                    <Button onClick={() => handleSaveReflection(section.heading)}>Save Reflection</Button>
                                 </CardFooter>
                             </Card>
                         );
@@ -236,7 +269,7 @@ function LessonClientPage({ module, lesson }: { module: ReturnType<typeof useMod
                     </CardHeader>
                     <CardContent className="space-y-6">
                         {lesson.assessment.questions.map((q, qIndex) => (
-                            <div key={qIndex}>
+                             <div key={qIndex}>
                                 <p className="font-semibold mb-3">{qIndex + 1}. {q.question_text}</p>
                                 <RadioGroup onValueChange={(value) => handleAnswerChange(qIndex, value)}>
                                     <div className="space-y-2 pl-2">

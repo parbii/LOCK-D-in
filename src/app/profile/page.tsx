@@ -6,8 +6,48 @@ import { useGoals } from "@/context/goals-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edit, Globe } from "lucide-react";
+import { Edit, Globe, BrainCircuit } from "lucide-react";
 import { ProfileStats } from '@/components/profile-stats';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useReflections } from '@/context/reflections-context';
+import Link from 'next/link';
+import { format } from 'date-fns';
+
+function ReflectionsList() {
+    const { reflections } = useReflections();
+
+    if (reflections.length === 0) {
+        return (
+            <div className="text-center text-muted-foreground py-8">
+                <p>You haven't saved any reflections yet.</p>
+                <Button asChild className="mt-4">
+                    <Link href="/lessons">
+                        <BrainCircuit className="mr-2 h-4 w-4" />
+                        Go to Mindset Modules
+                    </Link>
+                </Button>
+            </div>
+        );
+    }
+
+    return (
+        <div className="space-y-4">
+            {reflections.map((reflection, index) => (
+                <Card key={index} className="bg-muted/30">
+                    <CardHeader>
+                        <CardTitle className="text-lg">{reflection.lessonTitle}</CardTitle>
+                        <CardDescription>
+                            From Module {reflection.moduleId}: {reflection.moduleTitle} &middot; Saved on {format(new Date(reflection.date), "PPP")}
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="whitespace-pre-wrap">{reflection.reflectionText}</p>
+                    </CardContent>
+                </Card>
+            ))}
+        </div>
+    )
+}
 
 
 export default function ProfilePage() {
@@ -46,18 +86,29 @@ export default function ProfilePage() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>My Posts</CardTitle>
-          <CardDescription>Content you've shared with the community.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center text-muted-foreground py-8">
-            <p>You haven't posted anything yet.</p>
-            <Button className="mt-4">Create Your First Post</Button>
-          </div>
-        </CardContent>
-      </Card>
+      <Tabs defaultValue="posts" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="posts">My Posts</TabsTrigger>
+            <TabsTrigger value="reflections">Mindset Reflections</TabsTrigger>
+        </TabsList>
+        <TabsContent value="posts">
+            <Card>
+                <CardContent className="pt-6">
+                <div className="text-center text-muted-foreground py-8">
+                    <p>You haven't posted anything yet.</p>
+                    <Button className="mt-4">Create Your First Post</Button>
+                </div>
+                </CardContent>
+            </Card>
+        </TabsContent>
+        <TabsContent value="reflections">
+            <Card>
+                <CardContent className="pt-6">
+                   <ReflectionsList />
+                </CardContent>
+            </Card>
+        </TabsContent>
+        </Tabs>
     </div>
   );
 }
