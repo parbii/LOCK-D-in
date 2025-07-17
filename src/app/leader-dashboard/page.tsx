@@ -133,8 +133,8 @@ export default function LeaderDashboardPage() {
                 </CardHeader>
                 <CardContent className="prose prose-sm md:prose-base max-w-none text-foreground/90">
                     <p>This is where student engagement metrics will be displayed. It will include charts and data visualizations to track progress and goal completion across your student body.</p>
-                     <div className="aspect-video w-full rounded-lg overflow-hidden border bg-muted mt-4">
-                       <Image src="https://placehold.co/1280x720.png" alt="Performance chart" width={1280} height={720} className="w-full h-full object-cover" data-ai-hint="data chart graph" />
+                     <div className="aspect-video w-full rounded-lg overflow-hidden border bg-muted mt-4 relative">
+                       <Image src="https://placehold.co/1280x720.png" alt="Performance chart" layout="fill" className="object-cover" data-ai-hint="data chart graph" />
                     </div>
                 </CardContent>
             </Card>

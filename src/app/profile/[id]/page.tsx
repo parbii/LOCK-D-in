@@ -109,7 +109,7 @@ export default function FriendProfilePage() {
       </Card>
 
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold tracking-tight">{friend.name}'s F**d</h2>
+        <h2 className="text-2xl font-bold tracking-tight">{friend.name}'s Feed</h2>
         {friend.posts.length > 0 ? friend.posts.map(post => (
           <Card key={post.id}>
             <CardHeader>
@@ -133,7 +133,7 @@ export default function FriendProfilePage() {
               <p className="mb-4">{post.content}</p>
               {post.image && (
                  <div className="relative aspect-video w-full rounded-lg overflow-hidden border">
-                    <Image src={post.image} alt="Post image" layout="fill" objectFit="cover" data-ai-hint={post.imageAiHint}/>
+                    <Image src={post.image} alt="Post image" layout="fill" className="object-cover" data-ai-hint={post.imageAiHint}/>
                  </div>
               )}
             </CardContent>

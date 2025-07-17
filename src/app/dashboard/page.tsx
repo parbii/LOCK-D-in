@@ -137,7 +137,7 @@ function CreatePost({ addPost }: { addPost: (post: Omit<Post, 'id' | 'user' | 'l
                     )}
                     {attachedImage && (
                         <div className="relative w-full aspect-video rounded-lg overflow-hidden border">
-                            <Image src={attachedImage} alt="Post preview" layout="fill" objectFit="cover" />
+                            <Image src={attachedImage} alt="Post preview" layout="fill" className="object-cover" />
                              <Button
                                 size="icon"
                                 variant="destructive"
@@ -379,7 +379,7 @@ export default function DashboardPage() {
               <p className="mb-4 whitespace-pre-wrap">{post.content}</p>
               {post.image && (
                  <div className="relative aspect-video w-full rounded-lg overflow-hidden border">
-                    <Image src={post.image} alt="Post image" layout="fill" objectFit="cover" data-ai-hint={post.imageAiHint}/>
+                    <Image src={post.image} alt="Post image" layout="fill" className="object-cover" data-ai-hint={post.imageAiHint}/>
                  </div>
               )}
             </CardContent>

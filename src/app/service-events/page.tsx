@@ -236,7 +236,7 @@ export default function ServiceEventsPage() {
                 {events.map((event) => (
                     <Card key={event.id} className="overflow-hidden h-full flex flex-col group">
                         <div className="relative aspect-video w-full overflow-hidden">
-                            <Image src={event.image} alt={event.title} layout="fill" objectFit="cover" data-ai-hint={event.imageAiHint} className="group-hover:scale-105 transition-transform duration-300"/>
+                            <Image src={event.image} alt={event.title} layout="fill" className="object-cover group-hover:scale-105 transition-transform duration-300" data-ai-hint={event.imageAiHint} />
                         </div>
                         <CardContent className="p-4 flex flex-col flex-grow">
                             <Link href={`/service-events/${event.id}`} className="group">

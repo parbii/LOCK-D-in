@@ -145,7 +145,7 @@ function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
                     <p className="mb-4">{post.content}</p>
                     {post.image && (
                         <div className="relative aspect-video w-full rounded-lg overflow-hidden border">
-                            <Image src={post.image} alt="Post image" layout="fill" objectFit="cover" data-ai-hint={post.imageAiHint}/>
+                            <Image src={post.image} alt="Post image" layout="fill" className="object-cover" data-ai-hint={post.imageAiHint}/>
                         </div>
                     )}
                     </CardContent>
