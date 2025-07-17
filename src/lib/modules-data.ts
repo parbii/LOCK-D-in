@@ -9,7 +9,7 @@ export interface Module {
 export const modules: Module[] = [
   { id: 1, title: "KP God First", theme: "Foundations of Kingdom Principles", completed: true },
   { id: 2, title: "Know Your Why", theme: "Understanding Your Core Motivation", completed: true },
-  { id: 3, title: "Ballislife", theme: "Life Lessons from the Court", completed: false },
+  { id: 3, title: "Ball Is Life", theme: "Life Lessons from the Court", completed: false },
   { id: 4, title: "The Art of What If", theme: "Vision and Creative Thinking", completed: false },
   { id: 5, title: "Linkdin", theme: "Building Your Professional Network", completed: false },
   { id: 6, title: "Consistency/Discipline", theme: "The Habits of Success", completed: false },

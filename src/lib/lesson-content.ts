@@ -214,7 +214,7 @@ export const lessonContent = [
     },
     {
         "moduleID": "KP_BallIsLife_M3",
-        "title": "Module 3: Ballislife - Life Lessons from the Court",
+        "title": "Module 3: Ball Is Life - Life Lessons from the Court",
         "description": "This module explores the profound parallels between the game of basketball and the journey of life. Learners will discover how principles of teamwork, discipline, resilience, strategy, and continuous improvement, evident on the court, can be applied to transform their outlook, achieve personal goals, and fulfill their Kingdom purpose.",
         "order": 3,
         "lessons": [
@@ -227,7 +227,7 @@ export const lessonContent = [
             "content_sections": [
                 {
                 "type": "introduction",
-                "heading": "Welcome to Module 3: Ballislife!",
+                "heading": "Welcome to Module 3: Ball Is Life!",
                 "text": "For many, basketball is more than a game; it's a metaphor for life. The court becomes a classroom for crucial lessons in strategy, teamwork, discipline, and especially, mindset. In this module, we'll draw parallels between the highs and lows of the game and the realities of your personal and professional journey, equipping you with a winning outlook rooted in Kingdom Principles."
                 },
                 {
@@ -303,6 +303,65 @@ export const lessonContent = [
                 }
                 ]
             }
+            }
+        ]
+    },
+    {
+        "moduleID": "KP_ArtOfWhatIf_M4",
+        "title": "Module 4: The Art of What If",
+        "description": "This module encourages reframing thinking, focusing on positive possibilities, weighing choices, and embracing calculated risks.",
+        "order": 4,
+        "lessons": [
+            {
+                "lessonID": "KP_ArtOfWhatIf_M4_L1",
+                "title": "The Art of What If",
+                "order": 1,
+                "objective": "Learners will be able to reframe negative 'what if' scenarios into positive possibilities and make informed, calculated risks.",
+                "duration_minutes": 40,
+                "content_sections": [
+                    {
+                        "type": "introduction",
+                        "heading": "Welcome to 'The Art of What If'",
+                        "text": "Often, our minds jump to the worst-case 'what if' scenarios. We imagine all the things that could go wrong, paralyzing us from taking action. But what if we flipped that script? This lesson will challenge you to identify your negative 'what ifs' and then intentionally reframe them into positive possibilities. Remember, the regret of not trying at all often outweighs the fear of failure."
+                    },
+                    {
+                        "type": "teaching_point",
+                        "heading": "Weighing the Good with the Bad",
+                        "points": [
+                            {
+                                "sub_heading": "Conduct a 'What If' Assessment",
+                                "text": "Life is full of choices, and every choice comes with potential risks and rewards. For any decision you're facing, list out the potential positive outcomes ('what if it goes right?') and the potential negative outcomes ('what if it goes wrong?'). You'll likely discover that for many things you're contemplating, the potential good far outweighs the bad."
+                            }
+                        ]
+                    },
+                    {
+                        "type": "application_challenge",
+                        "heading": "Embracing Calculated Risks",
+                        "challenge_details": "Once you've analyzed your 'what ifs,' this lesson encourages you to embrace calculated risks. A calculated risk isn't about recklessness; it's about making informed decisions where the potential upside is significant, and the downside is manageable. We'll explore strategies for mitigating potential negative outcomes while still pushing yourself beyond your comfort zone."
+                    },
+                    {
+                        "type": "introduction",
+                        "heading": "Stories of 'What If' Success",
+                        "text": "Throughout history, countless individuals have achieved extraordinary things by daring to ask 'what if' and taking a chance. This lesson will feature inspiring success stories of people who took a leap of faith, faced their fears, and reaped incredible rewards. Their journeys will demonstrate the transformative power of focusing on positive possibilities and taking action."
+                    }
+                ],
+                "resources": [],
+                "assessment": {
+                    "type": "quiz",
+                    "quiz_id": "M4_L1_Quiz",
+                    "questions": [
+                        {
+                            "question_text": "Which of the following best describes the core idea of 'The Art of What If'?",
+                            "options": [
+                                "Always expecting the worst-case scenario.",
+                                "Reframing negative thoughts into positive possibilities.",
+                                "Avoiding all risks in life.",
+                                "Only focusing on the past."
+                            ],
+                            "correct_answer_index": 1
+                        }
+                    ]
+                }
             }
         ]
     }
