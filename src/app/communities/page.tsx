@@ -104,21 +104,11 @@ export default function CommunitiesPage() {
             return;
         }
         
-        const hasLockedInPublicGoal = activeGoals.some(goal => goal.progress >= 100 && goal.isPublic);
-
-        if (hasLockedInPublicGoal) {
-            setJoinedCommunities([...joinedCommunities, community.id]);
-            toast({
-                title: "Welcome to the community!",
-                description: "You've successfully joined.",
-            });
-        } else {
-            toast({
-                variant: "destructive",
-                title: "Goal Required to Join",
-                description: "You must have at least one 'LockdIn' public goal to join a community. Keep pushing!",
-            });
-        }
+        setJoinedCommunities([...joinedCommunities, community.id]);
+        toast({
+            title: "Welcome to the community!",
+            description: "You've successfully joined.",
+        });
     };
     
     const handleCreateCommunity = () => {
