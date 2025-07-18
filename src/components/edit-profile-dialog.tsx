@@ -7,26 +7,33 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from './ui/input';
 
 interface EditProfileDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    currentName: string;
+    currentUsername: string;
     currentBio: string;
     isPublic: boolean;
-    onSave: (newBio: string, newIsPublic: boolean) => void;
+    onSave: (newName: string, newUsername: string, newBio: string, newIsPublic: boolean) => void;
 }
 
-export function EditProfileDialog({ open, onOpenChange, currentBio, isPublic, onSave }: EditProfileDialogProps) {
+export function EditProfileDialog({ open, onOpenChange, currentName, currentUsername, currentBio, isPublic, onSave }: EditProfileDialogProps) {
+    const [name, setName] = useState(currentName);
+    const [username, setUsername] = useState(currentUsername);
     const [bio, setBio] = useState(currentBio);
     const [publicProfile, setPublicProfile] = useState(isPublic);
 
     useEffect(() => {
+        setName(currentName);
+        setUsername(currentUsername);
         setBio(currentBio);
         setPublicProfile(isPublic);
-    }, [open, currentBio, isPublic]);
+    }, [open, currentName, currentUsername, currentBio, isPublic]);
 
     const handleSave = () => {
-        onSave(bio, publicProfile);
+        onSave(name, username, bio, publicProfile);
         onOpenChange(false);
     };
 
@@ -40,6 +47,24 @@ export function EditProfileDialog({ open, onOpenChange, currentBio, isPublic, on
                     </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                            id="name"
+                            placeholder="Your name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="username">Username</Label>
+                        <Input
+                            id="username"
+                            placeholder="Your username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
                     <div className="space-y-2">
                         <Label htmlFor="bio">Bio</Label>
                         <Textarea

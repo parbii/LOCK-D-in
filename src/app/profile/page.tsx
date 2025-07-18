@@ -61,23 +61,27 @@ export default function ProfilePage() {
   const [isClient, setIsClient] = useState(false);
   const [isEditDialogOpen, setEditDialogOpen] = useState(false);
 
+  const [name, setName] = useState("My Profile");
+  const [username, setUsername] = useState("@me");
   const [bio, setBio] = useState("This is a sample bio. I'm driven by purpose and committed to growth. This is my personal space to track my journey.");
   const [isPublic, setIsPublic] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
     const savedAvatar = localStorage.getItem('userAvatar');
-    if (savedAvatar) {
-      setAvatarSrc(savedAvatar);
-    }
+    if (savedAvatar) setAvatarSrc(savedAvatar);
+    
+    const savedName = localStorage.getItem('userName');
+    if (savedName) setName(savedName);
+
+    const savedUsername = localStorage.getItem('userUsername');
+    if (savedUsername) setUsername(savedUsername);
+
     const savedBio = localStorage.getItem('userBio');
-    if (savedBio) {
-      setBio(savedBio);
-    }
+    if (savedBio) setBio(savedBio);
+
     const savedPrivacy = localStorage.getItem('userPrivacy');
-    if (savedPrivacy) {
-      setIsPublic(JSON.parse(savedPrivacy));
-    }
+    if (savedPrivacy) setIsPublic(JSON.parse(savedPrivacy));
   }, []);
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,14 +105,20 @@ export default function ProfilePage() {
     fileInputRef.current?.click();
   };
 
-  const handleProfileUpdate = (newBio: string, newIsPublic: boolean) => {
+  const handleProfileUpdate = (newName: string, newUsername: string, newBio: string, newIsPublic: boolean) => {
+    setName(newName);
+    setUsername(newUsername);
     setBio(newBio);
     setIsPublic(newIsPublic);
+    
+    localStorage.setItem('userName', newName);
+    localStorage.setItem('userUsername', newUsername);
     localStorage.setItem('userBio', newBio);
     localStorage.setItem('userPrivacy', JSON.stringify(newIsPublic));
+    
     toast({
         title: "Profil* Updat*d",
-        description: "Your bio and privacy settings have been saved."
+        description: "Your profile details have been saved."
     });
   };
 
@@ -120,7 +130,7 @@ export default function ProfilePage() {
             <div className="relative">
               <Avatar className="w-24 h-24 text-4xl">
                 <AvatarImage src={avatarSrc} data-ai-hint="profile avatar" className="object-cover" />
-                <AvatarFallback>U</AvatarFallback>
+                <AvatarFallback>{name.charAt(0) || 'U'}</AvatarFallback>
               </Avatar>
               <input
                 type="file"
@@ -135,8 +145,8 @@ export default function ProfilePage() {
               </Button>
             </div>
             <div className="space-y-1">
-                <h1 className="text-2xl font-bold">My Profil*</h1>
-                <p className="text-muted-foreground">@me</p>
+                <h1 className="text-2xl font-bold">{name}</h1>
+                <p className="text-muted-foreground">{username}</p>
             </div>
             <p className="max-w-prose text-sm text-foreground/80">
               {bio}
@@ -161,6 +171,8 @@ export default function ProfilePage() {
       <EditProfileDialog 
         open={isEditDialogOpen}
         onOpenChange={setEditDialogOpen}
+        currentName={name}
+        currentUsername={username}
         currentBio={bio}
         isPublic={isPublic}
         onSave={handleProfileUpdate}
