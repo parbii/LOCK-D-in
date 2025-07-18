@@ -1,3 +1,4 @@
+
 "use client";
 
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -14,9 +15,23 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { LogOut, User, Mail, Settings } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function DashboardHeader() {
   const router = useRouter();
+  const [avatarSrc, setAvatarSrc] = useState("https://placehold.co/40x40.png");
+  const [userName, setUserName] = useState("U");
+
+  useEffect(() => {
+    const savedAvatar = localStorage.getItem('userAvatar');
+    if (savedAvatar) {
+      setAvatarSrc(savedAvatar);
+    }
+    const savedName = localStorage.getItem('userName');
+    if (savedName) {
+        setUserName(savedName);
+    }
+  }, []);
   
   const handleSupportClick = () => {
     window.location.href = "mailto:support@lockdin.com";
@@ -30,8 +45,8 @@ export function DashboardHeader() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-9 w-9 rounded-full">
             <Avatar className="h-9 w-9">
-              <AvatarImage src="https://placehold.co/40x40.png" alt="User Avatar" data-ai-hint="profile avatar"/>
-              <AvatarFallback>U</AvatarFallback>
+              <AvatarImage src={avatarSrc} alt="User Avatar" data-ai-hint="profile avatar" className="object-cover"/>
+              <AvatarFallback>{userName.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -47,7 +62,7 @@ export function DashboardHeader() {
            <DropdownMenuItem asChild>
              <Link href="/settings">
                 <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
+                <span>S*ttings</span>
              </Link>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleSupportClick}>
