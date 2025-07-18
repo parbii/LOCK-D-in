@@ -6,13 +6,14 @@ import { useGoals } from "@/context/goals-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edit, Globe, BrainCircuit } from "lucide-react";
+import { Edit, Globe, BrainCircuit, Lock as LockIcon } from "lucide-react";
 import { ProfileStats } from '@/components/profile-stats';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useReflections } from '@/context/reflections-context';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { useToast } from "@/hooks/use-toast";
+import { EditProfileDialog } from '@/components/edit-profile-dialog';
 
 function ReflectionsList() {
     const { reflections } = useReflections();
@@ -58,12 +59,24 @@ export default function ProfilePage() {
   const [avatarSrc, setAvatarSrc] = useState("https://placehold.co/100x100.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isClient, setIsClient] = useState(false);
+  const [isEditDialogOpen, setEditDialogOpen] = useState(false);
+
+  const [bio, setBio] = useState("This is a sample bio. I'm driven by purpose and committed to growth. This is my personal space to track my journey.");
+  const [isPublic, setIsPublic] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
     const savedAvatar = localStorage.getItem('userAvatar');
     if (savedAvatar) {
       setAvatarSrc(savedAvatar);
+    }
+    const savedBio = localStorage.getItem('userBio');
+    if (savedBio) {
+      setBio(savedBio);
+    }
+    const savedPrivacy = localStorage.getItem('userPrivacy');
+    if (savedPrivacy) {
+      setIsPublic(JSON.parse(savedPrivacy));
     }
   }, []);
 
@@ -88,6 +101,17 @@ export default function ProfilePage() {
     fileInputRef.current?.click();
   };
 
+  const handleProfileUpdate = (newBio: string, newIsPublic: boolean) => {
+    setBio(newBio);
+    setIsPublic(newIsPublic);
+    localStorage.setItem('userBio', newBio);
+    localStorage.setItem('userPrivacy', JSON.stringify(newIsPublic));
+    toast({
+        title: "Profil* Updat*d",
+        description: "Your bio and privacy settings have been saved."
+    });
+  };
+
   return (
     <div className="space-y-6">
       <Card>
@@ -105,9 +129,9 @@ export default function ProfilePage() {
                 className="hidden"
                 accept="image/*"
               />
-              <Button size="icon" className="absolute bottom-0 right-0 rounded-full h-8 w-8" onClick={handleEditClick}>
+              <Button size="icon" className="absolute bottom-0 -right-2 rounded-full h-8 w-8" onClick={handleEditClick}>
                 <Edit className="h-4 w-4" />
-                <span className="sr-only">Edit profile picture</span>
+                <span className="sr-only">Change profile picture</span>
               </Button>
             </div>
             <div className="space-y-1">
@@ -115,11 +139,17 @@ export default function ProfilePage() {
                 <p className="text-muted-foreground">@me</p>
             </div>
             <p className="max-w-prose text-sm text-foreground/80">
-              This is a sample bio. I'm driven by purpose and committed to growth. This is my personal space to track my journey.
+              {bio}
             </p>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Globe className="h-4 w-4" />
-              <span>My Public Profile</span>
+            <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    {isPublic ? <Globe className="h-4 w-4" /> : <LockIcon className="h-4 w-4" />}
+                    <span>{isPublic ? "Public Profile" : "Private Profile"}</span>
+                </div>
+                 <Button variant="outline" size="sm" onClick={() => setEditDialogOpen(true)}>
+                    <Edit className="mr-2 h-3 w-3" />
+                    Edit Profile
+                </Button>
             </div>
             
             {isClient && <ProfileStats goals={activeGoals} postsCount={totalPosts} />}
@@ -127,6 +157,14 @@ export default function ProfilePage() {
           </div>
         </CardContent>
       </Card>
+
+      <EditProfileDialog 
+        open={isEditDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        currentBio={bio}
+        isPublic={isPublic}
+        onSave={handleProfileUpdate}
+      />
 
       <Tabs defaultValue="posts" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
