@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { ModuleCompletionTracker } from "@/components/module-completion-tracker";
-import { initialPosts, type Post } from "@/lib/posts-data";
+import { initialPosts, type Post, type Comment } from "@/lib/posts-data";
 import { useToast } from "@/hooks/use-toast";
 
 
@@ -91,6 +91,7 @@ function CreatePost({ addPost }: { addPost: (post: Omit<Post, 'id' | 'user' | 'l
             content,
             image: attachedImage || undefined,
             imageAiHint: attachedImage ? 'user uploaded' : undefined,
+            comments: [],
         });
 
         // Reset form
@@ -328,47 +329,43 @@ function RsvpEvents() {
     );
 }
 
-export default function DashboardPage() {
-    const [posts, setPosts] = useState<Post[]>([]);
+function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPost: Post) => void }) {
+    const [commentText, setCommentText] = useState("");
+    const [isCommentsOpen, setCommentsOpen] = useState(false);
 
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const savedPosts = localStorage.getItem('userPosts');
-            setPosts(savedPosts ? JSON.parse(savedPosts) : initialPosts);
-        }
-    }, []);
-
-    const addPost = (newPostData: Omit<Post, 'id' | 'user' | 'likes' | 'comments' | 'time'>) => {
-        const newPost: Post = {
-            id: Date.now(),
-            user: {
-                name: "Current User", // Replace with actual user data
-                avatar: "https://placehold.co/40x40.png",
-                aiHint: "profile avatar"
-            },
-            ...newPostData,
-            likes: 0,
-            comments: 0,
-            time: "Just now"
+    const handleLike = () => {
+        const updatedPost = {
+            ...post,
+            liked: !post.liked,
+            likes: post.liked ? post.likes - 1 : post.likes + 1,
         };
-        const updatedPosts = [newPost, ...posts];
-        setPosts(updatedPosts);
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('userPosts', JSON.stringify(updatedPosts));
-        }
+        onUpdatePost(updatedPost);
     };
 
-  return (
-    <div className="max-w-2xl mx-auto">
-        <DailyHabitsTracker />
-        <ModuleCompletionTracker />
-        <RsvpEvents />
-      <div className="space-y-6 mt-6">
-        <CreatePost addPost={addPost} />
+    const handleAddComment = () => {
+        if (!commentText.trim()) return;
 
-        {/* Feed Posts */}
-        {posts.map(post => (
-          <Card key={post.id}>
+        const newComment: Comment = {
+            id: Date.now(),
+            user: {
+                name: "Current User",
+                avatar: "https://placehold.co/40x40.png",
+                aiHint: "profile avatar",
+            },
+            text: commentText,
+            time: "Just now",
+        };
+
+        const updatedPost = {
+            ...post,
+            comments: [...post.comments, newComment],
+        };
+        onUpdatePost(updatedPost);
+        setCommentText("");
+    };
+
+    return (
+        <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -397,21 +394,122 @@ export default function DashboardPage() {
             <div className="px-6 pb-4">
                 <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="icon"><Heart className="h-5 w-5" /></Button>
-                        <Button variant="ghost" size="icon"><MessageCircle className="h-5 w-5" /></Button>
+                        <Button variant="ghost" size="icon" onClick={handleLike}>
+                            <Heart className={`h-5 w-5 ${post.liked ? 'text-red-500 fill-current' : ''}`} />
+                        </Button>
+                        <Button variant="ghost" size="icon" onClick={() => setCommentsOpen(true)}>
+                            <MessageCircle className="h-5 w-5" />
+                        </Button>
                         <Button variant="ghost" size="icon"><Send className="h-5 w-5" /></Button>
                     </div>
                     <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
                 </div>
                 <p className="text-sm font-semibold">{post.likes} likes</p>
-                <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
+                {post.comments.length > 0 && (
+                    <p className="text-sm text-muted-foreground cursor-pointer hover:underline" onClick={() => setCommentsOpen(true)}>
+                        View all {post.comments.length} comments
+                    </p>
+                )}
                 <div className="flex items-center gap-2 mt-2">
-                    <Input placeholder="Add a comment..." className="h-9 flex-1" />
-                    <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
-                    <Button variant="ghost" size="icon"><Send className="h-5 w-5" /></Button>
+                    <Input 
+                        placeholder="Add a comment..." 
+                        className="h-9 flex-1" 
+                        value={commentText} 
+                        onChange={(e) => setCommentText(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleAddComment()}
+                    />
+                    <Button variant="ghost" size="icon" onClick={() => { /* Emoji picker functionality */ }}>
+                        <Smile className="h-5 w-5"/>
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={handleAddComment}>
+                        <Send className="h-5 w-5"/>
+                    </Button>
                 </div>
             </div>
-          </Card>
+            <Dialog open={isCommentsOpen} onOpenChange={setCommentsOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Comments on {post.user.name}'s post</DialogTitle>
+                    </DialogHeader>
+                    <div className="max-h-[60vh] overflow-y-auto space-y-4 p-4">
+                        {post.comments.map(comment => (
+                            <div key={comment.id} className="flex items-start gap-3">
+                                <Avatar className="h-9 w-9">
+                                    <AvatarImage src={comment.user.avatar} data-ai-hint={comment.user.aiHint} />
+                                    <AvatarFallback>{comment.user.name.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <div className="bg-muted/50 rounded-lg px-3 py-2 flex-1">
+                                    <div className="flex items-baseline justify-between">
+                                        <p className="font-semibold text-sm">{comment.user.name}</p>
+                                        <p className="text-xs text-muted-foreground">{comment.time}</p>
+                                    </div>
+                                    <p className="text-sm">{comment.text}</p>
+                                </div>
+                            </div>
+                        ))}
+                         {post.comments.length === 0 && (
+                            <p className="text-sm text-center text-muted-foreground py-8">No comments yet. Be the first!</p>
+                        )}
+                    </div>
+                </DialogContent>
+            </Dialog>
+        </Card>
+    );
+}
+
+export default function DashboardPage() {
+    const [posts, setPosts] = useState<Post[]>([]);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedPosts = localStorage.getItem('userPosts');
+            const parsedPosts = savedPosts ? JSON.parse(savedPosts) : initialPosts;
+            // Ensure comments property is always an array
+            const sanitizedPosts = parsedPosts.map((p: Post) => ({ ...p, comments: p.comments || [] }));
+            setPosts(sanitizedPosts);
+        }
+    }, []);
+    
+    const updateAndSavePosts = (updatedPosts: Post[]) => {
+        setPosts(updatedPosts);
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('userPosts', JSON.stringify(updatedPosts));
+        }
+    };
+
+    const addPost = (newPostData: Omit<Post, 'id' | 'user' | 'likes' | 'comments' | 'time'>) => {
+        const newPost: Post = {
+            id: Date.now(),
+            user: {
+                name: "Current User", // Replace with actual user data
+                avatar: "https://placehold.co/40x40.png",
+                aiHint: "profile avatar"
+            },
+            ...newPostData,
+            likes: 0,
+            comments: [],
+            time: "Just now"
+        };
+        const updatedPosts = [newPost, ...posts];
+        updateAndSavePosts(updatedPosts);
+    };
+
+    const handleUpdatePost = (updatedPost: Post) => {
+        const updatedPosts = posts.map(p => p.id === updatedPost.id ? updatedPost : p);
+        updateAndSavePosts(updatedPosts);
+    };
+
+  return (
+    <div className="max-w-2xl mx-auto">
+        <DailyHabitsTracker />
+        <ModuleCompletionTracker />
+        <RsvpEvents />
+      <div className="space-y-6 mt-6">
+        <CreatePost addPost={addPost} />
+
+        {/* Feed Posts */}
+        {posts.map(post => (
+          <PostCard key={post.id} post={post} onUpdatePost={handleUpdatePost} />
         ))}
       </div>
     </div>

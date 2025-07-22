@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useParams } from "next/navigation";
@@ -12,10 +13,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Users, Lock, Globe, PlusCircle, Trash2, X, Target, ArrowLeft, Heart, MessageCircle, Send, Bookmark, Smile } from "lucide-react";
 import Link from "next/link";
 import { initialCommunities, type Community } from "@/lib/communities-data";
-import { posts, type Post } from "@/lib/posts-data";
+import { posts as allPosts, type Post, type Comment } from "@/lib/posts-data";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 import { type Habit } from "@/context/goals-context";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 function CreateSharedGoal({ community }: { community: Community }) {
     const { toast } = useToast();
@@ -106,8 +108,117 @@ function CreateSharedGoal({ community }: { community: Community }) {
     );
 }
 
-function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
-    if (communityPosts.length === 0) {
+function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPost: Post) => void }) {
+    const [commentText, setCommentText] = useState("");
+    const [isCommentsOpen, setCommentsOpen] = useState(false);
+
+    const handleLike = () => {
+        const updatedPost = {
+            ...post,
+            liked: !post.liked,
+            likes: post.liked ? post.likes - 1 : post.likes + 1,
+        };
+        onUpdatePost(updatedPost);
+    };
+
+    const handleAddComment = () => {
+        if (!commentText.trim()) return;
+
+        const newComment: Comment = {
+            id: Date.now(),
+            user: {
+                name: "Current User",
+                avatar: "https://placehold.co/40x40.png",
+                aiHint: "profile avatar",
+            },
+            text: commentText,
+            time: "Just now",
+        };
+
+        const updatedPost = {
+            ...post,
+            comments: [...(post.comments || []), newComment],
+        };
+        onUpdatePost(updatedPost);
+        setCommentText("");
+    };
+    
+    return (
+        <Card>
+            <CardHeader>
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                    <Avatar>
+                        <AvatarImage src={post.user.avatar} data-ai-hint={post.user.aiHint} />
+                        <AvatarFallback>{post.user.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                        <p className="font-semibold">{post.user.name}</p>
+                        <p className="text-xs text-muted-foreground">{post.time}</p>
+                    </div>
+                    </div>
+                </div>
+            </CardHeader>
+            <CardContent>
+            <p className="mb-4">{post.content}</p>
+            {post.image && (
+                <div className="relative aspect-video w-full rounded-lg overflow-hidden border">
+                    <Image src={post.image} alt="Post image" layout="fill" className="object-cover" data-ai-hint={post.imageAiHint}/>
+                </div>
+            )}
+            </CardContent>
+            <div className="px-6 pb-4">
+                <div className="flex justify-between items-center mb-2">
+                    <div className="flex items-center gap-4">
+                        <Button variant="ghost" size="icon" onClick={handleLike}><Heart className={`h-5 w-5 ${post.liked ? 'text-red-500 fill-current' : ''}`} /></Button>
+                        <Button variant="ghost" size="icon" onClick={() => setCommentsOpen(true)}><MessageCircle className="h-5 w-5" /></Button>
+                        <Button variant="ghost" size="icon"><Send className="h-5 w-5" /></Button>
+                    </div>
+                    <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
+                </div>
+                <p className="text-sm font-semibold">{post.likes} likes</p>
+                {(post.comments?.length || 0) > 0 && 
+                    <p className="text-sm text-muted-foreground cursor-pointer hover:underline" onClick={() => setCommentsOpen(true)}>View all {post.comments.length} comments</p>
+                }
+                <div className="flex items-center gap-2 mt-2">
+                    <Input placeholder="Add a comment..." className="h-9 flex-1" value={commentText} onChange={(e) => setCommentText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleAddComment()} />
+                    <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
+                    <Button variant="ghost" size="icon" onClick={handleAddComment}><Send className="h-5 w-5"/></Button>
+                </div>
+            </div>
+             <Dialog open={isCommentsOpen} onOpenChange={setCommentsOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Comments on {post.user.name}'s post</DialogTitle>
+                    </DialogHeader>
+                    <div className="max-h-[60vh] overflow-y-auto space-y-4 p-4">
+                        {(post.comments || []).map(comment => (
+                            <div key={comment.id} className="flex items-start gap-3">
+                                <Avatar className="h-9 w-9">
+                                    <AvatarImage src={comment.user.avatar} data-ai-hint={comment.user.aiHint} />
+                                    <AvatarFallback>{comment.user.name.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <div className="bg-muted/50 rounded-lg px-3 py-2 flex-1">
+                                    <div className="flex items-baseline justify-between">
+                                        <p className="font-semibold text-sm">{comment.user.name}</p>
+                                        <p className="text-xs text-muted-foreground">{comment.time}</p>
+                                    </div>
+                                    <p className="text-sm">{comment.text}</p>
+                                </div>
+                            </div>
+                        ))}
+                         {(post.comments?.length || 0) === 0 && (
+                            <p className="text-sm text-center text-muted-foreground py-8">No comments yet. Be the first!</p>
+                        )}
+                    </div>
+                </DialogContent>
+            </Dialog>
+        </Card>
+    )
+}
+
+function CommunityFeed({ initialPosts, onUpdatePost }: { initialPosts: Post[], onUpdatePost: (post: Post) => void }) {
+    if (initialPosts.length === 0) {
         return (
              <Card>
                 <CardHeader>
@@ -125,48 +236,8 @@ function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
     return (
         <div className="space-y-6">
             <h2 className="text-2xl font-bold tracking-tight">Community Feed</h2>
-            {communityPosts.map(post => (
-                 <Card key={post.id}>
-                    <CardHeader>
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                            <Avatar>
-                                <AvatarImage src={post.user.avatar} data-ai-hint={post.user.aiHint} />
-                                <AvatarFallback>{post.user.name.charAt(0)}</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <p className="font-semibold">{post.user.name}</p>
-                                <p className="text-xs text-muted-foreground">{post.time}</p>
-                            </div>
-                            </div>
-                        </div>
-                    </CardHeader>
-                    <CardContent>
-                    <p className="mb-4">{post.content}</p>
-                    {post.image && (
-                        <div className="relative aspect-video w-full rounded-lg overflow-hidden border">
-                            <Image src={post.image} alt="Post image" layout="fill" className="object-cover" data-ai-hint={post.imageAiHint}/>
-                        </div>
-                    )}
-                    </CardContent>
-                    <div className="px-6 pb-4">
-                        <div className="flex justify-between items-center mb-2">
-                            <div className="flex items-center gap-4">
-                                <Button variant="ghost" size="icon"><Heart className="h-5 w-5" /></Button>
-                                <Button variant="ghost" size="icon"><MessageCircle className="h-5 w-5" /></Button>
-                                <Button variant="ghost" size="icon"><Send className="h-5 w-5" /></Button>
-                            </div>
-                            <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
-                        </div>
-                        <p className="text-sm font-semibold">{post.likes} likes</p>
-                        <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
-                        <div className="flex items-center gap-2 mt-2">
-                            <Input placeholder="Add a comment..." className="h-9 flex-1" />
-                            <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
-                            <Button variant="ghost" size="icon"><Send className="h-5 w-5"/></Button>
-                        </div>
-                    </div>
-                </Card>
+            {initialPosts.map(post => (
+                <PostCard key={post.id} post={post} onUpdatePost={onUpdatePost} />
             ))}
         </div>
     )
@@ -180,7 +251,17 @@ export default function CommunityDetailPage() {
 
     // In a real app, this data would be fetched from a server.
     const community = initialCommunities.find(c => c.id.toString() === communityId);
-    const communityPosts = posts.filter(p => p.communityId?.toString() === communityId);
+    
+    const [posts, setPosts] = useState<Post[]>(() => 
+        allPosts
+            .filter(p => p.communityId?.toString() === communityId)
+            .map(p => ({...p, comments: p.comments || []}))
+    );
+
+    const handleUpdatePost = (updatedPost: Post) => {
+        setPosts(currentPosts => currentPosts.map(p => p.id === updatedPost.id ? updatedPost : p));
+        // Note: This won't persist across sessions without a backend or global state management
+    };
 
     // Mocking a joined state
     const [isJoined, setIsJoined] = useState(false);
@@ -258,7 +339,7 @@ export default function CommunityDetailPage() {
             
             <div className="grid md:grid-cols-3 gap-6">
                 <div className="md:col-span-2 space-y-6">
-                    <CommunityFeed communityPosts={communityPosts} />
+                    <CommunityFeed initialPosts={posts} onUpdatePost={handleUpdatePost} />
                 </div>
                 <div className="space-y-6">
                     <Card>

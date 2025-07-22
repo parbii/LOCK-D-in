@@ -1,4 +1,16 @@
 
+
+export interface Comment {
+    id: number;
+    user: {
+        name: string;
+        avatar: string;
+        aiHint: string;
+    };
+    text: string;
+    time: string;
+}
+
 export interface Post {
     id: number;
     user: {
@@ -10,9 +22,10 @@ export interface Post {
     image?: string;
     imageAiHint?: string;
     likes: number;
-    comments: number;
+    comments: Comment[]; // Changed from number to array of Comment
     time: string;
     communityId?: number;
+    liked?: boolean;
 }
 
 
@@ -29,7 +42,7 @@ export const initialPosts: Post[] = [
     image: "https://placehold.co/600x400.png",
     imageAiHint: "running marathon",
     likes: 124,
-    comments: 12,
+    comments: [],
     time: "2h ago",
     communityId: 1
   },
@@ -42,7 +55,7 @@ export const initialPosts: Post[] = [
     },
     content: "7-day streak on my 'Daily Devotion' habit! Feeling more focused and centered than ever. 🙏",
     likes: 89,
-    comments: 5,
+    comments: [],
     time: "4h ago",
     communityId: 2
   },
@@ -55,7 +68,7 @@ export const initialPosts: Post[] = [
     },
     content: "The 'Know Your Why' module was a game changer. Really digging deep into my motivations. Highly recommend!",
     likes: 210,
-    comments: 23,
+    comments: [],
     time: "1d ago"
   },
   {
@@ -69,7 +82,7 @@ export const initialPosts: Post[] = [
     image: "https://placehold.co/600x400.png",
     imageAiHint: "team launch",
     likes: 301,
-    comments: 45,
+    comments: [],
     time: "3d ago",
     communityId: 3
   }
