@@ -5,8 +5,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useGoals } from "@/context/goals-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edit, Globe, BrainCircuit, Lock as LockIcon } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Edit, Globe, BrainCircuit, Lock as LockIcon, Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile } from "lucide-react";
 import { ProfileStats } from '@/components/profile-stats';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useReflections } from '@/context/reflections-context';
@@ -14,6 +14,9 @@ import Link from 'next/link';
 import { format } from 'date-fns';
 import { useToast } from "@/hooks/use-toast";
 import { EditProfileDialog } from '@/components/edit-profile-dialog';
+import { type Post } from '@/lib/posts-data';
+import Image from 'next/image';
+import { Input } from '@/components/ui/input';
 
 function ReflectionsList() {
     const { reflections } = useReflections();
@@ -54,7 +57,6 @@ function ReflectionsList() {
 
 export default function ProfilePage() {
   const { activeGoals } = useGoals();
-  const totalPosts = 0; // Placeholder
   const { toast } = useToast();
   const [avatarSrc, setAvatarSrc] = useState("https://placehold.co/100x100.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -65,6 +67,9 @@ export default function ProfilePage() {
   const [username, setUsername] = useState("@me");
   const [bio, setBio] = useState("This is a sample bio. I'm driven by purpose and committed to growth. This is my personal space to track my journey.");
   const [isPublic, setIsPublic] = useState(true);
+  
+  const [posts, setPosts] = useState<Post[]>([]);
+  const postsCount = posts.length;
 
   useEffect(() => {
     setIsClient(true);
@@ -82,6 +87,9 @@ export default function ProfilePage() {
 
     const savedPrivacy = localStorage.getItem('userPrivacy');
     if (savedPrivacy) setIsPublic(JSON.parse(savedPrivacy));
+
+    const savedPosts = localStorage.getItem('userPosts');
+    if (savedPosts) setPosts(JSON.parse(savedPosts));
   }, []);
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -162,7 +170,7 @@ export default function ProfilePage() {
                 </Button>
             </div>
             
-            {isClient && <ProfileStats goals={activeGoals} postsCount={totalPosts} />}
+            {isClient && <ProfileStats goals={activeGoals} postsCount={postsCount} />}
 
           </div>
         </CardContent>
@@ -186,10 +194,65 @@ export default function ProfilePage() {
         <TabsContent value="posts">
             <Card>
                 <CardContent className="pt-6">
-                <div className="text-center text-muted-foreground py-8">
-                    <p>You haven't posted anything yet.</p>
-                    <Button className="mt-4">Create Your First Post</Button>
-                </div>
+                 {isClient && posts.length > 0 ? (
+                    <div className="space-y-6">
+                    {posts.map(post => (
+                        <Card key={post.id}>
+                            <CardHeader>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                <Avatar>
+                                    <AvatarImage src={post.user.avatar} data-ai-hint={post.user.aiHint} />
+                                    <AvatarFallback>{post.user.name.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                    <p className="font-semibold">{post.user.name}</p>
+                                    <p className="text-xs text-muted-foreground">{post.time}</p>
+                                </div>
+                                </div>
+                                <Button variant="ghost" size="icon">
+                                <MoreHorizontal className="h-5 w-5" />
+                                </Button>
+                            </div>
+                            </CardHeader>
+                            <CardContent>
+                            <p className="mb-4 whitespace-pre-wrap">{post.content}</p>
+                            {post.image && (
+                                <div className="relative aspect-video w-full rounded-lg overflow-hidden border">
+                                    <Image src={post.image} alt="Post image" layout="fill" className="object-cover" data-ai-hint={post.imageAiHint}/>
+                                </div>
+                            )}
+                            </CardContent>
+                            <CardFooter>
+                                <div className="w-full">
+                                    <div className="flex justify-between items-center mb-2">
+                                        <div className="flex items-center gap-4">
+                                            <Button variant="ghost" size="icon"><Heart className="h-5 w-5" /></Button>
+                                            <Button variant="ghost" size="icon"><MessageCircle className="h-5 w-5" /></Button>
+                                            <Button variant="ghost" size="icon"><Send className="h-5 w-5" /></Button>
+                                        </div>
+                                        <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
+                                    </div>
+                                    <p className="text-sm font-semibold">{post.likes} likes</p>
+                                    <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
+                                    <div className="flex items-center gap-2 mt-2">
+                                        <Input placeholder="Add a comment..." className="h-9 flex-1" />
+                                        <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
+                                        <Button variant="ghost" size="icon"><Send className="h-5 w-5" /></Button>
+                                    </div>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    ))}
+                    </div>
+                ) : (
+                    <div className="text-center text-muted-foreground py-8">
+                        <p>You haven't posted anything yet.</p>
+                        <Button asChild className="mt-4">
+                            <Link href="/dashboard">Create Your First Post</Link>
+                        </Button>
+                    </div>
+                )}
                 </CardContent>
             </Card>
         </TabsContent>

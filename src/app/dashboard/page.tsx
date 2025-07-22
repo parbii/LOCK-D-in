@@ -329,7 +329,14 @@ function RsvpEvents() {
 }
 
 export default function DashboardPage() {
-    const [posts, setPosts] = useState<Post[]>(initialPosts);
+    const [posts, setPosts] = useState<Post[]>([]);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedPosts = localStorage.getItem('userPosts');
+            setPosts(savedPosts ? JSON.parse(savedPosts) : initialPosts);
+        }
+    }, []);
 
     const addPost = (newPostData: Omit<Post, 'id' | 'user' | 'likes' | 'comments' | 'time'>) => {
         const newPost: Post = {
@@ -344,7 +351,11 @@ export default function DashboardPage() {
             comments: 0,
             time: "Just now"
         };
-        setPosts(prevPosts => [newPost, ...prevPosts]);
+        const updatedPosts = [newPost, ...posts];
+        setPosts(updatedPosts);
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('userPosts', JSON.stringify(updatedPosts));
+        }
     };
 
   return (

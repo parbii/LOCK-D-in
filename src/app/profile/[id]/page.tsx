@@ -5,7 +5,7 @@ import React from 'react';
 import { useParams } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Globe, Target, Flame, FileText, Lock, Heart, MessageCircle, MoreHorizontal, Send, Bookmark, Smile } from "lucide-react";
 import { Progress } from '@/components/ui/progress';
 import { Input } from '@/components/ui/input';
@@ -137,23 +137,25 @@ export default function FriendProfilePage() {
                  </div>
               )}
             </CardContent>
-            <div className="px-6 pb-4">
-                <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="icon"><Heart className="h-5 w-5" /></Button>
-                        <Button variant="ghost" size="icon"><MessageCircle className="h-5 w-5" /></Button>
-                        <Button variant="ghost" size="icon"><Send className="h-5 w-5" /></Button>
+            <CardFooter>
+                <div className="w-full">
+                    <div className="flex justify-between items-center mb-2">
+                        <div className="flex items-center gap-4">
+                            <Button variant="ghost" size="icon"><Heart className="h-5 w-5" /></Button>
+                            <Button variant="ghost" size="icon"><MessageCircle className="h-5 w-5" /></Button>
+                            <Button variant="ghost" size="icon"><Send className="h-5 w-5" /></Button>
+                        </div>
+                        <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
                     </div>
-                    <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
+                    <p className="text-sm font-semibold">{post.likes} likes</p>
+                    <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
+                    <div className="flex items-center gap-2 mt-2">
+                        <Input placeholder="Add a comment..." className="h-9 flex-1" />
+                        <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
+                        <Button variant="ghost" size="icon"><Send className="h-5 w-5"/></Button>
+                    </div>
                 </div>
-                <p className="text-sm font-semibold">{post.likes} likes</p>
-                <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
-                <div className="flex items-center gap-2 mt-2">
-                    <Input placeholder="Add a comment..." className="h-9 flex-1" />
-                    <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
-                    <Button variant="ghost" size="icon"><Send className="h-5 w-5"/></Button>
-                </div>
-            </div>
+            </CardFooter>
           </Card>
         )) : (
             <Card>
