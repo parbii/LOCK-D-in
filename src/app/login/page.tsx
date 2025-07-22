@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -12,6 +13,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }),
@@ -20,6 +23,7 @@ const loginSchema = z.object({
 
 export default function LoginPage() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
@@ -67,7 +71,18 @@ export default function LoginPage() {
                       </Link>
                     </div>
                     <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} />
+                      <div className="relative">
+                        <Input type={showPassword ? "text" : "password"} placeholder="••••••••" {...field} />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
+                          onClick={() => setShowPassword(prev => !prev)}
+                        >
+                          {showPassword ? <EyeOff /> : <Eye />}
+                        </Button>
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

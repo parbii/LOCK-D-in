@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -13,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const signupSchema = z.object({
   username: z.string().min(3, { message: "Username must be at least 3 characters." }),
@@ -22,6 +25,7 @@ const signupSchema = z.object({
 
 export default function SignUpPage() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: { username: "", email: "", password: "" },
@@ -80,7 +84,18 @@ export default function SignUpPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} />
+                      <div className="relative">
+                        <Input type={showPassword ? "text" : "password"} placeholder="••••••••" {...field} />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
+                          onClick={() => setShowPassword(prev => !prev)}
+                        >
+                          {showPassword ? <EyeOff /> : <Eye />}
+                        </Button>
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
