@@ -49,7 +49,7 @@ export default function FriendProfilePage() {
         return <div className="text-center py-10">Friend not found.</div>
     }
 
-    // Cast publicGoals to Goal[] to satisfy Profil*Stats compon*nt
+    // Cast publicGoals to Goal[] to satisfy ProfileStats component
     const publicGoals: Goal[] = friend.publicGoals.map(g => ({...g, habits: [], description: ''}));
 
     return (
@@ -149,8 +149,9 @@ export default function FriendProfilePage() {
                 <p className="text-sm font-semibold">{post.likes} likes</p>
                 <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
                 <div className="flex items-center gap-2 mt-2">
-                    <Input placeholder="Add a comment..." className="h-9" />
+                    <Input placeholder="Add a comment..." className="h-9 flex-1" />
                     <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
+                    <Button variant="ghost" size="icon"><Send className="h-5 w-5"/></Button>
                 </div>
             </div>
           </Card>

@@ -36,15 +36,15 @@ function CreateSharedGoal({ community }: { community: Community }) {
 
     const handleCreateGoal = () => {
         if (!goalName.trim()) {
-            toast({ variant: "destructive", title: "Goal Nam* is R*quir*d." });
+            toast({ variant: "destructive", title: "Goal Name is Required." });
             return;
         }
         
-        // Logic to cr*at* and shar* th* goal with th* community would go h*r*.
-        // For now, w*'ll just show a succ*ss toast.
+        // Logic to create and share the goal with the community would go here.
+        // For now, we'll just show a success toast.
         
         toast({
-            title: "Shar*d Goal Cr*at*d!",
+            title: "Shared Goal Created!",
             description: `The goal "${goalName}" has been shared with ${community.name}.`
         });
 
@@ -56,7 +56,7 @@ function CreateSharedGoal({ community }: { community: Community }) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Cr*at* a Shar*d Goal</CardTitle>
+                <CardTitle>Create a Shared Goal</CardTitle>
                 <CardDescription>Set a goal for the entire community to work on together.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -111,7 +111,7 @@ function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
         return (
              <Card>
                 <CardHeader>
-                    <CardTitle>Community F**d</CardTitle>
+                    <CardTitle>Community Feed</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="text-center text-muted-foreground py-8">
@@ -124,7 +124,7 @@ function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
 
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold tracking-tight">Community F**d</h2>
+            <h2 className="text-2xl font-bold tracking-tight">Community Feed</h2>
             {communityPosts.map(post => (
                  <Card key={post.id}>
                     <CardHeader>
@@ -161,8 +161,9 @@ function CommunityFeed({ communityPosts }: { communityPosts: Post[]}) {
                         <p className="text-sm font-semibold">{post.likes} likes</p>
                         <p className="text-sm text-muted-foreground cursor-pointer hover:underline">View all {post.comments} comments</p>
                         <div className="flex items-center gap-2 mt-2">
-                            <Input placeholder="Add a comment..." className="h-9" />
+                            <Input placeholder="Add a comment..." className="h-9 flex-1" />
                             <Button variant="ghost" size="icon"><Smile className="h-5 w-5"/></Button>
+                            <Button variant="ghost" size="icon"><Send className="h-5 w-5"/></Button>
                         </div>
                     </div>
                 </Card>
@@ -177,13 +178,13 @@ export default function CommunityDetailPage() {
     const communityId = params.id;
     const { toast } = useToast();
 
-    // In a r*al app, this data would b* f*tch*d from a s*rv*r.
+    // In a real app, this data would be fetched from a server.
     const community = initialCommunities.find(c => c.id.toString() === communityId);
     const communityPosts = posts.filter(p => p.communityId?.toString() === communityId);
 
-    // Mocking a join*d stat*
+    // Mocking a joined state
     const [isJoined, setIsJoined] = useState(false);
-    // Mocking th* curr*nt us*r ID
+    // Mocking the current user ID
     const currentUserId = 999; 
     const isCommunityAdmin = community?.adminId === currentUserId;
 
@@ -210,7 +211,7 @@ export default function CommunityDetailPage() {
     const handleJoinClick = () => {
         if (community.isPrivate) {
              toast({
-                title: "This is a privat* community",
+                title: "This is a private community",
                 description: "You can only join by invitation.",
             });
             return;
@@ -218,7 +219,7 @@ export default function CommunityDetailPage() {
         
         setIsJoined(true);
         toast({
-            title: "W*lcom* to th* community!",
+            title: "Welcome to the community!",
             description: `You've successfully joined ${community.name}.`,
         });
     };
@@ -262,7 +263,7 @@ export default function CommunityDetailPage() {
                 <div className="space-y-6">
                     <Card>
                         <CardHeader>
-                            <CardTitle className="flex items-center gap-2"><Target className="h-5 w-5 text-accent" /> Shar*d Goal</CardTitle>
+                            <CardTitle className="flex items-center gap-2"><Target className="h-5 w-5 text-accent" /> Shared Goal</CardTitle>
                         </CardHeader>
                          <CardContent>
                             <p className="text-muted-foreground">The community's shared goal will be displayed here once it's created by the admin.</p>
