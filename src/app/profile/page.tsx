@@ -85,7 +85,7 @@ function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPo
 
         const updatedPost = {
             ...post,
-            comments: [...post.comments, newComment],
+            comments: [...(post.comments || []), newComment],
         };
         onUpdatePost(updatedPost);
         setCommentText("");
@@ -114,7 +114,7 @@ function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPo
               <p className="mb-4 whitespace-pre-wrap">{post.content}</p>
               {post.image && (
                  <div className="relative aspect-video w-full rounded-lg overflow-hidden border">
-                    <Image src={post.image} alt="Post image" layout="fill" className="object-cover" data-ai-hint={post.imageAiHint}/>
+                    <Image src={post.image} alt="Post image" fill className="object-cover" data-ai-hint={post.imageAiHint}/>
                  </div>
               )}
             </CardContent>
@@ -133,7 +133,7 @@ function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPo
                         <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
                     </div>
                     <p className="text-sm font-semibold">{post.likes} likes</p>
-                    {post.comments.length > 0 && (
+                    {(post.comments?.length || 0) > 0 && (
                         <p className="text-sm text-muted-foreground cursor-pointer hover:underline" onClick={() => setCommentsOpen(true)}>
                             View all {post.comments.length} comments
                         </p>
@@ -157,7 +157,7 @@ function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPo
                         <DialogTitle>Comments on {post.user.name}'s post</DialogTitle>
                     </DialogHeader>
                     <div className="max-h-[60vh] overflow-y-auto space-y-4 p-4">
-                        {post.comments.map(comment => (
+                        {(post.comments || []).map(comment => (
                             <div key={comment.id} className="flex items-start gap-3">
                                 <Avatar className="h-9 w-9">
                                     <AvatarImage src={comment.user.avatar} data-ai-hint={comment.user.aiHint} />
@@ -172,7 +172,7 @@ function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPo
                                 </div>
                             </div>
                         ))}
-                        {post.comments.length === 0 && (
+                        {(post.comments?.length || 0) === 0 && (
                             <p className="text-sm text-center text-muted-foreground py-8">No comments yet. Be the first!</p>
                         )}
                     </div>
