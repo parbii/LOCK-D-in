@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -59,6 +58,7 @@ function ReflectionsList() {
 function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPost: Post) => void }) {
     const [commentText, setCommentText] = useState("");
     const [isCommentsOpen, setCommentsOpen] = useState(false);
+    const postComments = Array.isArray(post.comments) ? post.comments : [];
 
     const handleLike = () => {
         const updatedPost = {
@@ -85,7 +85,7 @@ function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPo
 
         const updatedPost = {
             ...post,
-            comments: [...(post.comments || []), newComment],
+            comments: [...postComments, newComment],
         };
         onUpdatePost(updatedPost);
         setCommentText("");
@@ -133,9 +133,9 @@ function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPo
                         <Button variant="ghost" size="icon"><Bookmark className="h-5 w-5" /></Button>
                     </div>
                     <p className="text-sm font-semibold">{post.likes} likes</p>
-                    {(post.comments?.length || 0) > 0 && (
+                    {postComments.length > 0 && (
                         <p className="text-sm text-muted-foreground cursor-pointer hover:underline" onClick={() => setCommentsOpen(true)}>
-                            View all {post.comments.length} comments
+                            View all {postComments.length} comments
                         </p>
                     )}
                     <div className="flex items-center gap-2 mt-2">
@@ -157,7 +157,7 @@ function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPo
                         <DialogTitle>Comments on {post.user.name}'s post</DialogTitle>
                     </DialogHeader>
                     <div className="max-h-[60vh] overflow-y-auto space-y-4 p-4">
-                        {(post.comments || []).map(comment => (
+                        {postComments.map(comment => (
                             <div key={comment.id} className="flex items-start gap-3">
                                 <Avatar className="h-9 w-9">
                                     <AvatarImage src={comment.user.avatar} data-ai-hint={comment.user.aiHint} />
@@ -172,7 +172,7 @@ function PostCard({ post, onUpdatePost }: { post: Post, onUpdatePost: (updatedPo
                                 </div>
                             </div>
                         ))}
-                        {(post.comments?.length || 0) === 0 && (
+                        {postComments.length === 0 && (
                             <p className="text-sm text-center text-muted-foreground py-8">No comments yet. Be the first!</p>
                         )}
                     </div>
@@ -216,7 +216,7 @@ export default function ProfilePage() {
 
     const savedPosts = localStorage.getItem('userPosts');
     const parsedPosts = savedPosts ? JSON.parse(savedPosts) : initialPosts;
-    const sanitizedPosts = parsedPosts.map((p: Post) => ({ ...p, comments: p.comments || [] }));
+    const sanitizedPosts = parsedPosts.map((p: Post) => ({ ...p, comments: Array.isArray(p.comments) ? p.comments : [] }));
     setPosts(sanitizedPosts);
   }, []);
 
@@ -358,3 +358,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+    
