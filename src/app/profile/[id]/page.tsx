@@ -19,8 +19,8 @@ const friendsData: { id: number, name: string, username: string, avatar: string,
     {
         id: 1, name: "Sarah Lee", username: "@sarahlee", avatar: "https://placehold.co/100x100.png", aiHint: "woman smiling", bio: "Fitness enthusiast and marathon runner. Always pushing my limits.",
         publicGoals: [
-            { id: 101, name: "Run a 5k", progress: 100, streak: 21, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [], status: "completed" },
-            { id: 102, name: "Read 12 books this year", progress: 75, streak: 3, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [], status: "active" },
+            { id: 101, name: "Run a 5k", progress: 100, streak: 21, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [], status: "completed", totalCheckIns: 25 },
+            { id: 102, name: "Read 12 books this year", progress: 75, streak: 3, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [], status: "active", totalCheckIns: 20 },
         ],
         posts: [
              { id: 1, user: { name: "Sarah Lee", avatar: "https://placehold.co/40x40.png", aiHint: "woman smiling" }, content: "Crushed my goal of running a 5k this morning! Felt amazing. #nevergiveup #goals", image: "https://placehold.co/600x400.png", imageAiHint: "running marathon", likes: 124, comments: [], time: "2h ago" },
@@ -29,7 +29,7 @@ const friendsData: { id: number, name: string, username: string, avatar: string,
     {
         id: 2, name: "David Kim", username: "@davidkim", avatar: "https://placehold.co/100x100.png", aiHint: "man portrait", bio: "Tech entrepreneur and mindfulness advocate. Building cool things and staying present.",
         publicGoals: [
-             { id: 201, name: "Meditate daily", progress: 100, streak: 45, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [], status: "completed" },
+             { id: 201, name: "Meditate daily", progress: 100, streak: 45, isPublic: true, lastCompleted: "2023-10-26", description: "", habits: [], status: "completed", totalCheckIns: 50 },
         ],
         posts: [
             { id: 2, user: { name: "David Kim", avatar: "https://placehold.co/40x40.png", aiHint: "man portrait" }, content: "7-day streak on my 'Daily Devotion' habit! Feeling more focused and centered than ever. 🙏", likes: 89, comments: [], time: "4h ago" },

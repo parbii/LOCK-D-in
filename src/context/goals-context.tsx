@@ -16,6 +16,7 @@ export interface Goal {
   habits: Habit[];
   progress: number;
   streak: number;
+  totalCheckIns: number; // New field to track all check-ins
   lastCompleted: string | null; // YYYY-MM-DD
   status?: 'active' | 'prompt_complete' | 'completed';
 }
@@ -68,7 +69,7 @@ export const GoalsProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     // Load goals from localStorage on mount
     const storedGoals = getFromLocalStorage('allGoals', []);
-    setGoals(storedGoals);
+    setGoals(storedGoals.map(g => ({...g, totalCheckIns: g.totalCheckIns || 0}))); // Ensure totalCheckIns exists
 
     // Daily reset logic for checked habits
     const todayStr = getTodaysDate();
@@ -91,7 +92,7 @@ export const GoalsProvider = ({ children }: { children: ReactNode }) => {
 
 
   const addGoal = (goal: Goal) => {
-    setGoals(prevGoals => [...prevGoals, {...goal, status: 'active'}]);
+    setGoals(prevGoals => [...prevGoals, {...goal, status: 'active', totalCheckIns: goal.totalCheckIns || 0}]);
   };
   
   const updateGoal = (updatedGoal: Goal) => {
@@ -135,17 +136,34 @@ export const GoalsProvider = ({ children }: { children: ReactNode }) => {
             const yesterdayStr = yesterday.toISOString().split('T')[0];
             
             const newStreak = goal.lastCompleted === yesterdayStr ? goal.streak + 1 : 1;
-            
-            const baseProgress = 1; 
-            const boostFactor = Math.pow(1.05, newStreak - 1);
-            const progressGained = baseProgress * boostFactor;
+            const newTotalCheckIns = (goal.totalCheckIns || 0) + 1;
 
-            const newProgress = Math.min(100, goal.progress + progressGained);
+            // New Progress Logic:
+            // Base progress from total check-ins (aiming for 100% at 30 check-ins)
+            const baseProgress = (newTotalCheckIns / 30) * 100;
+            // Streak bonus, capped to prevent excessive progress early on
+            const streakBonus = Math.min(25, (newStreak - 1) * 2); // bonus for each day in a streak
+
+            let progressGained = baseProgress + streakBonus;
+
+            // If it's the 15th day of a streak, just complete it.
+            if (newStreak === 15) {
+                progressGained = 100;
+            }
+
+            const newProgress = Math.min(100, progressGained);
 
             // If goal becomes LockdIn, set status to prompt for completion
             const newStatus = newProgress >= 100 && goal.status !== 'prompt_complete' ? 'prompt_complete' : goal.status;
             
-            return { ...goal, progress: newProgress, streak: newStreak, lastCompleted: todayStr, status: newStatus };
+            return { 
+                ...goal, 
+                progress: newProgress, 
+                streak: newStreak, 
+                totalCheckIns: newTotalCheckIns,
+                lastCompleted: todayStr, 
+                status: newStatus 
+            };
         }
         return goal;
     }));
@@ -159,7 +177,7 @@ export const GoalsProvider = ({ children }: { children: ReactNode }) => {
 
   const keepGoing = (goalId: number) => {
     setGoals(prevGoals => prevGoals.map(goal =>
-        goal.id === goalId ? { ...goal, status: 'active' } : goal
+        goal.id === goalId ? { ...goal, status: 'active', progress: 0, streak: 0, totalCheckIns: 0 } : goal
     ));
   }
 

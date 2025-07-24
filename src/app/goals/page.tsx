@@ -177,6 +177,7 @@ export default function GoalsPage() {
       habits: habits,
       progress: 0,
       streak: 0,
+      totalCheckIns: 0,
       lastCompleted: null,
       status: 'active',
     };
