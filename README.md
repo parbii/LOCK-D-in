@@ -1,7 +1,7 @@
 # LOCK-D-in
 
 ## Overview
-Sync'd is a personal growth and productivity platform built to help students track their goals and engage with an accountability community. This MVP was developed as a passion project to bridge the gap between solo goal-setting and social support.
+LOCKDin is a personal growth and productivity platform built to help students track their goals and engage with an accountability community. This MVP was developed as a passion project to bridge the gap between solo goal-setting and social support.
 
 ## Key Features
 * **Goal Management:** Intuitive interface for defining and tracking daily/long-term milestones.
